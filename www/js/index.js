@@ -1,9 +1,11 @@
 document.addEventListener('deviceready', function () {
     //var screenProps = getScreenProps();
 
+    //se autoResize è attivo, allora zoom non funziona!
     var config = {
         type: Phaser.WEBGL,
         autoResize: true,
+        zoom: 1,
         parent: 'game',
         width: 1024,
         height: 768,

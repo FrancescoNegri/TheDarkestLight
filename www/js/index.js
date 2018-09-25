@@ -1,14 +1,15 @@
 document.addEventListener('deviceready', function () {
-    //var screenProps = getScreenProps();
+    getDeviceType();
+    SCREEN_PROPS = getScreenProps();
 
     //se autoResize è attivo, allora zoom non funziona!
     var config = {
         type: Phaser.WEBGL,
-        autoResize: true,
-        zoom: 1,
+        autoResize: false,
+        zoom: SCREEN_PROPS.calculatedZoom,
         parent: 'game',
-        width: 1024,
-        height: 768,
+        width: SCREEN_PROPS.calculatedWidth,
+        height: SCREEN_PROPS.calculatedHeight,
         scene: [Boot],
         physics: {
             default: 'arcade',
@@ -17,7 +18,7 @@ document.addEventListener('deviceready', function () {
                 gravity: { y: 1000 }
             }
         },
-        backgroundColor: '#000000',
+        backgroundColor: '#ff0000',
         pixelArt: true,
         plugins: {
             global: [
@@ -33,19 +34,36 @@ if (!window.cordova) {
     window.dispatchEvent('deviceready');
 }
 
-/*function getScreenProps() {
-    var returnValue = {};
-    returnValue.availHeight = Math.max(window.innerHeight, document.documentElement.clientHeight);
-    returnValue.availWidth = Math.max(window.innerWidth, document.documentElement.clientWidth);
+function getDeviceType() {
+    var md = new MobileDetect(window.navigator.userAgent);
+    if (md.mobile() != null) DEVICE = 'MOBILE';
+    else DEVICE = 'DESKTOP';
+}
 
-    if (returnValue.availHeight < returnValue.availWidth) {
-        returnValue.calculatedHeight = FIXED_HEIGHT;
-        returnValue.calculatedWidth = FIXED_WIDTH;
+function getScreenProps() {
+    var returnValue = {};
+
+    // cz : ah = 1 : mh
+    if (DEVICE == 'MOBILE') {
+        returnValue.availHeight = window.innerHeight;
+        returnValue.availWidth = window.innerWidth;
+        returnValue.calculatedZoom = returnValue.availHeight / ((ROOM_HEIGHT_IN_TILE + INVENTORY_HEIGHT_IN_TILES_MOBILE + ROOM_FRAME_IN_TILES_MOBILE * 2) * TILE_SIZE);
     }
     else {
-        returnValue.calculatedHeight = FIXED_WIDTH * returnValue.availHeight / returnValue.availWidth;
-        returnValue.calculatedWidth = FIXED_WIDTH;
+        returnValue.availHeight = screen.height;
+        returnValue.availWidth = screen.width;
+        returnValue.calculatedZoom = returnValue.availHeight / ((ROOM_HEIGHT_IN_TILE + INVENTORY_HEIGHT_IN_TILES_DESKTOP + ROOM_FRAME_IN_TILES_DESKTOP * 2) * TILE_SIZE);
     }
 
+    console.log('ZOOM: ' + returnValue.calculatedZoom);
+
+    //Sono le dimensioni riaggiustate rispetto allo zoom scelto
+    //ch : ah = 1 : cz
+    returnValue.calculatedHeight = returnValue.availHeight / returnValue.calculatedZoom;
+    returnValue.calculatedWidth = returnValue.availWidth / returnValue.calculatedZoom;
+
+    console.log('AVAIL-H: ' + returnValue.availHeight + '\nCALC-H: ' + returnValue.calculatedHeight);
+    console.log('AVAIL-W: ' + returnValue.availWidth + '\nCALC-W: ' + returnValue.calculatedWidth);
+
     return returnValue;
-}*/
+}

@@ -7,6 +7,10 @@ class Room extends Phaser.Scene {
 
     preload() {
         console.log('Preloading...');
+        this.load.image('top-mask-camera', 'img/Masks/topMaskCamera.png');
+        this.load.image('bottom-mask-camera', 'img/Masks/bottomMaskCamera.png');
+        this.load.image('left-mask-camera', 'img/Masks/leftMaskCamera.png');
+        this.load.image('right-mask-camera', 'img/Masks/rightMaskCamera.png');
     }
 
     generateRoom() {
@@ -25,6 +29,13 @@ class Room extends Phaser.Scene {
         var bg_layer = map.createDynamicLayer('Background', bg_tileset, 0, 0);
         var walls_tileset = map.addTilesetImage('MANSION_INTERIOR_WALLS_2');
         var walls_layer = map.createDynamicLayer('Walls', walls_tileset, 0, 0);
+
+        //Adding Masks
+        //alert(this.cameras.main.width + '    ' + (SCREEN_PROPS.calculatedWidth - 2 * ROOM_FRAME_IN_TILES_DESKTOP * TILE_SIZE));
+        this.add.sprite(0, 0, 'top-mask-camera').setScrollFactor(0).setOrigin(0, 0);
+        this.add.sprite(0, 0, 'left-mask-camera').setScrollFactor(0).setOrigin(0, 0);
+        this.add.sprite(this.cameras.main.width - TILE_SIZE, 0, 'right-mask-camera').setScrollFactor(0).setOrigin(0, 0);
+        this.add.sprite(0, this.cameras.main.height - TILE_SIZE, 'bottom-mask-camera').setScrollFactor(0).setOrigin(0, 0);
     }
 
     loadAssets() {

@@ -59,8 +59,8 @@ function getScreenProps() {
 
     //Sono le dimensioni riaggiustate rispetto allo zoom scelto
     //ch : ah = 1 : cz
-    returnValue.calculatedHeight = returnValue.availHeight / returnValue.calculatedZoom;
-    returnValue.calculatedWidth = returnValue.availWidth / returnValue.calculatedZoom;
+    returnValue.calculatedHeight = Math.ceil(returnValue.availHeight / returnValue.calculatedZoom);
+    returnValue.calculatedWidth = Math.ceil(returnValue.availWidth / returnValue.calculatedZoom);
 
     console.log('AVAIL-H: ' + returnValue.availHeight + '\nCALC-H: ' + returnValue.calculatedHeight);
     console.log('AVAIL-W: ' + returnValue.availWidth + '\nCALC-W: ' + returnValue.calculatedWidth);

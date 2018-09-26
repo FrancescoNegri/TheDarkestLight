@@ -41,4 +41,12 @@ class Room extends Phaser.Scene {
     loadAssets() {
         //Carica tutti gli assets dal parametro passato dalla Room figlia e, quando termina, ripassa il controllo a generateRoom che procede con la creazione della Room figlia
     }
+
+    findFileNameFromPath(path){
+        var nameFirstCharachterPosition = path.lastIndexOf("/") +1;
+        var nameLastCharachterPosition = path.lastIndexOf(".");
+        if (nameFirstCharachterPosition == -1 || nameLastCharachterPosition== -1) return -1;
+        var filename= path.slice(nameFirstCharachterPosition,nameLastCharachterPosition);
+        return filename;
+    }
 }

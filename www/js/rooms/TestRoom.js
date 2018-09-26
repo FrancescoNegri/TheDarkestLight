@@ -12,12 +12,10 @@ class TestRoom extends Room {
     }
 
     create() {
-        //GAME.room.getAt(0);
-        console.log('Creating...');
-        this.generateRoom();
+        super.create();
     }
 
     update() {
-        //console.log('Updating...');
+        
     }
 }

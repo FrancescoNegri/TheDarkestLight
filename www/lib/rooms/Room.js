@@ -2,19 +2,24 @@ class Room extends Phaser.Scene {
     constructor(sceneKey) {
         super(sceneKey);
 
+        this.assets;
+        this.layers = {}; 
         //Prende in ingresso tutti gli assets della Room figlia e li mette nel membro this.assets
     }
 
     preload() {
-        console.log('Preloading...');
         this.load.image('top-mask-camera', 'img/Masks/topMaskCamera.png');
         this.load.image('bottom-mask-camera', 'img/Masks/bottomMaskCamera.png');
         this.load.image('left-mask-camera', 'img/Masks/leftMaskCamera.png');
         this.load.image('right-mask-camera', 'img/Masks/rightMaskCamera.png');
     }
 
+    create() {
+        this.generateRoom();
+    }
+
     generateRoom() {
-        /*await*/ this.loadAssets(); //Carica gli assets e deve aspettare che finisca il loading
+        //Resizing the viewport
         if (DEVICE == 'MOBILE'){
             this.cameras.main.setPosition((ROOM_FRAME_IN_TILES_MOBILE + INVENTORY_WIDTH_IN_TILES_MOBILE) * TILE_SIZE, (ROOM_FRAME_IN_TILES_MOBILE + INVENTORY_HEIGHT_IN_TILES_MOBILE) * TILE_SIZE);
             this.cameras.main.setSize(SCREEN_PROPS.calculatedWidth - 2 * (ROOM_FRAME_IN_TILES_MOBILE + INVENTORY_WIDTH_IN_TILES_MOBILE) * TILE_SIZE, ROOM_HEIGHT_IN_TILE * TILE_SIZE);
@@ -24,12 +29,10 @@ class Room extends Phaser.Scene {
             this.cameras.main.setSize(SCREEN_PROPS.calculatedWidth - 2 * ROOM_FRAME_IN_TILES_DESKTOP * TILE_SIZE, ROOM_HEIGHT_IN_TILE * TILE_SIZE);
         }
 
-        var map = this.make.tilemap({ key: 'map', tileWidth: TILE_SIZE, tileHeight: TILE_SIZE});
-        var bg_tileset = map.addTilesetImage('MANSION_INTERIOR_BACKGROUND_2');
-        var bg_layer = map.createDynamicLayer('Background', bg_tileset, 0, 0);
-        var walls_tileset = map.addTilesetImage('MANSION_INTERIOR_WALLS_2');
-        var walls_layer = map.createDynamicLayer('Walls', walls_tileset, 0, 0);
-
+        this.map = this.make.tilemap({ key: 'map', tileWidth: TILE_SIZE, tileHeight: TILE_SIZE});
+        this.layers.backgroundLayer = this.map.createDynamicLayer('Background', this.map.addTilesetImage('MANSION_INTERIOR_BACKGROUND_2'), 0, 0);
+        this.layers.wallsLayer = this.map.createDynamicLayer('Walls', this.map.addTilesetImage('MANSION_INTERIOR_WALLS_2'), 0, 0);
+        
         //Adding Masks
         //alert(this.cameras.main.width + '    ' + (SCREEN_PROPS.calculatedWidth - 2 * ROOM_FRAME_IN_TILES_DESKTOP * TILE_SIZE));
         this.add.sprite(0, 0, 'top-mask-camera').setScrollFactor(0).setOrigin(0, 0);

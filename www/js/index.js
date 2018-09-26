@@ -47,12 +47,12 @@ function getScreenProps() {
     if (DEVICE == 'MOBILE') {
         returnValue.availHeight = window.innerHeight;
         returnValue.availWidth = window.innerWidth;
-        returnValue.calculatedZoom = returnValue.availHeight / ((ROOM_HEIGHT_IN_TILE + INVENTORY_HEIGHT_IN_TILES_MOBILE + ROOM_FRAME_IN_TILES_MOBILE * 2) * TILE_SIZE);
+        returnValue.calculatedZoom = Math.floor(returnValue.availHeight / ((ROOM_HEIGHT_IN_TILE + INVENTORY_HEIGHT_IN_TILES_MOBILE + ROOM_FRAME_IN_TILES_MOBILE * 2) * TILE_SIZE) * 100) / 100;
     }
     else {
         returnValue.availHeight = screen.height;
         returnValue.availWidth = screen.width;
-        returnValue.calculatedZoom = returnValue.availHeight / ((ROOM_HEIGHT_IN_TILE + INVENTORY_HEIGHT_IN_TILES_DESKTOP + ROOM_FRAME_IN_TILES_DESKTOP * 2) * TILE_SIZE);
+        returnValue.calculatedZoom = Math.floor(returnValue.availHeight / ((ROOM_HEIGHT_IN_TILE + INVENTORY_HEIGHT_IN_TILES_DESKTOP + ROOM_FRAME_IN_TILES_DESKTOP * 2) * TILE_SIZE) * 100) / 100;
     }
 
     console.log('ZOOM: ' + returnValue.calculatedZoom);

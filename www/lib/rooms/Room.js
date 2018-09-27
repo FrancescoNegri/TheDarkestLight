@@ -49,4 +49,44 @@ class Room extends Phaser.Scene {
         var filename= path.slice(nameFirstCharachterPosition,nameLastCharachterPosition);
         return filename;
     }
+
+    /*
+    function ricorsiveResList(assetFile, typeRes) {
+        var assetKeyList = Object.keys(assetFile);
+        if (assetKeyList.length != 0) {
+            for (let i = 0; i < assetKeyList.length; i++) {
+                console.log("we enterd in " + assetKeyList[i]);
+                if (assetKeyList[i].localeCompare("path") == 0) {
+                    assetFile.type = typeRes;
+                    assetFile.key = findFileNameFromPath(assetFile.path);
+                    let assetList=[];
+                    assetList.push(assetFile);
+                    return assetList;
+                }
+            }
+            //se non trova la propieta' path, deve scendere di profondità.
+            var assetList = [];
+            for (let i = 0; i < assetKeyList.length; i++) {
+                assetList= assetList.concat(ricorsiveResList(assetFile.assetKeyList[i], typeRes));  
+            }
+            return assetList;
+        } else {
+          let assetList=[];
+          console.log("exit without res");
+          return assetList;
+        }
+    }
+    
+    function getResListFromAsset(asset) {
+        var resList= [];
+        var i = 0;
+        for (var typeRes in asset) {
+            console.log("we are in " + typeRes);
+            resList=resList.concat(ricorsiveResList(asset[typeRes], typeRes));
+            console.log(resList);
+            i++;
+        }
+        return resList;
+    
+    }*/
 }

@@ -19,6 +19,11 @@ class Room extends Phaser.Scene {
         this.setCameraViewport();
         this.createRoom();
         this.applyCameraMasks();
+
+        //Camera bounds, anche il wallsLayer
+        this.cameras.main.setBounds(0, 0, this.layers.wallsLayer.width, this.layers.wallsLayer.height);
+        //Physics Bounds, sarà solo lo spazio di gioco (togliamo il wall layer tutto attorno!!)
+        this.physics.world.setBounds(TILE_SIZE, TILE_SIZE, this.layers.wallsLayer.width - 2 * TILE_SIZE, this.layers.wallsLayer.height - 2 * TILE_SIZE);
     }
 
     createRoom() {

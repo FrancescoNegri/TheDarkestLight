@@ -18,7 +18,7 @@ document.addEventListener('deviceready', function () {
                 gravity: { y: 1000 }
             }
         },
-        backgroundColor: '#ff0000',
+        backgroundColor: '#000000',
         pixelArt: true,
         plugins: {
             global: [

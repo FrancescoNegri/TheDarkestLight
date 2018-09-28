@@ -7,7 +7,7 @@ function findFileNameFromPath(path) {
     return filename;
 }
 
-isObject(object1){
+function isObject(object1){
     let array = true;
     let keyList = Object.keys(object1);
     /*console.log(keyList);*/

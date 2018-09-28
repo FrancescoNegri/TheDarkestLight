@@ -6,3 +6,21 @@ function findFileNameFromPath(path) {
     var filename = path.slice(nameFirstCharachterPosition, nameLastCharachterPosition);
     return filename;
 }
+
+isObject(object1){
+    let array = true;
+    let keyList = Object.keys(object1);
+    /*console.log(keyList);*/
+    //controlliamo se è una variabile normale(quindi senza length)
+    if (keyList.length != 0) {
+        //adesso controlliamo se è una string perchè ogni riferimento coincide con i numeri da 0 a n
+        for (let i = 0; i < keyList.length; i++) {
+            if (i != keyList[i]) {
+                array = false;
+            }
+        }
+        //se non abbiamo trovato neanche un caso diverso, è una stringa. altrimenti un oggetto.
+        if (array) return false;
+        else return true;
+    } else return false;
+}

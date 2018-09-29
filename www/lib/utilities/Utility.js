@@ -7,20 +7,20 @@ function findFileNameFromPath(path) {
     return filename;
 }
 
-function isObject(object1){
-    let array = true;
-    let keyList = Object.keys(object1);
-    /*console.log(keyList);*/
-    //controlliamo se è una variabile normale(quindi senza length)
-    if (keyList.length != 0) {
-        //adesso controlliamo se è una string perchè ogni riferimento coincide con i numeri da 0 a n
-        for (let i = 0; i < keyList.length; i++) {
-            if (i != keyList[i]) {
-                array = false;
+function scrapeComplexObjKey(obj, params, searchKey, callback) {
+    if (Array.isArray(obj)) {
+        for (var i = 0; i < obj.length; i++) {
+            scrapeComplexObjKey(obj[i], params, searchKey, callback);
+        }
+    }
+    else if (obj !== null && typeof obj === 'object') {
+        if (searchKey in obj) {
+            callback(obj, params);
+        }
+        else {
+            for (var prop in obj) {
+                scrapeComplexObjKey(obj[prop], params, searchKey, callback);
             }
         }
-        //se non abbiamo trovato neanche un caso diverso, è una stringa. altrimenti un oggetto.
-        if (array) return false;
-        else return true;
-    } else return false;
+    }
 }

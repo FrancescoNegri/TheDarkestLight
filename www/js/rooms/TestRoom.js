@@ -31,15 +31,15 @@ class TestRoom extends Room {
 
         this.cameras.main.startFollow(this.debugger);
 
-        var light = this.lights.addLight(0, 0, 250).setScrollFactor(0, 0).setIntensity(.5);
+        this.light = this.lights.addLight(0, 0, 250).setScrollFactor(0, 0).setIntensity(.5);
 
         this.lights.enable();
 
-        this.input.on('pointermove', function (pointer) {
+        /*this.input.on('pointermove', function (pointer) {
 
-            light.setPosition(pointer.x, pointer.y);
+            this.light.setPosition(pointer.x, pointer.y);
     
-        });
+        });*/
     }
 
     update() {
@@ -58,5 +58,7 @@ class TestRoom extends Room {
         else if (this.cursors.down.isDown) {
             this.debugger.body.setVelocityY(300);
         }
+
+        this.light.setPosition(this.debugger.x, this.debugger.y);
     }
 }

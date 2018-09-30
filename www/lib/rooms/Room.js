@@ -9,6 +9,14 @@ class Room extends Phaser.Scene {
     preload() {
 
         this.scrapeAssets();
+        this.assets.array.forEach(obj => {
+            if ('nPath' in obj) {
+                this.load[obj.type](obj.key, [obj.path, obj.nPath]);
+            }
+            else {
+                this.load[obj.type](obj.key, obj.path);
+            }
+        });
 
         //Loading Border Camera Masks
         this.load.image('top-mask-camera', 'img/Masks/topMaskCamera.png');
@@ -29,9 +37,9 @@ class Room extends Phaser.Scene {
     }
 
     createRoom() {
-        this.map = this.make.tilemap({ key: 'map', tileWidth: TILE_SIZE, tileHeight: TILE_SIZE });
-        this.layers.backgroundLayer = this.map.createDynamicLayer('Background', this.map.addTilesetImage('MANSION_INTERIOR_BACKGROUND_2'), 0, 0);
-        this.layers.wallsLayer = this.map.createDynamicLayer('Walls', this.map.addTilesetImage('MANSION_INTERIOR_WALLS_2'), 0, 0);
+        this.map = this.make.tilemap({ key: findFileNameFromPath(this.assets.raw.tilemapTiledJSON.path), tileWidth: TILE_SIZE, tileHeight: TILE_SIZE });
+        this.layers.backgroundLayer = this.map.createDynamicLayer('Background', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.background.path)), 0, 0).setPipeline('Light2D');
+        this.layers.wallsLayer = this.map.createDynamicLayer('Walls', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.path)), 0, 0);
     }
 
     setCameraViewport() {
@@ -51,7 +59,7 @@ class Room extends Phaser.Scene {
         this.add.sprite(this.cameras.main.width - TILE_SIZE, 0, 'right-mask-camera').setScrollFactor(0).setOrigin(0, 0);
         this.add.sprite(0, this.cameras.main.height - TILE_SIZE, 'bottom-mask-camera').setScrollFactor(0).setOrigin(0, 0);
     }
-    
+
     scrapeAssets() {
         for (var type in this.assets.raw) {
             scrapeComplexObjKey(
@@ -65,6 +73,5 @@ class Room extends Phaser.Scene {
                 }
             );
         }
-        console.log(this.assets.array);
     }
 }

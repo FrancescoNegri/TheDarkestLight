@@ -7,7 +7,6 @@ class Room extends Phaser.Scene {
     }
 
     preload() {
-
         this.scrapeAssets();
         this.assets.array.forEach(obj => {
             if ('nPath' in obj) {
@@ -75,3 +74,8 @@ class Room extends Phaser.Scene {
         }
     }
 }
+
+
+
+
+

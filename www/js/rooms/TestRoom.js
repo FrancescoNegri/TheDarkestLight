@@ -47,11 +47,11 @@ class TestRoom extends Room {
 
         if (this.cursors.left.isDown) {
             this.debugger.body.setVelocityX(-300);
-            this.light2.setIntensity(this.light2.intensity - .5);
+            this.light2.setIntensity(this.light2.intensity - .05);
         }
         else if (this.cursors.right.isDown) {
             this.debugger.body.setVelocityX(300);
-            this.light2.setIntensity(this.light2.intensity + .5);
+            this.light2.setIntensity(this.light2.intensity + .05);
         }
 
         if (this.cursors.up.isDown) {

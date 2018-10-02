@@ -59,7 +59,7 @@ class Room extends Phaser.Scene {
         this.map = this.make.tilemap({ key: findFileNameFromPath(this.assets.raw.tilemapTiledJSON.path), tileWidth: TILE_SIZE, tileHeight: TILE_SIZE });
         this.layers.backgroundLayer = this.map.createDynamicLayer('Background', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.background.path)), 0, 0).setPipeline('Light2D');
         this.layers.wallsLayer = this.map.createDynamicLayer('Walls', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.path)), 0, 0);
-        this.layers.wallsMaskLayer = this.map.createDynamicLayer('WallsMask', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.bPath)), 0, 0).setAlpha(.25);
+        this.layers.wallsMaskLayer = this.map.createDynamicLayer('WallsMask', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.bPath)), 0, 0);
     }
 
     setCameraViewport() {
@@ -86,7 +86,7 @@ class Room extends Phaser.Scene {
     }
 
     updateMasksByLightDiffusion() {
-
+        this.layers.wallsMaskLayer.setAlpha(.1);
     }
 }
 

@@ -24,6 +24,18 @@
          "width":18,
          "x":0,
          "y":0
+        }, 
+        {
+         "data":"IwAAACMAAAAjAAAAIwAAACMAAAAjAAAAIwAAACMAAAAjAAAAIwAAACMAAAAjAAAAIwAAACMAAAAjAAAAIwAAACMAAAAjAAAAJgAAACgAAAAnAAAAKAAAACgAAAAoAAAAJwAAACgAAAAoAAAAKAAAACcAAAAoAAAAKAAAACgAAAAnAAAAKAAAACgAAAAqAAAAKwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAMAAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAA",
+         "encoding":"base64",
+         "height":6,
+         "name":"WallsMask",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":false,
+         "width":18,
+         "x":0,
+         "y":0
         }],
  "nextobjectid":1,
  "orientation":"orthogonal",
@@ -52,6 +64,19 @@
          "imagewidth":240,
          "margin":0,
          "name":"MANSION_INTERIOR_WALLS_2",
+         "spacing":0,
+         "tilecount":20,
+         "tileheight":48,
+         "tilewidth":48
+        }, 
+        {
+         "columns":5,
+         "firstgid":33,
+         "image":"..\/MANSION_INTERIOR_WALLS_2_b.png",
+         "imageheight":192,
+         "imagewidth":240,
+         "margin":0,
+         "name":"MANSION_INTERIOR_WALLS_2_b",
          "spacing":0,
          "tilecount":20,
          "tileheight":48,

@@ -15,7 +15,7 @@ document.addEventListener('deviceready', function () {
             default: 'arcade',
             arcade: {
                 debug: false,
-                gravity: { y: 0, x: 1500 }
+                gravity: { y: 0, x: 0 }
             }
         },
         backgroundColor: '#000000',

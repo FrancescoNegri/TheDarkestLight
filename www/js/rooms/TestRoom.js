@@ -7,7 +7,7 @@ class TestRoom extends Room {
                 image: {
                     tiles: {
                         background: { path: 'img/MANSION_INTERIOR_BACKGROUND_2.png', nPath: 'img/MANSION_INTERIOR_BACKGROUND_2_n.png' },
-                        walls: { path: 'img/MANSION_INTERIOR_WALLS_2.png', nPath: 'img/MANSION_INTERIOR_WALLS_2_n.png' }
+                        walls: { path: 'img/MANSION_INTERIOR_WALLS_2.png', bPath: 'img/MANSION_INTERIOR_WALLS_2_b.png' }
                     }
                 },
                 tilemapTiledJSON:
@@ -31,9 +31,8 @@ class TestRoom extends Room {
 
         this.cameras.main.startFollow(this.debugger);
 
-        this.light = this.lights.addLight(0, 0, 250).setScrollFactor(0, 0).setIntensity(.5);
-
-        this.lights.enable();
+        this.light1 = this.lights.addLight(20, -30, 250).setIntensity(2);
+        this.light2 = this.lights.addLight(200, -30, 30000).setIntensity(2);
 
         /*this.input.on('pointermove', function (pointer) {
 
@@ -43,22 +42,25 @@ class TestRoom extends Room {
     }
 
     update() {
+        super.update();
         this.debugger.body.setVelocity(0);
 
         if (this.cursors.left.isDown) {
             this.debugger.body.setVelocityX(-300);
+            this.light2.setIntensity(this.light2.intensity - .5);
         }
         else if (this.cursors.right.isDown) {
             this.debugger.body.setVelocityX(300);
+            this.light2.setIntensity(this.light2.intensity + .5);
         }
 
         if (this.cursors.up.isDown) {
             this.debugger.body.setVelocityY(-300);
+            this.lights.removeLight(this.light2);
         }
         else if (this.cursors.down.isDown) {
             this.debugger.body.setVelocityY(300);
+            this.lights.removeLight(this.light1);
         }
-
-        this.light.setPosition(this.debugger.x, this.debugger.y);
     }
 }

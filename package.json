@@ -10,9 +10,9 @@
     "author": "Apache Cordova Team",
     "license": "Apache-2.0",
     "dependencies": {
-        "browser-sync": "^2.24.7",
+        "browser-sync": "^2.26.0",
         "cheerio": "^0.22.0",
-        "cordova": "^8.1.0",
+        "cordova": "^8.1.2",
         "cordova-android": "^7.1.1",
         "cordova-browser": "^5.0.4",
         "cordova-plugin-browsersync": "^1.1.0",

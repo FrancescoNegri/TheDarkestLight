@@ -27,7 +27,7 @@ class Room extends Phaser.Scene {
         this.load.image('left-border-mask-camera', 'img/Masks/leftMaskCamera.png');
         this.load.image('right-border-mask-camera', 'img/Masks/rightMaskCamera.png');
     }
-
+    
     scrapeAssets() {
         for (var type in this.assets.raw) {
             scrapeComplexObjKey(
@@ -83,10 +83,37 @@ class Room extends Phaser.Scene {
 
     update() {
         this.updateMasksByLightDiffusion();
+        this.lightsContribute = this.calculateLightsContribuite();
+        //console.log(this.lightsContribute);
     }
 
     updateMasksByLightDiffusion() {
-        this.layers.wallsMaskLayer.setAlpha(.1);
+        //Da rivedere tutto in seguito
+        var averageDiffusedLight = 0;
+        var tot_intensity = 0;
+        this.lights.lights.forEach(light => {
+            tot_intensity += light.intensity;
+        });
+        averageDiffusedLight =  Math.floor((tot_intensity * 10000 / this.layers.wallsLayer.width / TILE_SIZE) * 100) / 100 + 0.3;
+        console.log(averageDiffusedLight, 1 - averageDiffusedLight);
+        this.layers.wallsMaskLayer.setAlpha(1 - averageDiffusedLight);
+    }
+
+    calculateLightsContribuite() {
+        //da ripensare per il lightSourcesManager
+        var numerator = 0;
+        var denominator = 0;
+        
+        var sommatoria = 0;
+        this.lights.lights.forEach(light => {
+            numerator += light.intensity * 1 / Math.abs(light.x - this.debugger.x);
+            denominator += 1 / Math.abs(light.x - this.debugger.x)^1.1;
+
+            sommatoria += light.intensity / (Math.abs(light.x - this.debugger.x)^2);
+        });
+
+        //return (numerator / denominator) * 100;
+        return Math.floor(sommatoria * 1000)/1000;
     }
 }
 

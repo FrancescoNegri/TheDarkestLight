@@ -31,8 +31,13 @@ class TestRoom extends Room {
 
         this.cameras.main.startFollow(this.debugger);
 
-        this.light1 = this.lights.addLight(20, -30, 250).setIntensity(2);
-        this.light2 = this.lights.addLight(200, -30, 30000).setIntensity(2);
+        //this.light1 = this.lights.addLight(20, -30, 250).setIntensity(2);
+        //this.graphicLight = this.lights.addLight(200, 40, 60).setIntensity(1.5);
+        this.diffusedLight = this.lights.addLight(200, 40, 4000).setIntensity(1);
+        this.diffusedLight3 = this.lights.addLight(600, 40, 4000).setIntensity(2);
+
+        this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
         /*this.input.on('pointermove', function (pointer) {
 
@@ -47,20 +52,26 @@ class TestRoom extends Room {
 
         if (this.cursors.left.isDown) {
             this.debugger.body.setVelocityX(-300);
-            this.light2.setIntensity(this.light2.intensity - .05);
         }
         else if (this.cursors.right.isDown) {
             this.debugger.body.setVelocityX(300);
-            this.light2.setIntensity(this.light2.intensity + .05);
         }
 
         if (this.cursors.up.isDown) {
             this.debugger.body.setVelocityY(-300);
-            this.lights.removeLight(this.light2);
         }
         else if (this.cursors.down.isDown) {
             this.debugger.body.setVelocityY(300);
-            this.lights.removeLight(this.light1);
         }
+
+        if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
+            this.lights.removeLight(this.diffusedLight);
+            this.diffusedLight2 = this.lights.addLight(200, 40, 4000).setIntensity(2);
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
+            this.lights.removeLight(this.diffusedLight2);
+            this.diffusedLight = this.lights.addLight(200, 40, 4000).setIntensity(1);
+        }
+
     }
 }

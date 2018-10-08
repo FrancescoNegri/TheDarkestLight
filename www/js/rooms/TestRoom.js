@@ -8,6 +8,9 @@ class TestRoom extends Room {
                     tiles: {
                         background: { path: 'img/MANSION_INTERIOR_BACKGROUND_2.png', nPath: 'img/MANSION_INTERIOR_BACKGROUND_2_n.png' },
                         walls: { path: 'img/MANSION_INTERIOR_WALLS_2.png', bPath: 'img/MANSION_INTERIOR_WALLS_2_b.png' }
+                    },
+                    lightSources: {
+                        testLamp: { path: 'img/CeilingLamp.png', nPath: 'img/CeilingLamp_n.png' }
                     }
                 },
                 tilemapTiledJSON:
@@ -31,13 +34,10 @@ class TestRoom extends Room {
 
         this.cameras.main.startFollow(this.debugger);
 
-        //this.light1 = this.lights.addLight(20, -30, 250).setIntensity(2);
-        //this.graphicLight = this.lights.addLight(200, 40, 60).setIntensity(1.5);
-        this.diffusedLight = this.lights.addLight(200, 40, 4000).setIntensity(1);
-        this.diffusedLight3 = this.lights.addLight(600, 40, 4000).setIntensity(2);
+        this.lightSource.add(new LightSource(this, 200, 96, 'CeilingLamp', { intensity: .5, radius: 150 }, { intensity: .8, radius: 4000 }, { x: 0, y: 20 }));
 
-        this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        //this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        //this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
         /*this.input.on('pointermove', function (pointer) {
 
@@ -64,6 +64,7 @@ class TestRoom extends Room {
             this.debugger.body.setVelocityY(300);
         }
 
+        /*
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
             this.lights.removeLight(this.diffusedLight);
             this.diffusedLight2 = this.lights.addLight(200, 40, 4000).setIntensity(2);
@@ -72,6 +73,6 @@ class TestRoom extends Room {
             this.lights.removeLight(this.diffusedLight2);
             this.diffusedLight = this.lights.addLight(200, 40, 4000).setIntensity(1);
         }
-
+        */
     }
 }

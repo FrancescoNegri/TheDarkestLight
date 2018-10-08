@@ -45,6 +45,7 @@ class Room extends Phaser.Scene {
 
     create() {
         this.lights.enable();
+        this.lightSource.boot();
         this.setCameraViewport();
         this.createRoom();
         this.applyBorderMasks();
@@ -88,14 +89,14 @@ class Room extends Phaser.Scene {
     }
 
     updateMasksByLightDiffusion() {
-        //Da rivedere tutto in seguito
+        //Da rivedere tutto in seguito => cambiare dal lightManager al lightSourceManager !!!
         var averageDiffusedLight = 0;
         var tot_intensity = 0;
         this.lights.lights.forEach(light => {
             tot_intensity += light.intensity;
         });
         averageDiffusedLight =  Math.floor((tot_intensity * 10000 / this.layers.wallsLayer.width / TILE_SIZE) * 100) / 100 + 0.3;
-        console.log(averageDiffusedLight, 1 - averageDiffusedLight);
+        //console.log(averageDiffusedLight, 1 - averageDiffusedLight);
         this.layers.wallsMaskLayer.setAlpha(1 - averageDiffusedLight);
     }
 

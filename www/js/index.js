@@ -25,7 +25,8 @@ document.addEventListener('deviceready', function () {
                 { key: 'RoomManager', plugin: RoomManager, start: false, mapping: 'room' }
             ],
             scene: [
-                { key: 'LightSourceManager', plugin: LightSourceManager, mapping: 'lightSource'}
+                { key: 'LightSourceManager', plugin: LightSourceManager, mapping: 'lightSource'},
+                { key: 'LayerManager', plugin: LayerManager, mapping: 'layers'}
             ]
         }
     };

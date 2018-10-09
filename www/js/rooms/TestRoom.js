@@ -22,12 +22,12 @@ class TestRoom extends Room {
     preload() {
         super.preload();
 
-        this.load.image('debugger', 'img/debugger.png');
+        this.load.image('debugger', ['img/debugger.png', 'img/debugger_n.png']);
     }
 
     create() {
         super.create();
-        this.debugger = this.physics.add.sprite(100, 100, 'debugger');
+        this.debugger = this.physics.add.sprite(100, 100, 'debugger').setPipeline('Light2D');
         this.debugger.setCollideWorldBounds(true);
 
         this.cursors = this.input.keyboard.createCursorKeys();

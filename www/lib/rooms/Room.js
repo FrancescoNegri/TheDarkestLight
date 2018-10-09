@@ -3,7 +3,6 @@ class Room extends Phaser.Scene {
         super(sceneKey);
 
         this.assets = { raw: rawAssets, array: [] };
-        this.layers = {};
     }
 
     preload() {
@@ -45,7 +44,7 @@ class Room extends Phaser.Scene {
 
     create() {
         this.lights.enable(); //Boot Phaser's LightManager
-        this.lightSource.boot(); //Boot Custom LightSourceManager
+        
         this.setCameraViewport();
         this.createRoom();
         this.applyBorderMasks();
@@ -75,7 +74,6 @@ class Room extends Phaser.Scene {
     }
 
     applyBorderMasks() {
-        this.layers.borderMasksLayer = this.add.group();
         this.layers.borderMasksLayer.create(0, 0, 'top-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);
         this.layers.borderMasksLayer.create(0, 0, 'left-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);
         this.layers.borderMasksLayer.create(this.cameras.main.width - TILE_SIZE, 0, 'right-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);

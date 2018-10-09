@@ -44,8 +44,8 @@ class Room extends Phaser.Scene {
     }
 
     create() {
-        this.lights.enable();
-        this.lightSource.boot();
+        this.lights.enable(); //Boot Phaser's LightManager
+        this.lightSource.boot(); //Boot Custom LightSourceManager
         this.setCameraViewport();
         this.createRoom();
         this.applyBorderMasks();
@@ -84,38 +84,16 @@ class Room extends Phaser.Scene {
 
     update() {
         this.updateMasksByLightDiffusion();
-        this.lightsContribute = this.calculateLightsContribuite();
+        this.lightsContribute = this.lightSource.calculateLightsContribuitePoint(this.debugger);
         //console.log(this.lightsContribute);
     }
 
     updateMasksByLightDiffusion() {
-        //Da rivedere tutto in seguito => cambiare dal lightManager al lightSourceManager !!!
-        var averageDiffusedLight = 0;
-        var tot_intensity = 0;
-        this.lights.lights.forEach(light => {
-            tot_intensity += light.intensity;
-        });
-        averageDiffusedLight =  Math.floor((tot_intensity * 10000 / this.layers.wallsLayer.width / TILE_SIZE) * 100) / 100 + 0.3;
-        //console.log(averageDiffusedLight, 1 - averageDiffusedLight);
-        this.layers.wallsMaskLayer.setAlpha(1 - averageDiffusedLight);
+        var averageLightsContribute = this.lightSource.calculateAverageLightsContribute();
+        this.layers.wallsMaskLayer.setAlpha(1 - averageLightsContribute);
+        //console.log(averageLightsContribute);
     }
 
-    calculateLightsContribuite() {
-        //da ripensare per il lightSourcesManager
-        var numerator = 0;
-        var denominator = 0;
-        
-        var sommatoria = 0;
-        this.lights.lights.forEach(light => {
-            numerator += light.intensity * 1 / Math.abs(light.x - this.debugger.x);
-            denominator += 1 / Math.abs(light.x - this.debugger.x)^1.1;
-
-            sommatoria += light.intensity / (Math.abs(light.x - this.debugger.x)^2);
-        });
-
-        //return (numerator / denominator) * 100;
-        return Math.floor(sommatoria * 1000)/1000;
-    }
 }
 
 

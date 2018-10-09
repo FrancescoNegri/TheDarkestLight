@@ -35,6 +35,8 @@ class TestRoom extends Room {
         this.cameras.main.startFollow(this.debugger);
 
         this.lightSource.add(new LightSource(this, 200, 96, 'CeilingLamp', { intensity: .5, radius: 150 }, { intensity: .8, radius: 4000 }, { x: 0, y: 20 }));
+        this.lightSource.add(new LightSource(this, 600, 96, 'CeilingLamp', { intensity: .5, radius: 150 }, { intensity: .8, radius: 4000 }, { x: 0, y: 20 }));
+
 
         //this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         //this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);

@@ -30,18 +30,12 @@ class TestRoom extends Room {
         this.debugger = this.physics.add.sprite(100, 100, 'debugger').setPipeline('Light2D');
         this.debugger.setCollideWorldBounds(true);
         this.layers.playerLayer.add(this.debugger);
-
-        this.cursors = this.input.keyboard.createCursorKeys();
-
         this.cameras.main.startFollow(this.debugger);
 
+        this.cursors = this.input.keyboard.createCursorKeys();
+        
         this.layers.cielingObjectsLayer.add(this.lightSource.add(new LightSource(this, 200, 96, 'CeilingLamp', { intensity: .5, radius: 150 }, { intensity: .8, radius: 4000 }, { x: 0, y: 20 })));
         this.layers.cielingObjectsLayer.add(this.lightSource.add(new LightSource(this, 600, 96, 'CeilingLamp', { intensity: .5, radius: 150 }, { intensity: .8, radius: 4000 }, { x: 0, y: 20 })));
-
-        //var l1 = this.lightSource.add(new LightSource(this, 200, 96, 'CeilingLamp', { intensity: .5, radius: 150 }, { intensity: .8, radius: 4000 }, { x: 0, y: 20 }));
-        //var l2 = this.lightSource.add(new LightSource(this, 600, 96, 'CeilingLamp', { intensity: .5, radius: 150 }, { intensity: .8, radius: 4000 }, { x: 0, y: 20 }));
-        //this.layers.cielingObjectsLayer.add(l1);
-        //this.layers.cielingObjectsLayer.add(l2);
 
         this.layers.setLayersDepth();
 

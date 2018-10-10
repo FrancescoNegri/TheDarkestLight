@@ -1,6 +1,6 @@
-class LightSource extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, graphicLightConfig, diffusedLightConfig, offset) {
-        super(scene, x, y, texture);
+class LightSource extends TDLSprite {
+    constructor(room, x, y, texture, graphicLightConfig, diffusedLightConfig, offset) {
+        super(room, x, y, texture, false);
 
         this.config = {
             graphicLight : graphicLightConfig,
@@ -13,9 +13,5 @@ class LightSource extends Phaser.GameObjects.Sprite {
 
         this.graphicLight = this.scene.lights.addLight(x + this.config.offset.x, y + this.config.offset.y, this.config.graphicLight.radius).setIntensity(this.config.graphicLight.intensity);
         this.scene.lightSource.graphicLights.push(this.graphicLight);
-    }
-
-    create() {
-        
     }
 }

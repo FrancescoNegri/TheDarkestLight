@@ -21,14 +21,14 @@ class TestRoom extends Room {
 
     preload() {
         super.preload();
-
+        
         this.load.image('debugger', ['img/debugger.png', 'img/debugger_n.png']);
     }
 
     create() {
         super.create();
-                
-        this.debugger = new Sprite(this, 100, 100, 'debugger').setPipeline('Light2D');
+
+        this.debugger = new TDLSprite(this, 100, 100, 'debugger').setPipeline('Light2D');
         this.debugger.setCollideWorldBounds(true);
         this.layers.playerLayer.add(this.debugger);
         this.cameras.main.startFollow(this.debugger);

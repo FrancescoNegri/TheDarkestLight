@@ -6,6 +6,7 @@ document.addEventListener('deviceready', function () {
     var config = {
         type: Phaser.WEBGL,
         autoResize: false,
+        maxLights: 20,
         zoom: SCREEN_PROPS.calculatedZoom,
         parent: 'game',
         width: SCREEN_PROPS.calculatedWidth,

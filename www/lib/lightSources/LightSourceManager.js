@@ -15,6 +15,8 @@ class LightSourceManager extends Phaser.Plugins.ScenePlugin {
         this.lightSources.getChildren().forEach(lightSource => {
             lightSource.setPipeline('Light2D');
         });
+
+        return source;
     }
 
     calculateLightsContribuitePoint(target) {

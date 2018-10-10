@@ -1,4 +1,4 @@
-class LightSource extends TDLSprite {
+class LightSource extends WorldObject {
     constructor(room, x, y, texture, graphicLightConfig, diffusedLightConfig, offset) {
         super(room, x, y, texture, false);
 
@@ -13,5 +13,7 @@ class LightSource extends TDLSprite {
 
         this.graphicLight = this.scene.lights.addLight(x + this.config.offset.x, y + this.config.offset.y, this.config.graphicLight.radius).setIntensity(this.config.graphicLight.intensity);
         this.scene.lightSource.graphicLights.push(this.graphicLight);
+    
+        this.room.lightSource.add(this);
     }
 }

@@ -4,7 +4,6 @@ class Boot extends Phaser.Scene {
     }
 
     create() {
-        console.log('Boot created');
         this.configPlugins();
 
         this.room.add('TestRoom', TestRoom, true);

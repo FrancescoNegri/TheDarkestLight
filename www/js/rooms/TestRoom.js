@@ -35,8 +35,8 @@ class TestRoom extends Room {
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.layers.cielingObjectsLayer.add(this.lightSource.add(new LightSource(this, 200, 96, 'CeilingLamp', { intensity: .5, radius: 150 }, { intensity: .8, radius: 4000 }, { x: 0, y: 20 })));
-        this.layers.cielingObjectsLayer.add(this.lightSource.add(new LightSource(this, 600, 96, 'CeilingLamp', { intensity: .5, radius: 150 }, { intensity: .8, radius: 4000 }, { x: 0, y: 20 })));
+        this.layers.cielingObjectsLayer.add(new TestLamp(this, 200, 96));
+        this.layers.cielingObjectsLayer.add(new TestLamp(this, 600, 96));
 
         this.layers.setLayersDepth();
 

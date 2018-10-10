@@ -6,7 +6,7 @@ class RoomManager extends Phaser.Plugins.BasePlugin {
     }
 
     add(key, scene, autoStart) {
-        console.log('Adding Room...');
+        console.log('Added room:', key);
         this.scene.add(key, scene, autoStart);
     }
 }

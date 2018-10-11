@@ -46,7 +46,6 @@ class TestRoom extends Room {
 
     update() {
         super.update();
-        this.debugger.update();
 
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
             this.lamp1.turnOn();

@@ -34,6 +34,9 @@ class TestRoom extends Room {
         this.lamp1 = new TestLamp(this, 200, 96);
         this.lamp2 = new TestLamp(this, 600, 96);
 
+        //this.lamp1.startFlickering(10, 400);
+        //this.lamp2.startFlickering(10, 400);
+
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
@@ -48,10 +51,10 @@ class TestRoom extends Room {
         super.update();
 
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
-            this.lamp1.turnOn();
+            this.lamp2.stopFlickering();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
-            this.lamp1.turnOff();
+            this.lamp2.startFlickering(10, 400);
         }
     }
 }

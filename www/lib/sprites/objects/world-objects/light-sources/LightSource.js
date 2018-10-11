@@ -12,6 +12,7 @@ class LightSource extends WorldObject {
         if (isOn) {
             this.turnOn();
         }
+        this.isFlickering = false;
 
         this.room.lightSource.add(this);
     }
@@ -43,6 +44,38 @@ class LightSource extends WorldObject {
             }
 
             this.isOn = false;
+        }
+    }
+
+    startFlickering(minTime, maxTime) {
+        if (!this.isFlickering) {
+            this.isFlickering = true;
+            var minTime = minTime;
+            var maxTime = maxTime;
+
+            var setTimer = (_this) => {
+                _this.room.time.addEvent({
+                    delay: Math.floor(Math.random() * maxTime) + minTime,
+                    callback: () => {
+                        if (this.isFlickering) {
+                            if (_this.isOn) _this.turnOff();
+                            else if (!_this.isOn) _this.turnOn();
+                            setTimer(_this);
+                        }
+                    },
+                    callbackScope: _this,
+                    repeat: 0
+                })
+            }
+            setTimer(this);
+        }
+    }
+
+    stopFlickering(mode = 'on') {
+        if (this.isFlickering) {
+            this.isFlickering = false;
+            if (mode == 'on') this.turnOn();
+            else if (mode == 'off') this.turnOff();
         }
     }
 }

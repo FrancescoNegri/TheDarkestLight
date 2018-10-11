@@ -6,15 +6,15 @@ class TestRoom extends Room {
             {
                 image: {
                     tiles: {
-                        background: { path: 'img/MANSION_INTERIOR_BACKGROUND_2.png', nPath: 'img/MANSION_INTERIOR_BACKGROUND_2_n.png' },
-                        walls: { path: 'img/MANSION_INTERIOR_WALLS_2.png', bPath: 'img/MANSION_INTERIOR_WALLS_2_b.png' }
+                        background: { path: 'assets/MANSION_INTERIOR_BACKGROUND_2.png', nPath: 'assets/MANSION_INTERIOR_BACKGROUND_2_n.png' },
+                        walls: { path: 'assets/MANSION_INTERIOR_WALLS_2.png', bPath: 'assets/MANSION_INTERIOR_WALLS_2_b.png' }
                     },
                     lightSources: {
-                        testLamp: { path: 'img/CeilingLamp.png', nPath: 'img/CeilingLamp_n.png' }
+                        testLamp: { path: 'assets/CeilingLamp.png', nPath: 'assets/CeilingLamp_n.png' }
                     }
                 },
                 tilemapTiledJSON:
-                    { path: 'img/Rooms/TestRoom.json' }
+                    { path: 'assets/Rooms/TestRoom.json' }
             }
         );
     }
@@ -22,7 +22,7 @@ class TestRoom extends Room {
     preload() {
         super.preload();
         
-        this.load.image('debugger', ['img/debugger.png', 'img/debugger_n.png']);
+        this.load.image('debugger', ['assets/debugger.png', 'assets/debugger_n.png']);
     }
 
     create() {

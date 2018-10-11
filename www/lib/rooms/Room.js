@@ -21,10 +21,10 @@ class Room extends Phaser.Scene {
         });
 
         //Loading Border Camera Masks
-        this.load.image('top-border-mask-camera', 'img/Masks/topMaskCamera.png');
-        this.load.image('bottom-border-mask-camera', 'img/Masks/bottomMaskCamera.png');
-        this.load.image('left-border-mask-camera', 'img/Masks/leftMaskCamera.png');
-        this.load.image('right-border-mask-camera', 'img/Masks/rightMaskCamera.png');
+        this.load.image('top-border-mask-camera', 'assets/Masks/topMaskCamera.png');
+        this.load.image('bottom-border-mask-camera', 'assets/Masks/bottomMaskCamera.png');
+        this.load.image('left-border-mask-camera', 'assets/Masks/leftMaskCamera.png');
+        this.load.image('right-border-mask-camera', 'assets/Masks/rightMaskCamera.png');
     }
     
     scrapeAssets() {

@@ -28,14 +28,11 @@ class TestRoom extends Room {
     create() {
         super.create();
 
-        this.debugger = new TDLSprite(this, 100, 100, 'debugger', 'playerLayer').setPipeline('Light2D'); //Pensare se inserire il layer direttamente qui (forse è meglio!)
-        this.debugger.setCollideWorldBounds(true);
+        this.debugger = new Debugger(this, 100, 100);
         this.cameras.main.startFollow(this.debugger);
 
-        this.cursors = this.input.keyboard.createCursorKeys();
-
-        new TestLamp(this, 200, 96);
-        this.lamp1 = new TestLamp(this, 600, 96);
+        this.lamp1 = new TestLamp(this, 200, 96);
+        this.lamp2 = new TestLamp(this, 600, 96);
 
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
@@ -49,23 +46,8 @@ class TestRoom extends Room {
 
     update() {
         super.update();
-        this.debugger.body.setVelocity(0);
+        this.debugger.update();
 
-        if (this.cursors.left.isDown) {
-            this.debugger.body.setVelocityX(-300);
-        }
-        else if (this.cursors.right.isDown) {
-            this.debugger.body.setVelocityX(300);
-        }
-
-        if (this.cursors.up.isDown) {
-            this.debugger.body.setVelocityY(-300);
-        }
-        else if (this.cursors.down.isDown) {
-            this.debugger.body.setVelocityY(300);
-        }
-
-        
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
             this.lamp1.turnOn();
         }

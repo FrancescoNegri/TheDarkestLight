@@ -11,5 +11,15 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
             }
             else console.warn('ALERT: layer not found for object', this);
         }
+
+        this.create();
+    }
+
+    create() {
+        console.log('Created:', this);
+    }
+
+    update() {
+
     }
 }

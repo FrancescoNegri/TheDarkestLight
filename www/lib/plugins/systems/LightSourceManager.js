@@ -1,13 +1,13 @@
-class LightSourceManager extends Phaser.Plugins.ScenePlugin {
-    constructor(scene, pluginManager) {
-        super(scene, pluginManager);
+class LightSourceManager extends TDLRoomPlugin {
+    constructor(room, pluginManager) {
+        super(room, pluginManager);
 
         this.graphicLights = [];
         this.diffusedLights = [];
     }
 
     boot() {
-        this.lightSources = this.scene.add.group();
+        this.lightSources = this.room.add.group();
     }
 
     add(source) {
@@ -33,7 +33,7 @@ class LightSourceManager extends Phaser.Plugins.ScenePlugin {
         this.diffusedLights.forEach(light => {
             singleLightIntensityAccumulator += light.intensity;
         });
-        var averageLightsContribute = Math.floor((singleLightIntensityAccumulator * 10000 / this.scene.layers.wallsLayer.width / TILE_SIZE) * 100) / 100 + 0.3;
+        var averageLightsContribute = Math.floor((singleLightIntensityAccumulator * 10000 / this.room.layers.wallsLayer.width / TILE_SIZE) * 100) / 100 + 0.3;
         return averageLightsContribute;
     }
 }

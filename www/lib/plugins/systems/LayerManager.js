@@ -1,24 +1,24 @@
-class LayerManager extends Phaser.Plugins.ScenePlugin {
-    constructor(scene, pluginManager) {
-        super(scene, pluginManager);
+class LayerManager extends TDLRoomPlugin {
+    constructor(room, pluginManager) {
+        super(room, pluginManager);
         
         this.layerSize = 10;
         this.strartingDepth = 0;
     }
 
     boot() {
-        this.backgroundLayer = this.scene.add.group();
-        this.rearWallObjectsLayer = this.scene.add.group();
-        this.roomObjectsLayer = this.scene.add.group();
-        this.sideDoorsLayer = this.scene.add.group();
-        this.npcLayer = this.scene.add.group();
-        this.playerLayer = this.scene.add.group();
-        this.cielingObjectsLayer = this.scene.add.group();
-        this.wallsLayer = this.scene.add.group();
-        this.wallsMaskLayer = this.scene.add.group();
-        this.overallDarknessLayer = this.scene.add.group();
-        this.frontLayer = this.scene.add.group();
-        this.borderMasksLayer = this.scene.add.group();
+        this.backgroundLayer = this.room.add.group();
+        this.rearWallObjectsLayer = this.room.add.group();
+        this.roomObjectsLayer = this.room.add.group();
+        this.sideDoorsLayer = this.room.add.group();
+        this.npcLayer = this.room.add.group();
+        this.playerLayer = this.room.add.group();
+        this.cielingObjectsLayer = this.room.add.group();
+        this.wallsLayer = this.room.add.group();
+        this.wallsMaskLayer = this.room.add.group();
+        this.overallDarknessLayer = this.room.add.group();
+        this.frontLayer = this.room.add.group();
+        this.borderMasksLayer = this.room.add.group();
     }
 
     setLayersDepth() {

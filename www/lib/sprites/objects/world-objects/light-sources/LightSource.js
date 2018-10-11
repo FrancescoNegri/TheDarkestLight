@@ -1,6 +1,6 @@
 class LightSource extends WorldObject {
-    constructor(room, x, y, texture, graphicLightConfig, diffusedLightConfig, offset, isOn = true) {
-        super(room, x, y, texture, false);
+    constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, isOn = true) {
+        super(room, x, y, texture, layer, false);
 
         this.config = {
             graphicLight: graphicLightConfig,

@@ -28,18 +28,14 @@ class TestRoom extends Room {
     create() {
         super.create();
 
-        this.debugger = new TDLSprite(this, 100, 100, 'debugger').setPipeline('Light2D'); //Pensare se inserire il layer direttamente qui (forse è meglio!)
+        this.debugger = new TDLSprite(this, 100, 100, 'debugger', 'playerLayer').setPipeline('Light2D'); //Pensare se inserire il layer direttamente qui (forse è meglio!)
         this.debugger.setCollideWorldBounds(true);
-        this.layers.playerLayer.add(this.debugger); //Il gruppo restituisce il gruppo stesso, non il singolo elemento!!
         this.cameras.main.startFollow(this.debugger);
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.layers.cielingObjectsLayer.add(new TestLamp(this, 200, 96));
+        new TestLamp(this, 200, 96);
         this.lamp1 = new TestLamp(this, 600, 96);
-        this.layers.cielingObjectsLayer.add(this.lamp1);
-
-        this.layers.setLayersDepth();
 
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);

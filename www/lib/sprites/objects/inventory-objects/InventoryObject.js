@@ -1,5 +1,5 @@
 class InventoryObject extends TDLObject {
-    constructor(room, x, y, texture) {
-        super(room, x, y, texture, false);
+    constructor(room, x, y, texture, layer) {
+        super(room, x, y, texture, layer, false);
     }
 }

@@ -21,7 +21,6 @@
         "cordova-windows": "^6.0.1",
         "csp-parse": "0.0.2",
         "elementtree": "^0.1.7",
-        "glob": "^5.0.15",
         "npm": "^6.4.1",
         "plist": "^3.0.1",
         "q": "^1.5.1"
@@ -36,5 +35,8 @@
             "android",
             "windows"
         ]
+    },
+    "devDependencies": {
+        "glob": "^5.0.15"
     }
 }

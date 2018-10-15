@@ -23,7 +23,8 @@
         "elementtree": "^0.1.7",
         "npm": "^6.4.1",
         "plist": "^3.0.1",
-        "q": "^1.5.1"
+        "q": "^1.5.1",
+        "recursive-readdir": "^2.2.2"
     },
     "cordova": {
         "plugins": {

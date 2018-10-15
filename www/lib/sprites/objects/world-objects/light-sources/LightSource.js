@@ -7,15 +7,23 @@ class LightSource extends WorldObject {
             diffusedLight: diffusedLightConfig,
             offset: offset
         }
-        
+        this.behaviour = {
+            flickering: {
+                isRunning: false,
+                mode: 'hard',
+            },
+            trembling: {
+                isRunning: false,
+            }
+        }
         this.isOn = false;
         if (isOn) {
             this.turnOn();
         }
-        this.isFlickering = false;
-        this.isTrembling = false;
 
         this.room.lightSource.add(this);
+        this.component = new LightSourceBehaviourComponent(this, ['HardFlickering']);
+        //this.component.hardFlickeringBehavior.start(1,1);
     }
 
     turnOn() {
@@ -49,12 +57,18 @@ class LightSource extends WorldObject {
     }
 
     startFlickering(minTime, maxTime, mode = 'hard', minPercentageIntensity = 0.8, maxPercentageIntensity = 1) {
-        if (!this.isFlickering) {
-            if (this.isTrembling && mode== 'hard'){
-                this.isTrembling= false;
+        if (!this.behaviour.flickering.isRunning || this.behaviour.flickering.mode!=mode) {
+            if (this.behaviour.flickering.isRunning && this.behaviour.flickering.mode != mode) {
+                this.stopFlickering();
+            }
+
+            this.behaviour.flickering.mode = mode;
+
+            if (this.behaviour.trembling.isRunning && this.behaviour.flickering.mode == 'hard') {
                 this.stopTrembling();
             }
-            this.isFlickering = true;
+            console.log('start flickering...');
+            this.behaviour.flickering.isRunning = true;
             var minTime = minTime;
             var maxTime = maxTime;
             var mode = mode;
@@ -62,14 +76,15 @@ class LightSource extends WorldObject {
 
             switch (mode) {
                 case 'hard':
-                    setTimer = (context, callback) => {
+                    console.log('start hard flickering');
+                    setTimer = (context) => {
                         context.room.time.addEvent({
                             delay: Math.floor(Math.random() * (maxTime - minTime)) + minTime,
                             callback: () => {
-                                if (this.isFlickering) {
+                                if (this.behaviour.flickering.isRunning) {
                                     if (this.isOn) this.turnOff();
                                     else if (!this.isOn) this.turnOn();
-                                    setTimer(this, callback);
+                                    setTimer(this);
                                 }
                             },
                             callbackScope: context,
@@ -78,15 +93,16 @@ class LightSource extends WorldObject {
                     };
                     break;
                 case 'soft':
-                    setTimer = (context, callback) => {
+                    console.log('start soft flickering');
+                    setTimer = (context) => {
                         context.room.time.addEvent({
                             delay: Math.floor(Math.random() * (maxTime - minTime)) + minTime,
                             callback: () => {
-                                if (this.isFlickering) {
-                                    var newIntensityPercentage = Math.floor((minPercentageIntensity + Math.random() * (maxPercentageIntensity - minPercentageIntensity))  * 100 + 1) / 100;
+                                if (this.behaviour.flickering.isRunning) {
+                                    var newIntensityPercentage = Math.floor((minPercentageIntensity + Math.random() * (maxPercentageIntensity - minPercentageIntensity)) * 100 + 1) / 100;
                                     this.graphicLight.setIntensity(this.config.graphicLight.intensity * newIntensityPercentage);
                                     this.diffusedLight.setIntensity(this.config.diffusedLight.intensity * newIntensityPercentage);
-                                    setTimer(this, callback);
+                                    setTimer(this);
                                 }
                             },
                             callbackScope: context,
@@ -102,18 +118,23 @@ class LightSource extends WorldObject {
     }
 
     stopFlickering(finalState = 'on') {
-        if (this.isFlickering) {
-            this.isFlickering = false;
+        if (this.behaviour.flickering.isRunning) {
+            this.behaviour.flickering.isRunning = false;
             if (finalState == 'on') this.turnOn();
             else if (finalState == 'off') this.turnOff();
             this.graphicLight.setIntensity(this.config.graphicLight.intensity);
             this.diffusedLight.setIntensity(this.config.diffusedLight.intensity);
+            console.log('stop flickering');
         }
     }
 
     startTrembling(minTime, maxTime, xMinOscillation, xMaxOscillation, yMinOscillation = -1, yMaxOscillation = -1, movementOnXAxis = true, movementeOnYAxis = true) {
-        if (!this.isTrembling) {
-            this.isTrembling = true;
+        if (!this.behaviour.trembling.isRunning) {
+            console.log('start trembling');
+            this.behaviour.trembling.isRunning = true;
+            if (this.behaviour.flickering.isRunning && this.behaviour.flickering.mode == 'hard') {
+                this.stopFlickering();
+            }
             yMinOscillation = yMinOscillation < 0 ? xMinOscillation : yMinOscillation;
             yMaxOscillation = yMaxOscillation < 0 ? xMaxOscillation : yMaxOscillation;
             var config = {
@@ -130,7 +151,7 @@ class LightSource extends WorldObject {
                 context.room.time.addEvent({
                     delay: Math.floor(Math.random() * (maxTime - minTime)) + minTime,
                     callback: () => {
-                        if (this.isTrembling) {
+                        if (this.behaviour.trembling.isRunning) {
                             var xNewOffset = 0;
                             var yNewOffset = 0;
                             if (config.movementOnXAxis) {
@@ -154,8 +175,9 @@ class LightSource extends WorldObject {
     }
 
     stopTrembling(backToInitialPosition = true) {
-        if (this.isTrembling) {
-            this.isTrembling = false;
+        if (this.behaviour.trembling.isRunning) {
+            console.log('stop trembling');
+            this.behaviour.trembling.isRunning = false;
             if (backToInitialPosition) this.graphicLight.setPosition(this.x + this.config.offset.x, this.y + this.config.offset.y);
         }
     }

@@ -22,7 +22,7 @@ class LightSource extends WorldObject {
         }
 
         this.room.lightSource.add(this);
-        this.behaviour = new LightSourceBehaviourComponent(this);
+        this.behaviour = new LightSourceBehaviourComponent(this, ['HardFlickeringBehaviour']);
         //this.component.hardFlickeringBehavior.start(1,1);
     }
 

@@ -22,7 +22,7 @@ class LightSource extends WorldObject {
         }
 
         this.room.lightSource.add(this);
-        //this.behaviour = new LightSourceBehaviourComponent(this, ['HardFlickering']);
+        this.behaviour = new LightSourceBehaviourComponent(this);
         //this.component.hardFlickeringBehavior.start(1,1);
     }
 
@@ -57,7 +57,7 @@ class LightSource extends WorldObject {
     }
 
     startFlickering(minTime, maxTime, mode = 'hard', minPercentageIntensity = 0.8, maxPercentageIntensity = 1) {
-        if (!this.behaviour.flickering.isRunning || this.behaviour.flickering.mode!=mode) {
+        /*if (!this.behaviour.flickering.isRunning || this.behaviour.flickering.mode!=mode) {
             if (this.behaviour.flickering.isRunning && this.behaviour.flickering.mode != mode) {
                 this.stopFlickering();
             }
@@ -114,10 +114,12 @@ class LightSource extends WorldObject {
 
             console.log(setTimer);
             setTimer(this);
-        }
+        }*/
+        this.behaviour.hardFlickering.start();
     }
 
     stopFlickering(finalState = 'on') {
+        /*
         if (this.behaviour.flickering.isRunning) {
             this.behaviour.flickering.isRunning = false;
             if (finalState == 'on') this.turnOn();
@@ -125,7 +127,8 @@ class LightSource extends WorldObject {
             this.graphicLight.setIntensity(this.config.graphicLight.intensity);
             this.diffusedLight.setIntensity(this.config.diffusedLight.intensity);
             console.log('stop flickering');
-        }
+        }*/
+        this.behaviour.hardFlickering.stop();
     }
 
     startTrembling(minTime, maxTime, xMinOscillation, xMaxOscillation, yMinOscillation = -1, yMaxOscillation = -1, movementOnXAxis = true, movementeOnYAxis = true) {

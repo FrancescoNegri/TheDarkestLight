@@ -31,7 +31,7 @@ var generateCorrectStrings = (array) => {
     return array;
 }
 
-getDirectories('../www/lib', function (err, res) {
+getDirectories('./www/lib', function (err, res) {
     var fileArray = [];
     if (err) {
         console.log('Error', err);
@@ -39,7 +39,7 @@ getDirectories('../www/lib', function (err, res) {
         //console.log(res);
         fileArray = fileArray.concat(res);
     }
-    getDirectories('../www/js', function (err, res) {
+    getDirectories('./www/js', function (err, res) {
         if (err) {
             console.log('Error', err);
         } else {
@@ -51,12 +51,20 @@ getDirectories('../www/lib', function (err, res) {
             fileArray.push(indexFile);
             fileArray = generateCorrectStrings(fileArray);
 
-            fs.writeFileSync('output.txt', '');
+            fs.writeFileSync('./www/index.html', str1);
+            fs.appendFileSync('./www/index.html', str2);
+            fs.appendFileSync('./www/index.html', str3);
             fileArray.forEach(line => {
                 console.log(line);
-                fs.appendFileSync('output.txt', line + '\n');
+                fs.appendFileSync('./www/index.html', line + '\n');
             });
-            console.log('\nTOTAL:', fileArray.length, 'files');
+            fs.appendFileSync('./www/index.html', str4);
+            console.log('\nTOTAL:', fileArray.length, 'files\n');
         }
     });
 });
+
+const str1 = '<!DOCTYPE html>\n<html>\n';
+const str2 = '<head>\n<meta name="format-detection" content="telephone=no">\n<meta name="msapplication-tap-highlight" content="no">\n<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">\n<link rel="stylesheet" type="text/css" href="css/index.css">\n<title>The Darkest Light</title>\n</head>\n';
+const str3 = '<body>\n<!-- EXTERNAL LIBS SCRIPTS-->\n<script type="text/javascript" src="cordova.js"></script>\n<script type="text/javascript" src="node_modules/phaser/dist/phaser.js"></script>\n<script src="node_modules/mobile-detect/mobile-detect.js"></script>\n';
+const str4 = '</body>\n</html>';

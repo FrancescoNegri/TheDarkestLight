@@ -1,81 +1,46 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-
 <head>
-    <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <title>Hello World</title>
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<title>The Darkest Light</title>
 </head>
-
 <body>
-    <!-- EXTERNAL LIBS SCRIPTS-->
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="node_modules/phaser/dist/phaser.js"></script>
-    <script src="node_modules/mobile-detect/mobile-detect.js"></script>
-
-
-    <script src="lib\rooms\Room.js"></script>
-    <script src="lib\plugins\TDLRoomPlugin.js"></script>
-    <script src="lib\plugins\UpdatePlugin.js"></script>
-    <script src="lib\plugins\systems\LayerManager.js"></script>
-    <script src="lib\plugins\systems\LightSourceManager.js"></script>
-    <script src="lib\plugins\systems\RoomManager.js"></script>
-    <script src="lib\components\TDLComponent.js"></script>
-    <script src="lib\components\light-source-behaviour-component\LightSourceBehaviour.js"></script>
-    <script src="lib\components\light-source-behaviour-component\LightSourceBehaviourComponent.js"></script>
-    <script src="lib\components\light-source-behaviour-component\light-source-behaviours\HardFlickeringAndTremblingBehaviour.js"></script>
-    <script src="lib\components\light-source-behaviour-component\light-source-behaviours\HardFlickeringBehaviour.js"></script>
-    <script src="lib\components\light-source-behaviour-component\light-source-behaviours\TremblingBehaviour.js"></script>
-    <script src="lib\sprites\TDLSprite.js"></script>
-    <script src="lib\sprites\characters\TDLCharacter.js"></script>
-    <script src="lib\sprites\characters\NPCharacters\NPCharacter.js"></script>
-    <script src="lib\sprites\characters\player\Player.js"></script>
-    <script src="lib\sprites\objects\TDLObject.js"></script>
-    <script src="lib\sprites\objects\inventory-objects\InventoryObject.js"></script>
-    <script src="lib\sprites\objects\world-objects\WorldObject.js"></script>
-    <script src="lib\sprites\objects\world-objects\room-furnitures\RoomFurniture.js"></script>
-    <script src="lib\sprites\objects\world-objects\transitioners\Transitioner.js"></script>
-    <script src="lib\sprites\objects\world-objects\wall-furnitures\WallFurniture.js"></script>
-    <script src="lib\sprites\objects\world-objects\light-sources\LightSource.js"></script>
-    <script src="lib\sprites\objects\world-objects\light-sources\lamps\Lamp.js"></script>
-    <script src="js\Boot.js"></script>
-    <script src="js\Global.js"></script>
-    <script src="js\rooms\TestRoom.js"></script>
-    <script src="js\characters\player\Debugger.js"></script>
-    <script src="js\objects\world-objects\light-sources\lamps\TestLamp.js"></script>
-    <script src="js\index.js"></script>
-
-
-
+<!-- EXTERNAL LIBS SCRIPTS-->
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="node_modules/phaser/dist/phaser.js"></script>
+<script src="node_modules/mobile-detect/mobile-detect.js"></script>
+<script src="\rooms\Room.js"></script>
+<script src="\plugins\TDLRoomPlugin.js"></script>
+<script src="\plugins\UpdatePlugin.js"></script>
+<script src="\plugins\systems\LayerManager.js"></script>
+<script src="\plugins\systems\LightSourceManager.js"></script>
+<script src="\plugins\systems\RoomManager.js"></script>
+<script src="\components\TDLComponent.js"></script>
+<script src="\components\light-source-behaviour-component\LightSourceBehaviour.js"></script>
+<script src="\components\light-source-behaviour-component\LightSourceBehaviourComponent.js"></script>
+<script src="\components\light-source-behaviour-component\light-source-behaviours\HardFlickeringAndTremblingBehaviour.js"></script>
+<script src="\components\light-source-behaviour-component\light-source-behaviours\HardFlickeringBehaviour.js"></script>
+<script src="\components\light-source-behaviour-component\light-source-behaviours\TremblingBehaviour.js"></script>
+<script src="\sprites\TDLSprite.js"></script>
+<script src="\sprites\characters\TDLCharacter.js"></script>
+<script src="\sprites\characters\NPCharacters\NPCharacter.js"></script>
+<script src="\sprites\characters\player\Player.js"></script>
+<script src="\sprites\objects\TDLObject.js"></script>
+<script src="\sprites\objects\inventory-objects\InventoryObject.js"></script>
+<script src="\sprites\objects\world-objects\WorldObject.js"></script>
+<script src="\sprites\objects\world-objects\room-furnitures\RoomFurniture.js"></script>
+<script src="\sprites\objects\world-objects\transitioners\Transitioner.js"></script>
+<script src="\sprites\objects\world-objects\wall-furnitures\WallFurniture.js"></script>
+<script src="\sprites\objects\world-objects\light-sources\LightSource.js"></script>
+<script src="\sprites\objects\world-objects\light-sources\lamps\Lamp.js"></script>
+<script src="Boot.js"></script>
+<script src="Global.js"></script>
+<script src="rooms\TestRoom.js"></script>
+<script src="characters\player\Debugger.js"></script>
+<script src="objects\world-objects\light-sources\lamps\TestLamp.js"></script>
+<script src="index.js"></script>
 </body>
-
 </html>

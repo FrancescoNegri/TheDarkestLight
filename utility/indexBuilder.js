@@ -15,14 +15,14 @@ findStringInFile = (str, array) => {
 
 var cleanFilesArray = (array) => {
     for (var i = 0; i < array.length; i++) {
-        array[i] = array[i].substring(7);
+        array[i] = array[i].substring(array[i].indexOf('www') + 4);
     };
 
     return array;
 }
 
 var generateCorrectStrings = (array) => {
-    const modelSubString1 = '<script src="';
+    const modelSubString1 = '<script type="text/javascript" src="';
     const modelSubString2 = '"></script>';
     for (var i = 0; i < array.length; i++) {
         array[i] = modelSubString1 + array[i] + modelSubString2;
@@ -31,36 +31,43 @@ var generateCorrectStrings = (array) => {
     return array;
 }
 
-getDirectories('./www/lib', function (err, res) {
-    var fileArray = [];
+getDirectories('../www', function (err, res) {
+    var basePath = '../www/';
     if (err) {
-        console.log('Error', err);
-    } else {
-        //console.log(res);
-        fileArray = fileArray.concat(res);
+        basePath = 'www/'
     }
-    getDirectories('./www/js', function (err, res) {
+
+    getDirectories(basePath + 'lib', function (err, res) {
+        var fileArray = [];
         if (err) {
             console.log('Error', err);
         } else {
+            //console.log(res);
             fileArray = fileArray.concat(res);
-            fileArray = cleanFilesArray(fileArray);
-            var index = findStringInFile('index.js', fileArray);
-            var indexFile = fileArray[index];
-            fileArray.splice(index, 1);
-            fileArray.push(indexFile);
-            fileArray = generateCorrectStrings(fileArray);
-
-            fs.writeFileSync('./www/index.html', str1);
-            fs.appendFileSync('./www/index.html', str2);
-            fs.appendFileSync('./www/index.html', str3);
-            fileArray.forEach(line => {
-                console.log(line);
-                fs.appendFileSync('./www/index.html', line + '\n');
-            });
-            fs.appendFileSync('./www/index.html', str4);
-            console.log('\nTOTAL:', fileArray.length, 'files\n');
         }
+        getDirectories(basePath + 'js', function (err, res) {
+            if (err) {
+                console.log('Error', err);
+            } else {
+                fileArray = fileArray.concat(res);
+                fileArray = cleanFilesArray(fileArray);
+                var index = findStringInFile('index.js', fileArray);
+                var indexFile = fileArray[index];
+                fileArray.splice(index, 1);
+                fileArray.push(indexFile);
+                fileArray = generateCorrectStrings(fileArray);
+
+                fs.writeFileSync(basePath + 'index.html', str1);
+                fs.appendFileSync(basePath + 'index.html', str2);
+                fs.appendFileSync(basePath + 'index.html', str3);
+                fileArray.forEach(line => {
+                    console.log(line);
+                    fs.appendFileSync(basePath + 'index.html', line + '\n');
+                });
+                fs.appendFileSync(basePath + 'index.html', str4);
+                console.log('\nTOTAL:', fileArray.length, 'files');
+            }
+        });
     });
 });
 

@@ -56,6 +56,7 @@ getDirectories('../www/lib', function (err, res) {
                 console.log(line);
                 fs.appendFileSync('output.txt', line + '\n');
             });
+            console.log('\nTOTAL:', fileArray.length, 'files');
         }
     });
 });

@@ -1,17 +1,17 @@
-class HardFlickeringBehaviour extends LightSourceBehaviour {
+class TremblingBehaviour extends LightSourceBehaviour {
     constructor(component) {
-        super('HardFlickeringBehaviour', component)
+        super('TremblingBehaviour', component)
     }
 
     start(toRegister = true) {
         super.start(() => {
-            console.log('Sono la callback e faccio cose');
+            console.log('TREMBLING callback start');
         }, toRegister);
     }
 
     stop(isComplexBehaviour = false) {
         super.stop(() => {
-            console.log('Stoppo cose, vedo gente.');
+            console.log('TREMBLING callback stop');
         }, isComplexBehaviour);
     }
 }

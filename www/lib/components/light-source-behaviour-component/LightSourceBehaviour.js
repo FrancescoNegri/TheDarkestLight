@@ -6,11 +6,13 @@ class LightSourceBehaviour {
         //console.log('Added', this.name, 'to', this.component, ', component of', this.component.gameObject);
     }
 
-    start(callback = () => { }) {
+    start(callback = () => { }, toRegister = true) {
         if (this.component.allowedBehaviours.length > 0 && this.component.allowedBehaviours.includes(this.name)) {
             this.isBooting = true; //Necessaria per non stoppare il behaviour durante lo stop generale
-            this.component.stopAllBehaviours(this.name);
-            this.component.currentBehaviour = this.name;
+            if (toRegister) {
+                this.component.stopAllBehaviours(this.name);
+                this.register();
+            }
             this.isBooting = false;
             console.log('Starting component', this.name);
             callback();
@@ -20,12 +22,18 @@ class LightSourceBehaviour {
         }
     }
 
-    stop(callback = () => { }) {
+    stop(callback = () => { }, isComplexBehaviour = false) {
         if (this.isBooting) console.log('Booting. Not stopping', this.name);
         else {
             console.log('Stopping component', this.name);
-            if (this.component.currentBehaviour === this.name) callback();
-            this.component.currentBehaviour = null;
+            if (this.component.currentBehaviour === this.name || isComplexBehaviour) {
+                callback();
+                this.component.currentBehaviour = null;
+            }
         }
+    }
+
+    register() {
+        this.component.currentBehaviour = this.name;
     }
 }

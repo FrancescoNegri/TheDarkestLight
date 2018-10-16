@@ -22,7 +22,7 @@ class LightSource extends WorldObject {
         }
 
         this.room.lightSource.add(this);
-        this.behaviour = new LightSourceBehaviourComponent(this, ['HardFlickeringBehaviour']);
+        this.behaviour = new LightSourceBehaviourComponent(this, ['HardFlickeringBehaviour', 'TremblingBehaviour', 'HardFlickeringAndTremblingBehaviour']);
         //this.component.hardFlickeringBehavior.start(1,1);
     }
 
@@ -115,7 +115,7 @@ class LightSource extends WorldObject {
             console.log(setTimer);
             setTimer(this);
         }*/
-        this.behaviour.hardFlickering.start();
+        this.behaviour.hardFlickeringAndTrembling.start();
     }
 
     stopFlickering(finalState = 'on') {
@@ -128,10 +128,11 @@ class LightSource extends WorldObject {
             this.diffusedLight.setIntensity(this.config.diffusedLight.intensity);
             console.log('stop flickering');
         }*/
-        this.behaviour.hardFlickering.stop();
+        this.behaviour.hardFlickeringAndTrembling.stop();
     }
 
     startTrembling(minTime, maxTime, xMinOscillation, xMaxOscillation, yMinOscillation = -1, yMaxOscillation = -1, movementOnXAxis = true, movementeOnYAxis = true) {
+        /*
         if (!this.behaviour.trembling.isRunning) {
             console.log('start trembling');
             this.behaviour.trembling.isRunning = true;
@@ -174,15 +175,18 @@ class LightSource extends WorldObject {
                 })
             }
             setTimer(this);
-        }
+        }*/
+        this.behaviour.trembling.start();
     }
 
     stopTrembling(backToInitialPosition = true) {
+        /*
         if (this.behaviour.trembling.isRunning) {
             console.log('stop trembling');
             this.behaviour.trembling.isRunning = false;
             if (backToInitialPosition) this.graphicLight.setPosition(this.x + this.config.offset.x, this.y + this.config.offset.y);
-        }
+        }*/
+        this.behaviour.trembling.stop();
     }
 
 

@@ -139,7 +139,7 @@ class LightSource extends WorldObject {
         this.behaviour.hardFlickering.stop();
     }
 
-    startTrembling(minTime, maxTime, xMinOscillation, xMaxOscillation, yMinOscillation = -1, yMaxOscillation = -1, movementOnXAxis = true, movementeOnYAxis = true) {
+    startTrembling(minTime = 10, maxTime = 100, movementOnXAxis = true, xMinOscillation = 2, xMaxOscillation = 10, movementeOnYAxis = true, yMinOscillation = -1, yMaxOscillation = -1) {
         /*
         if (!this.behaviour.trembling.isRunning) {
             console.log('start trembling');
@@ -184,7 +184,7 @@ class LightSource extends WorldObject {
             }
             setTimer(this);
         }*/
-        this.behaviour.trembling.start();
+        this.behaviour.trembling.start(minTime, maxTime, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation);
     }
 
     stopTrembling(backToInitialPosition = true) {
@@ -194,7 +194,7 @@ class LightSource extends WorldObject {
             this.behaviour.trembling.isRunning = false;
             if (backToInitialPosition) this.graphicLight.setPosition(this.x + this.config.offset.x, this.y + this.config.offset.y);
         }*/
-        this.behaviour.trembling.stop();
+        this.behaviour.trembling.stop(backToInitialPosition);
     }
 
 

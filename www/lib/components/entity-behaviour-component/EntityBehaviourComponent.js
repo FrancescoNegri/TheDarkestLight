@@ -26,6 +26,8 @@ class EntityBehaviourComponent extends TDLComponent {
         return 2;
     }
 
+    //Vedere di caricare i cursori una volta per tutte all'inizio (altrimenti li torna a caricare ogni volta!!!!!)
+
     setBehaviour() {
         if (this.gameObject.behaviourType === EntityBehaviourComponent.EXAMINABLE || this.gameObject.behaviourType === EntityBehaviourComponent.INTERACTIVE) {
 

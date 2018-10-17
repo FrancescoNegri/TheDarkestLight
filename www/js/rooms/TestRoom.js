@@ -42,6 +42,7 @@ class TestRoom extends Room {
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        this.keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
         /*this.input.on('pointermove', function (pointer) {
 
@@ -60,13 +61,16 @@ class TestRoom extends Room {
             this.lamp2.startFlickering(100, 400, 'soft');
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
-            this.lamp2.startFlickering(10,200, 'hard');
+            this.lamp2.stopFlickeringAndTrembling();
         }
-        if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
-            this.lamp2.stopTrembling();
+        if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+            this.lamp2.startFlickeringAndTrembling();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
             this.lamp2.startTrembling(100, 400, 2, 10, 1, 5);
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
+            this.lamp2.stopTrembling();
         }
     }
 }

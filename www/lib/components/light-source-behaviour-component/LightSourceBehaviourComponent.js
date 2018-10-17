@@ -4,7 +4,7 @@ class LightSourceBehaviourComponent extends TDLComponent {
 
         this.bootBehaviours();
         this.allowedBehaviours = allowedBehaviours;
-        this.currentBehaviour;
+        this.runningBehaviour = null;
     }
 
     bootBehaviours() {

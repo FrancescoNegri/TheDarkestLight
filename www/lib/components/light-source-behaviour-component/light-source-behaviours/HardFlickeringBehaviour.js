@@ -1,17 +1,17 @@
 class HardFlickeringBehaviour extends LightSourceBehaviour {
-    constructor(component) {
-        super('HardFlickeringBehaviour', component)
+    constructor(component, calledByBehaviour = null) {
+        super( component, calledByBehaviour);
     }
 
-    start(toRegister = true) {
+    start() {
         super.start(() => {
-            console.log('Sono la callback e faccio cose');
-        }, toRegister);
+            console.log('HARDFLICKERING start');
+        });
     }
 
-    stop(isComplexBehaviour = false) {
+    stop() {
         super.stop(() => {
-            console.log('Stoppo cose, vedo gente.');
-        }, isComplexBehaviour);
+            console.log('HARDFLICKERING stop');
+        });
     }
 }

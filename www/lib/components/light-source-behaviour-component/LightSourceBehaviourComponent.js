@@ -1,6 +1,6 @@
 class LightSourceBehaviourComponent extends TDLComponent {
     constructor(gameObject, allowedBehaviours = []) {
-        super('LightSourceBehaviourComponent', gameObject);
+        super(gameObject);
 
         this.bootBehaviours();
         this.allowedBehaviours = allowedBehaviours;

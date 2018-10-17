@@ -4,6 +4,7 @@ class Debugger extends Player {
     }
 
     create() {
+        super.create();
         this.setCollideWorldBounds(true).setPipeline('Light2D');
         this.room.cursors = this.room.input.keyboard.createCursorKeys();
     }

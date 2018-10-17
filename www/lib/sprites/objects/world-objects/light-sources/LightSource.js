@@ -139,52 +139,8 @@ class LightSource extends WorldObject {
         this.behaviour.hardFlickering.stop();
     }
 
-    startTrembling(minTime = 10, maxTime = 100, movementOnXAxis = true, xMinOscillation = 2, xMaxOscillation = 10, movementeOnYAxis = true, yMinOscillation = -1, yMaxOscillation = -1) {
-        /*
-        if (!this.behaviour.trembling.isRunning) {
-            console.log('start trembling');
-            this.behaviour.trembling.isRunning = true;
-            if (this.behaviour.flickering.isRunning && this.behaviour.flickering.mode == 'hard') {
-                this.stopFlickering();
-            }
-            yMinOscillation = yMinOscillation < 0 ? xMinOscillation : yMinOscillation;
-            yMaxOscillation = yMaxOscillation < 0 ? xMaxOscillation : yMaxOscillation;
-            var config = {
-                minTime: minTime,
-                maxTime: maxTime,
-                xMinOscillation: xMinOscillation,
-                xMaxOscillation: xMaxOscillation,
-                yMinOscillation: yMinOscillation,
-                yMaxOscillation: yMaxOscillation,
-                movementOnXAxis: movementOnXAxis,
-                movementeOnYAxis: movementeOnYAxis,
-            }
-            var setTimer = (context) => {
-                context.room.time.addEvent({
-                    delay: Math.floor(Math.random() * (maxTime - minTime)) + minTime,
-                    callback: () => {
-                        if (this.behaviour.trembling.isRunning) {
-                            var xNewOffset = 0;
-                            var yNewOffset = 0;
-                            if (config.movementOnXAxis) {
-                                xNewOffset = Math.floor(Math.random() * (xMaxOscillation - xMinOscillation + 1)) + xMinOscillation;
-                                xNewOffset *= Math.round(Math.random()) * 2 - 1;
-                            }
-                            if (config.movementeOnYAxis) {
-                                yNewOffset = Math.floor(Math.random() * yMaxOscillation - yMinOscillation + 1) + yMinOscillation;
-                                yNewOffset *= Math.round(Math.random()) * 2 - 1;
-                            }
-                            this.graphicLight.setPosition(this.x + xNewOffset, this.y + yNewOffset);
-                            setTimer(this);
-                        }
-                    },
-                    callbackScope: context,
-                    repeat: 0
-                })
-            }
-            setTimer(this);
-        }*/
-        this.behaviour.trembling.start(minTime, maxTime, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation);
+    startTrembling() {
+        this.behaviour.trembling.start(...arguments);
     }
 
     stopTrembling(backToInitialPosition = true) {

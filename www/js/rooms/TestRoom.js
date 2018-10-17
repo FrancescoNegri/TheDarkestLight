@@ -21,7 +21,7 @@ class TestRoom extends Room {
 
     preload() {
         super.preload();
-        
+
         this.load.image('debugger', ['assets/debugger.png', 'assets/debugger_n.png']);
     }
 
@@ -67,7 +67,7 @@ class TestRoom extends Room {
             this.lamp2.startFlickeringAndTrembling();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
-            this.lamp2.startTrembling(100,400);
+            this.lamp2.startTrembling(100, 400);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
             this.lamp2.stopTrembling();

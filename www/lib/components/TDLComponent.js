@@ -1,6 +1,6 @@
 class TDLComponent {
-    constructor(name, gameObject) {
-        this.name = name;
+    constructor(gameObject) {
+        this.name = this.constructor.name;
         this.gameObject = gameObject;
 
         //console.log('Added component', this.name, 'to', this.gameObject);

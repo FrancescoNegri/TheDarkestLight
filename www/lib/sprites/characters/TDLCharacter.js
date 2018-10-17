@@ -1,5 +1,5 @@
-class TDLCharacter extends TDLSprite {
+class TDLCharacter extends Entity {
     constructor(room, x, y, texture, layer) {
-        super(room, x, y, texture, layer, true);
+        super(room, x, y, texture, layer, true, EntityBehaviourComponent.INTERACTIVE);
     }
 }

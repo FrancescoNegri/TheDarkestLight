@@ -29,7 +29,7 @@ class TremblingBehaviour extends LightSourceBehaviour {
                         else {
                             if (this.calledByBehaviour.runningSubBehaviours.indexOf(this.name) != -1) isRunning = true;
                         }
-                        
+
                         if (isRunning) {
                             var xNewOffset = 0;
                             var yNewOffset = 0;
@@ -50,7 +50,6 @@ class TremblingBehaviour extends LightSourceBehaviour {
                     repeat: 0
                 })
             }
-            if (this.calledByBehaviour === null) setTimer(this)
             setTimer(this);
             console.log('TREMBLING start');
         });

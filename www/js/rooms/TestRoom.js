@@ -55,22 +55,22 @@ class TestRoom extends Room {
         super.update();
 
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
-            this.lamp2.stopFlickering();
+            this.lamp2.behaviour.stopAllBehaviours();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
-            this.lamp2.startFlickering(100, 400, 'soft');
+            this.lamp2.startFlickering();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
-            this.lamp2.stopFlickeringAndTrembling();
+            this.lamp2.startTrembling();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-            this.lamp2.startFlickeringAndTrembling();
+            this.lamp2.startSoftFlickering();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
-            this.lamp2.startTrembling(100,400);
+            this.lamp2.startHardFlickeringAndTrembling();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
-            this.lamp2.stopTrembling();
+            this.lamp2.startSoftFlickeringAndTrembling();
         }
     }
 }

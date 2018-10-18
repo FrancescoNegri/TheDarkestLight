@@ -11,6 +11,8 @@ class LightSourceBehaviourComponent extends TDLComponent {
         this.hardFlickering = new HardFlickeringBehaviour(this);
         this.trembling = new TremblingBehaviour(this);
         this.hardFlickeringAndTrembling = new HardFlickeringAndTremblingBehaviour(this);
+        this.softFlickering = new SoftFlickeringBehaviour(this);
+        this.softFlickeringAndTrembling = new SoftFlickeringAndTremblingBehaviour(this);
     }
 
     stopAllBehaviours() {
@@ -18,5 +20,7 @@ class LightSourceBehaviourComponent extends TDLComponent {
         this.hardFlickering.stop();
         this.trembling.stop();
         this.hardFlickeringAndTrembling.stop();
+        this.softFlickering.stop();
+        this.softFlickeringAndTrembling.stop();
     }
 }

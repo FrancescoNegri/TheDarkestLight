@@ -22,7 +22,7 @@ class LightSource extends WorldObject {
         }
 
         this.room.lightSource.add(this);
-        this.behaviour = new LightSourceBehaviourComponent(this, ['HardFlickeringBehaviour', 'TremblingBehaviour', 'HardFlickeringAndTremblingBehaviour']);
+        this.behaviour = new LightSourceBehaviourComponent(this, ['HardFlickeringBehaviour', 'TremblingBehaviour', 'HardFlickeringAndTremblingBehaviour','SoftFlickeringAndTremblingBehaviour','SoftFlickeringBehaviour'],);
         //this.component.hardFlickeringBehavior.start(1,1);
     }
 
@@ -56,11 +56,11 @@ class LightSource extends WorldObject {
         }
     }
 
-    startFlickeringAndTrembling(){
+    startHardFlickeringAndTrembling(){
         this.behaviour.hardFlickeringAndTrembling.start();
     }
 
-    stopFlickeringAndTrembling(){
+    stopHardFlickeringAndTrembling(){
         this.behaviour.hardFlickeringAndTrembling.stop();
     }
 
@@ -195,6 +195,22 @@ class LightSource extends WorldObject {
             if (backToInitialPosition) this.graphicLight.setPosition(this.x + this.config.offset.x, this.y + this.config.offset.y);
         }*/
         this.behaviour.trembling.stop(backToInitialPosition);
+    }
+
+    startSoftFlickering(){
+        this.behaviour.softFlickering.start();
+    }
+
+    stopSoftFlickering(){
+        this.behaviour.softFlickering.stop();
+    }
+
+    startSoftFlickeringAndTrembling(){
+        this.behaviour.softFlickeringAndTrembling.start();
+    }
+
+    stopSoftFlickering(){
+        this.behaviour.softFlickeringAndTrembling.stop();
     }
 
 

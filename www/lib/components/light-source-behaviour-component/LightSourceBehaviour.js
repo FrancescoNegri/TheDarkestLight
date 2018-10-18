@@ -17,6 +17,9 @@ class LightSourceBehaviour {
             }
             else {
                 console.warn('ALERT: trying to start a non-existing or non-allowed behaviour or an alredy running behaviour!');
+                if (this.component.allowedBehaviours.length <= 0) console.warn('allowed behaviour is null');
+                if (!(this.component.allowedBehaviours.includes(this.name))) console.warn('not allowed Behaviour');
+                if (this.component.runningBehaviour === this.name) console.warn('already running Behaviour');
             }
         } else {
             this.isStarting = true;
@@ -31,14 +34,14 @@ class LightSourceBehaviour {
         if (!this.isStarting) {
             if (this.calledByBehaviour === null) {
                 if (this.component.runningBehaviour == this.name) {
-                    callback();
                     this.unregisterToComponent();
+                    callback();
                 }
             }
             else {
                 if (this.calledByBehaviour.runningSubBehaviours.indexOf(this.name) != -1) {
-                    callback();
                     this.unregisterToBehaviour();
+                    callback();
                 }
             }
         }
@@ -57,6 +60,6 @@ class LightSourceBehaviour {
     }
 
     unregisterToBehaviour() {
-        this.calledByBehaviour.runningSubBehaviours.slice(this.calledByBehaviour.runningSubBehaviours.indexOf(this.constructor.name), 1);
+        this.calledByBehaviour.runningSubBehaviours.splice(this.calledByBehaviour.runningSubBehaviours.indexOf(this.name), 1);
     }
 }

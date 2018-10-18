@@ -63,6 +63,17 @@ class LightSource extends WorldObject {
         this.behaviour.hardFlickering.stop(...arguments);
     }
 
+    /**
+     * Start the trembling behaviour.
+     * @param {number} [minTime] - Minimum time gap between two tremblings.
+     * @param {number} [maxTime] - Maximum time gap between two tremblings.
+     * @param {boolean} [movementOnXAxis] - Determines if the light source has to move on X axis.
+     * @param {number} [xMinOscillation] - Minimum displcement on X axis.
+     * @param {number} [xMaxOscillation] - Maximum displcement on X axis.
+     * @param {boolean} [movementeOnYAxis] - Determines if the light source has to move on Y axis.
+     * @param {number} [yMinOscillation] - Minimum displcement on Y axis.
+     * @param {number} [yMaxOscillation] - Maximum displcement on Y axis.
+     */
     startTrembling(minTime, maxTime, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
         this.behaviour.trembling.start(...arguments);
     }

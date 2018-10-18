@@ -5,7 +5,7 @@ class LightSourceBehaviour {
     /**
      * Create a LightSourceBehaviour.
      * @param {LightSourceBehaviourComponent} component - The component which called the behaviour.
-     * @param {LightSourceBehaviour} [calledByBehaviour] - The behaviour which is inoving this as a subBehaviour, if exists.
+     * @param {LightSourceBehaviour} [calledByBehaviour] - The behaviour which is invoking this as a subBehaviour, if exists.
      */
     constructor(component, calledByBehaviour = null) {
         this.name = this.constructor.name;
@@ -13,62 +13,57 @@ class LightSourceBehaviour {
         this.calledByBehaviour = calledByBehaviour;
     }
 
-    start(callback = () => { }) {
+    /**
+     * Start a behaviour.
+     * @param {*} callback - The callback to execute once the behaviour is started.
+     */
+    start(callback) {
         if (this.calledByBehaviour === null) {
-            //Spostare i controlli su tre livelli diversi e scrivere un console.warn appropriato per ciascuno
-            if (this.component.allowedBehaviours.length > 0 && this.component.allowedBehaviours.includes(this.name) && this.component.runningBehaviour !== this.name) {
-                this.isStarting = true; //Necessaria per non stoppare il behaviour durante lo stop generale
-                this.component.stopAllBehaviours(this.name);
-                this.registerToComponent();
-                //console.log('Starting behaviour', this.name);
-                this.isStarting = false;
-                callback();
+            if (this.component.allowedBehaviours.length > 0) {
+                if (this.component.allowedBehaviours.includes(this.name)) {
+                    if (this.component.runningBehaviour !== this.name) {
+                        this.isStarting = true; //Necessaria per non stoppare il behaviour durante lo stop generale
+                        this.component.stopAllBehaviours(this.name);
+                        this.component.runningBehaviour = this.name;
+                        this.isStarting = false;
+                        callback();
+                    }
+                    else {
+                        console.warn('ALERT: alredy running behaviour -', this.name);
+                    }
+                }
+                else {
+                    console.warn('ALERT: trying to start a non-allowed behaviour -', this.name);
+                }
+
             }
-            else {
-                console.warn('ALERT: trying to start a non-existing or non-allowed behaviour or an alredy running behaviour!');
-                if (this.component.allowedBehaviours.length <= 0) console.warn('allowed behaviour is null');
-                if (!(this.component.allowedBehaviours.includes(this.name))) console.warn('not allowed Behaviour');
-                if (this.component.runningBehaviour === this.name) console.warn('already running Behaviour');
-            }
-        } else {
+        } 
+        else {
             this.isStarting = true;
-            this.registerToBehaviour();
-            //console.log('Starting subBehaviour', this.name);
+            this.calledByBehaviour.runningSubBehaviours.push(this.name);
             this.isStarting = false;
             callback();
         }
     }
 
+    /**
+     * Stop a behaviour.
+     * @param {*} callback - The callback to execute once the behaviour is stopped.
+     */
     stop(callback = () => { }) {
         if (!this.isStarting) {
             if (this.calledByBehaviour === null) {
                 if (this.component.runningBehaviour == this.name) {
-                    this.unregisterToComponent();
+                    this.component.runningBehaviour = null;
                     callback();
                 }
             }
             else {
                 if (this.calledByBehaviour.runningSubBehaviours.indexOf(this.name) != -1) {
-                    this.unregisterToBehaviour();
+                    this.calledByBehaviour.runningSubBehaviours.splice(this.calledByBehaviour.runningSubBehaviours.indexOf(this.name), 1);
                     callback();
                 }
             }
         }
-    }
-
-    registerToComponent() {
-        this.component.runningBehaviour = this.name;
-    }
-
-    unregisterToComponent() {
-        this.component.runningBehaviour = null;
-    }
-
-    registerToBehaviour() {
-        this.calledByBehaviour.runningSubBehaviours.push(this.name);
-    }
-
-    unregisterToBehaviour() {
-        this.calledByBehaviour.runningSubBehaviours.splice(this.calledByBehaviour.runningSubBehaviours.indexOf(this.name), 1);
     }
 }

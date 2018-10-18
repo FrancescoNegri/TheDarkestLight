@@ -1,8 +1,27 @@
+/**
+ * Class representing a trembling behaviour of a LightSource. 
+ */
 class TremblingBehaviour extends LightSourceBehaviour {
+    /**
+     * Create a TremblingBehaviour.
+     * @param {LightSourceBehaviourComponent} component - The component which called the behaviour.
+     * @param {LightSourceBehaviour} [calledByBehaviour] - The behaviour which is invoking this as a subBehaviour, if exists.
+     */
     constructor(component, calledByBehaviour = null) {
         super(component, calledByBehaviour);
     }
 
+    /**
+     * Start the trembling behaviour.
+     * @param {number} [minTime] - Minimum time gap between two tremblings.
+     * @param {number} [maxTime] - Maximum time gap between two tremblings.
+     * @param {boolean} [movementOnXAxis] - Determines if the light source has to move on X axis.
+     * @param {number} [xMinOscillation] - Minimum displcement on X axis.
+     * @param {number} [xMaxOscillation] - Maximum displcement on X axis.
+     * @param {boolean} [movementeOnYAxis] - Determines if the light source has to move on Y axis.
+     * @param {number} [yMinOscillation] - Minimum displcement on Y axis.
+     * @param {number} [yMaxOscillation] - Maximum displcement on Y axis.
+     */
     start(minTime = 10, maxTime = 100, movementOnXAxis = true, xMinOscillation = 2, xMaxOscillation = 10, movementeOnYAxis = true, yMinOscillation = -1, yMaxOscillation = -1) {
         super.start(() => {
             yMinOscillation = yMinOscillation < 0 ? xMinOscillation : yMinOscillation;

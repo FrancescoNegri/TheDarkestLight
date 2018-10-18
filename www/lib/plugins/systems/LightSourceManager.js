@@ -33,7 +33,7 @@ class LightSourceManager extends TDLRoomPlugin {
         this.diffusedLights.forEach(light => {
             singleLightIntensityAccumulator += light.intensity;
         });
-        var averageLightsContribute = Math.floor((singleLightIntensityAccumulator * 10000 / this.room.layers.wallsLayer.width / TILE_SIZE) * 100) / 100 + 0.3;
+        var averageLightsContribute = Math.floor((singleLightIntensityAccumulator * 10000 / this.room.layers.wallsLayer.width / Global.TILE_SIZE) * 100) / 100 + 0.3;
         return averageLightsContribute;
     }
 }

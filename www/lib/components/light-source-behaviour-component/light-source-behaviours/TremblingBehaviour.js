@@ -5,7 +5,7 @@ class TremblingBehaviour extends LightSourceBehaviour {
     /**
      * Create a TremblingBehaviour.
      * @param {LightSourceBehaviourComponent} component - The component which called the behaviour.
-     * @param {LightSourceBehaviour} [calledByBehaviour] - The behaviour which is invoking this as a subBehaviour, if exists.
+     * @param {LightSourceBehaviour} [calledByBehaviour=null] - The behaviour which is invoking this as a subBehaviour, if exists.
      */
     constructor(component, calledByBehaviour = null) {
         super(component, calledByBehaviour);
@@ -13,14 +13,14 @@ class TremblingBehaviour extends LightSourceBehaviour {
 
     /**
      * Start the trembling behaviour.
-     * @param {number} [minTime] - Minimum time gap between two tremblings.
-     * @param {number} [maxTime] - Maximum time gap between two tremblings.
-     * @param {boolean} [movementOnXAxis] - Determines if the light source has to move on X axis.
-     * @param {number} [xMinOscillation] - Minimum displcement on X axis.
-     * @param {number} [xMaxOscillation] - Maximum displcement on X axis.
-     * @param {boolean} [movementeOnYAxis] - Determines if the light source has to move on Y axis.
-     * @param {number} [yMinOscillation] - Minimum displcement on Y axis.
-     * @param {number} [yMaxOscillation] - Maximum displcement on Y axis.
+     * @param {number} [minTime=10] - Minimum time gap between two tremblings in milliseconds.
+     * @param {number} [maxTime=100] - Maximum time gap between two tremblings in milliseconds.
+     * @param {boolean} [movementOnXAxis=true] - Determines if the light source has to move on X axis.
+     * @param {number} [xMinOscillation=2] - Minimum displcement on X axis in pixels.
+     * @param {number} [xMaxOscillation=10] - Maximum displcement on X axis in pixels.
+     * @param {boolean} [movementeOnYAxis=true] - Determines if the light source has to move on Y axis.
+     * @param {number} [yMinOscillation=-1] - Minimum displcement on Y axis in pixels.
+     * @param {number} [yMaxOscillation=-1] - Maximum displcement on Y axis in pixels.
      */
     start(minTime = 10, maxTime = 100, movementOnXAxis = true, xMinOscillation = 2, xMaxOscillation = 10, movementeOnYAxis = true, yMinOscillation = -1, yMaxOscillation = -1) {
         super.start(() => {
@@ -74,6 +74,10 @@ class TremblingBehaviour extends LightSourceBehaviour {
         });
     }
 
+    /**
+     * Stop the trembling behaviour.
+     * @param {boolean} [backToInitialPosition=true] - Specify if the LightSource.graphicLight has to return at the defualt position.
+     */
     stop(backToInitialPosition = true) {
         super.stop(() => {
             if (backToInitialPosition) this.component.gameObject.graphicLight.setPosition(this.component.gameObject.x + this.component.gameObject.config.offset.x, this.component.gameObject.y + this.component.gameObject.config.offset.y);

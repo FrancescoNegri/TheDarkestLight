@@ -5,7 +5,7 @@ class LightSourceBehaviour {
     /**
      * Create a LightSourceBehaviour.
      * @param {LightSourceBehaviourComponent} component - The component which called the behaviour.
-     * @param {LightSourceBehaviour} [calledByBehaviour] - The behaviour which is invoking this as a subBehaviour, if exists.
+     * @param {LightSourceBehaviour=null} [calledByBehaviour] - The behaviour which is invoking this as a subBehaviour, if exists.
      */
     constructor(component, calledByBehaviour = null) {
         this.name = this.constructor.name;
@@ -50,7 +50,7 @@ class LightSourceBehaviour {
      * Stop a behaviour.
      * @param {*} callback - The callback to execute once the behaviour is stopped.
      */
-    stop(callback = () => { }) {
+    stop(callback) {
         if (!this.isStarting) {
             if (this.calledByBehaviour === null) {
                 if (this.component.runningBehaviour == this.name) {

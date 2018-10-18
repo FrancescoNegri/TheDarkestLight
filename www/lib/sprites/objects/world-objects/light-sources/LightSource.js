@@ -65,14 +65,14 @@ class LightSource extends WorldObject {
 
     /**
      * Start the trembling behaviour.
-     * @param {number} [minTime] - Minimum time gap between two tremblings.
-     * @param {number} [maxTime] - Maximum time gap between two tremblings.
-     * @param {boolean} [movementOnXAxis] - Determines if the light source has to move on X axis.
-     * @param {number} [xMinOscillation] - Minimum displcement on X axis.
-     * @param {number} [xMaxOscillation] - Maximum displcement on X axis.
-     * @param {boolean} [movementeOnYAxis] - Determines if the light source has to move on Y axis.
-     * @param {number} [yMinOscillation] - Minimum displcement on Y axis.
-     * @param {number} [yMaxOscillation] - Maximum displcement on Y axis.
+     * @param {number} [minTime=10] - Minimum time gap between two tremblings in milliseconds.
+     * @param {number} [maxTime=100] - Maximum time gap between two tremblings in milliseconds.
+     * @param {boolean} [movementOnXAxis=true] - Determines if the light source has to move on X axis.
+     * @param {number} [xMinOscillation=2] - Minimum displcement on X axis in pixels.
+     * @param {number} [xMaxOscillation=10] - Maximum displcement on X axis in pixels.
+     * @param {boolean} [movementeOnYAxis=true] - Determines if the light source has to move on Y axis.
+     * @param {number} [yMinOscillation=-1] - Minimum displcement on Y axis in pixels.
+     * @param {number} [yMaxOscillation=-1] - Maximum displcement on Y axis in pixels.
      */
     startTrembling(minTime, maxTime, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
         this.behaviour.trembling.start(...arguments);

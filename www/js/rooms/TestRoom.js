@@ -21,7 +21,7 @@ class TestRoom extends Room {
 
     preload() {
         super.preload();
-        
+
         this.load.image('debugger', ['assets/debugger.png', 'assets/debugger_n.png']);
     }
 

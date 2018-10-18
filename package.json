@@ -39,6 +39,7 @@
         ]
     },
     "devDependencies": {
-        "glob": "^5.0.15"
+        "glob": "^5.0.15",
+        "jsdoc": "^3.5.5"
     }
 }

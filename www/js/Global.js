@@ -1,9 +1,18 @@
+class Global {
+    constructor() {
+        
+    }
+
+    static get TILE_SIZE() {
+        const TILE_SIZE = 48;
+        return TILE_SIZE
+    }
+}
 var GAME;
 var DEVICE = '';
 var SCREEN_PROPS = {};
 
-const TILE_SIZE = 48;
-const HALF_TILE_SIZE = TILE_SIZE / 2;
+const HALF_TILE_SIZE = Global.TILE_SIZE / 2;
 const ROOM_HEIGHT_IN_TILE = 6;
 const INVENTORY_WIDTH_IN_TILES_MOBILE = 1.25;
 const INVENTORY_WIDTH_IN_TILES_DESKTOP = 0;

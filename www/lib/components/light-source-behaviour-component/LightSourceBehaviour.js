@@ -1,4 +1,12 @@
+/**
+ * Class representing a behaviour of a LightSource.
+ */
 class LightSourceBehaviour {
+    /**
+     * Create a LightSourceBehaviour.
+     * @param {LightSourceBehaviourComponent} component - The component which called the behaviour.
+     * @param {LightSourceBehaviour} [calledByBehaviour] - The behaviour which is inoving this as a subBehaviour, if exists.
+     */
     constructor(component, calledByBehaviour = null) {
         this.name = this.constructor.name;
         this.component = component;
@@ -7,6 +15,7 @@ class LightSourceBehaviour {
 
     start(callback = () => { }) {
         if (this.calledByBehaviour === null) {
+            //Spostare i controlli su tre livelli diversi e scrivere un console.warn appropriato per ciascuno
             if (this.component.allowedBehaviours.length > 0 && this.component.allowedBehaviours.includes(this.name) && this.component.runningBehaviour !== this.name) {
                 this.isStarting = true; //Necessaria per non stoppare il behaviour durante lo stop generale
                 this.component.stopAllBehaviours(this.name);

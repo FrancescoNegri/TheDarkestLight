@@ -22,7 +22,7 @@ class LightSource extends WorldObject {
         }
 
         this.room.lightSource.add(this);
-        this.behaviour = new LightSourceBehaviourComponent(this, ['HardFlickeringBehaviour', 'TremblingBehaviour', 'HardFlickeringAndTremblingBehaviour','SoftFlickeringAndTremblingBehaviour','SoftFlickeringBehaviour'],);
+        this.behaviour = new LightSourceBehaviourComponent(this, ['HardFlickeringBehaviour', 'TremblingBehaviour', 'HardFlickeringAndTremblingBehaviour', 'SoftFlickeringAndTremblingBehaviour', 'SoftFlickeringBehaviour']);
         //this.component.hardFlickeringBehavior.start(1,1);
     }
 
@@ -56,117 +56,41 @@ class LightSource extends WorldObject {
         }
     }
 
-    startHardFlickeringAndTrembling(){
-        this.behaviour.hardFlickeringAndTrembling.start();
+    startFlickering(minTime, maxTime) {
+        this.behaviour.hardFlickering.start(...arguments);
+    }
+    stopFlickering(finalState) {
+        this.behaviour.hardFlickering.stop(...arguments);
     }
 
-    stopHardFlickeringAndTrembling(){
-        this.behaviour.hardFlickeringAndTrembling.stop();
-    }
-
-    startFlickering(minTime, maxTime, mode = 'hard', minPercentageIntensity = 0.8, maxPercentageIntensity = 1) {
-        /*if (!this.behaviour.flickering.isRunning || this.behaviour.flickering.mode!=mode) {
-            if (this.behaviour.flickering.isRunning && this.behaviour.flickering.mode != mode) {
-                this.stopFlickering();
-            }
-
-            this.behaviour.flickering.mode = mode;
-
-            if (this.behaviour.trembling.isRunning && this.behaviour.flickering.mode == 'hard') {
-                this.stopTrembling();
-            }
-            console.log('start flickering...');
-            this.behaviour.flickering.isRunning = true;
-            var minTime = minTime;
-            var maxTime = maxTime;
-            var mode = mode;
-            var setTimer;
-
-            switch (mode) {
-                case 'hard':
-                    console.log('start hard flickering');
-                    setTimer = (context) => {
-                        context.room.time.addEvent({
-                            delay: Math.floor(Math.random() * (maxTime - minTime)) + minTime,
-                            callback: () => {
-                                if (this.behaviour.flickering.isRunning) {
-                                    if (this.isOn) this.turnOff();
-                                    else if (!this.isOn) this.turnOn();
-                                    setTimer(this);
-                                }
-                            },
-                            callbackScope: context,
-                            repeat: 0
-                        })
-                    };
-                    break;
-                case 'soft':
-                    console.log('start soft flickering');
-                    setTimer = (context) => {
-                        context.room.time.addEvent({
-                            delay: Math.floor(Math.random() * (maxTime - minTime)) + minTime,
-                            callback: () => {
-                                if (this.behaviour.flickering.isRunning) {
-                                    var newIntensityPercentage = Math.floor((minPercentageIntensity + Math.random() * (maxPercentageIntensity - minPercentageIntensity)) * 100 + 1) / 100;
-                                    this.graphicLight.setIntensity(this.config.graphicLight.intensity * newIntensityPercentage);
-                                    this.diffusedLight.setIntensity(this.config.diffusedLight.intensity * newIntensityPercentage);
-                                    setTimer(this);
-                                }
-                            },
-                            callbackScope: context,
-                            repeat: 0
-                        })
-                    };
-                    break;
-            }
-
-            console.log(setTimer);
-            setTimer(this);
-        }*/
-        this.behaviour.hardFlickering.start();
-    }
-
-    stopFlickering(finalState = 'on') {
-        /*
-        if (this.behaviour.flickering.isRunning) {
-            this.behaviour.flickering.isRunning = false;
-            if (finalState == 'on') this.turnOn();
-            else if (finalState == 'off') this.turnOff();
-            this.graphicLight.setIntensity(this.config.graphicLight.intensity);
-            this.diffusedLight.setIntensity(this.config.diffusedLight.intensity);
-            console.log('stop flickering');
-        }*/
-        this.behaviour.hardFlickering.stop();
-    }
-
-    startTrembling() {
+    startTrembling(minTime, maxTime, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
         this.behaviour.trembling.start(...arguments);
     }
-
-    stopTrembling(backToInitialPosition = true) {
-        /*
-        if (this.behaviour.trembling.isRunning) {
-            console.log('stop trembling');
-            this.behaviour.trembling.isRunning = false;
-            if (backToInitialPosition) this.graphicLight.setPosition(this.x + this.config.offset.x, this.y + this.config.offset.y);
-        }*/
-        this.behaviour.trembling.stop(backToInitialPosition);
+    stopTrembling(backToInitialPosition) {
+        this.behaviour.trembling.stop(...arguments);
     }
 
-    startSoftFlickering(){
-        this.behaviour.softFlickering.start();
+    startSoftFlickering(minTime, maxTime, minPercentageIntensity, maxPercentageIntensity) {
+        this.behaviour.softFlickering.start(...arguments);
+    }
+    stopSoftFlickering(backToInitialIntensity) {
+        this.behaviour.softFlickering.stop(...arguments);
     }
 
-    stopSoftFlickering(){
-        this.behaviour.softFlickering.stop();
+
+
+    startSoftFlickeringAndTrembling(minTimeSoftFlickering, maxTimeSoftFlickering, minPercentageIntensity, maxPercentageIntensity, minTimeTrembling, maxTimeTrembling, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
+        this.behaviour.softFlickeringAndTrembling.start(...arguments);
+    }
+    stopSoftFlickeringAndTrembling(backToInitialIntensity, backToInitialPosition) {
+        this.behaviour.softFlickeringAndTrembling.stop(...arguments);
     }
 
-    startSoftFlickeringAndTrembling(){
-        this.behaviour.softFlickeringAndTrembling.start();
+    startHardFlickeringAndTrembling(minTimeHardFlickering, maxTimeHardFlickering, minTimeTrembling, maxTimeTrembling, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
+        this.behaviour.hardFlickeringAndTrembling.start(...arguments);
     }
-
-    stopSoftFlickering(){
-        this.behaviour.softFlickeringAndTrembling.stop();
+    stopHardFlickeringAndTrembling(finalState, backToInitialPosition) {
+        this.behaviour.hardFlickeringAndTrembling.stop(...arguments);
     }
 
 

@@ -6,19 +6,19 @@ class HardFlickeringAndTremblingBehaviour extends LightSourceBehaviour {
         this.tremblingBehaviour = new TremblingBehaviour(this.component,this);
     }
 
-    start() {
+    start(minTimeHardFlickering, maxTimeHardFlickering, minTimeTrembling, maxTimeTrembling, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
         super.start(() => {
-            this.hardFlickeringBehaviour.start();
-            this.tremblingBehaviour.start();
+            this.hardFlickeringBehaviour.start(minTimeHardFlickering, maxTimeHardFlickering);
+            this.tremblingBehaviour.start(minTimeTrembling, maxTimeTrembling, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation);
             //console.log(this.runningSubBehaviours);
             console.log('HARDFLICKTREMB start');
         });
     }
 
-    stop() {
+    stop(finalState, backToInitialPosition) {
         super.stop(() => {
-            this.hardFlickeringBehaviour.stop();
-            this.tremblingBehaviour.stop();
+            this.hardFlickeringBehaviour.stop(finalState);
+            this.tremblingBehaviour.stop(backToInitialPosition);
             //console.log(this.runningSubBehaviours);
             console.log('HARDFLICKTREMB stop');
         });

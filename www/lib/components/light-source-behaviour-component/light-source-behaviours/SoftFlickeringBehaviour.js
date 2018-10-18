@@ -36,9 +36,9 @@ class SoftFlickeringBehaviour extends LightSourceBehaviour {
         });
     }
 
-    stop(backInitialIntensity = true) {
+    stop(backToInitialIntensity = true) {
         super.stop(() => {
-            if (backInitialIntensity) {
+            if (backToInitialIntensity) {
                 this.component.gameObject.graphicLight.setIntensity(this.component.gameObject.config.graphicLight.intensity);
                 this.component.gameObject.diffusedLight.setIntensity(this.component.gameObject.config.diffusedLight.intensity);
             }

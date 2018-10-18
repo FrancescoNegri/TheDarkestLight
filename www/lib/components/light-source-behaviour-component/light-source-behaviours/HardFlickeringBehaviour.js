@@ -7,7 +7,6 @@ class HardFlickeringBehaviour extends LightSourceBehaviour {
         super.start(() => {
             /*var minTime = minTime;
             var maxTime = maxTime;*/
-            console.log(this.component.runningBehaviour);
             var setTimer = (context) => {
                 context.component.gameObject.room.time.addEvent({
                     delay: Math.floor(Math.random() * (maxTime - minTime)) + minTime,

@@ -58,13 +58,13 @@ class TestRoom extends Room {
             this.lamp2.behaviour.stopAllBehaviours();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
-            this.lamp2.startFlickering();
+            this.lamp2.startFlickering(1,50);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
-            this.lamp2.startTrembling();
+            this.lamp2.startTrembling(1, 50, true, 0, 200, false);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-            this.lamp2.startSoftFlickering();
+            this.lamp2.startSoftFlickering(1, 50, 0.2, 0.7);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
             this.lamp2.startHardFlickeringAndTrembling();

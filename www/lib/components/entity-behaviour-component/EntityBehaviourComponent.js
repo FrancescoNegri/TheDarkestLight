@@ -25,13 +25,6 @@ class EntityBehaviourComponent extends TDLComponent {
         return 'INVENTORY';
     }
 
-    /**
-	* E'il tempo minimo di mouse over necessario per far iniziare l'azione di osserva del player in secondi!
-	*/
-    static get MIN_TIME_TO_OBSERVE() {
-        return 2;
-    }
-
     //RIFARE TUTTI I CURSORI: SONO TROPPO BLOCCATI
 
     addBehaviours() {

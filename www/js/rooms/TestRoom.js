@@ -31,6 +31,9 @@ class TestRoom extends Room {
         this.lamp1 = new TestLamp(this, 200, 96);
         this.lamp2 = new TestLamp(this, 600, 96);
 
+        //this.diffusedLightSource1 = new TestDiffusedLightSource(this, 200, 96);
+        //this.blankLightSource1= new TestBlankLightSource(this, 350, 200);
+
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);

@@ -42,7 +42,8 @@ class Room extends Phaser.Scene {
         }
     }
 
-    create() {
+    create(player) {
+        this.player = player;
         this.lights.enable(); //Boot Phaser's LightManager
         
         this.setCameraViewport();
@@ -51,6 +52,7 @@ class Room extends Phaser.Scene {
 
         //Camera bounds, anche il wallsLayer
         this.cameras.main.setBounds(0, 0, this.layers.wallsLayer.width, this.layers.wallsLayer.height);
+        this.cameras.main.startFollow(this.player);
         //Physics Bounds, sarà solo lo spazio di gioco (togliamo il wall layer tutto attorno!!)
         this.physics.world.setBounds(Global.TILE_SIZE, Global.TILE_SIZE, this.layers.wallsLayer.width - 2 * Global.TILE_SIZE, this.layers.wallsLayer.height - 2 * Global.TILE_SIZE);
     }
@@ -82,7 +84,7 @@ class Room extends Phaser.Scene {
 
     update() {
         this.updateMasksByLightDiffusion();
-        this.lightsContribute = this.lightSource.calculateLightsContribuitePoint(this.debugger);
+        this.lightsContribute = this.lightSource.calculateLightsContribuitePoint(this.player);
         //console.log(this.lightsContribute);
     }
 

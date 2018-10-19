@@ -2,11 +2,11 @@ class EntityBehaviourComponent extends TDLComponent {
     constructor(gameObject) {
         super(gameObject);
 
-        this.observe = {};
+        (typeof this.gameObject.room.player === 'undefined') ? this.player = this.gameObject : this.player = this.gameObject.room.player;
         this.interact = {};
         this.examine = {};
 
-        this.setBehaviour();
+        this.addBehaviours();
     }
 
     static get INERT() {
@@ -18,6 +18,12 @@ class EntityBehaviourComponent extends TDLComponent {
     static get INTERACTIVE() {
         return 'INTERACTIVE';
     }
+    static get TALKABLE() {
+        return 'TALKABLE';
+    }
+    static get INVENTORY() {
+        return 'INVENTORY';
+    }
 
     /**
 	* E'il tempo minimo di mouse over necessario per far iniziare l'azione di osserva del player in secondi!
@@ -26,26 +32,13 @@ class EntityBehaviourComponent extends TDLComponent {
         return 2;
     }
 
-    //Vedere di caricare i cursori una volta per tutte all'inizio (altrimenti li torna a caricare ogni volta!!!!!)
+    //RIFARE TUTTI I CURSORI: SONO TROPPO BLOCCATI
 
-    setBehaviour() {
+    addBehaviours() {
+        //Se l'oggetto è osservabile (cioè esaminabile o interagibile) setto il cursore appropriato 
         if (this.gameObject.behaviourType === EntityBehaviourComponent.EXAMINABLE || this.gameObject.behaviourType === EntityBehaviourComponent.INTERACTIVE) {
 
-            if (this.gameObject.behaviourType === EntityBehaviourComponent.EXAMINABLE) this.gameObject.setInteractive({ cursor: 'url(assets/Cursors/CursorExamine.cur), pointer' });
-            else this.gameObject.setInteractive({ cursor: 'url(assets/Cursors/CursorInteract.cur), pointer' });
-
-            this.gameObject.on('pointerover', function (event) {
-                this.observe.timer = this.gameObject.room.time.addEvent({
-                    delay: EntityBehaviourComponent.MIN_TIME_TO_OBSERVE * 1000,
-                    callback: () => {
-                        console.log(this.gameObject.name + ':', this.gameObject.observeText);
-                    },
-                    callbackScope: this
-                });
-            }.bind(this));
-            this.gameObject.on('pointerout', function (event) {
-                this.observe.timer.remove(false);
-            }.bind(this));
+            this.observe = new ObservableBehaviour(this);
 
         }
     }

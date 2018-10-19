@@ -26,16 +26,10 @@ class TestRoom extends Room {
     }
 
     create() {
-        super.create();
-
-        this.debugger = new Debugger(this, 100, 100);
-        this.cameras.main.startFollow(this.debugger);
+        super.create(new Debugger(this, 100, 100));
 
         this.lamp1 = new TestLamp(this, 200, 96);
         this.lamp2 = new TestLamp(this, 600, 96);
-
-        //this.lamp1.startFlickering(10, 400);
-        //this.lamp2.startFlickering(10, 400);
 
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);

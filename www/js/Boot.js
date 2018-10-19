@@ -6,7 +6,7 @@ class Boot extends Phaser.Scene {
     create() {
         this.configPlugins();
 
-        this.input.setDefaultCursor('url(assets/Cursors/CursorMove.cur), pointer');
+        //this.input.setDefaultCursor('url(assets/Cursors/CursorMove.cur), pointer');
         this.room.add('TestRoom', TestRoom, true);
     }
 

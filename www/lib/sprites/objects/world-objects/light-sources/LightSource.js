@@ -1,5 +1,5 @@
 class LightSource extends WorldObject {
-    constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, isOn = true) {
+    constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours, isOn = true) {
         super(room, x, y, texture, layer, false);
 
         this.config = {
@@ -7,32 +7,27 @@ class LightSource extends WorldObject {
             diffusedLight: diffusedLightConfig,
             offset: offset
         }
-        this.behaviour = {
-            flickering: {
-                isRunning: false,
-                mode: 'hard',
-            },
-            trembling: {
-                isRunning: false,
-            }
-        }
+
         this.isOn = false;
         if (isOn) {
             this.turnOn();
         }
 
         this.room.lightSource.add(this);
-        this.behaviour = new LightSourceBehaviourComponent(this, ['HardFlickeringBehaviour', 'TremblingBehaviour', 'HardFlickeringAndTremblingBehaviour', 'SoftFlickeringAndTremblingBehaviour', 'SoftFlickeringBehaviour']);
-        //this.component.hardFlickeringBehavior.start(1,1);
+        this.behaviour = new LightSourceBehaviourComponent(this, allowedBehaviours);
     }
 
     turnOn() {
         if (!this.isOn) {
-            this.diffusedLight = this.room.lights.addLight(this.x + this.config.offset.x, this.y + this.config.offset.y, this.config.diffusedLight.radius).setIntensity(this.config.diffusedLight.intensity);
-            this.room.lightSource.diffusedLights.push(this.diffusedLight);
+            if (this.config.diffusedLight !== null) {
+                this.diffusedLight = this.room.lights.addLight(this.x + this.config.offset.x, this.y + this.config.offset.y, this.config.diffusedLight.radius).setIntensity(this.config.diffusedLight.intensity);
+                this.room.lightSource.diffusedLights.push(this.diffusedLight);
+            }
 
-            this.graphicLight = this.room.lights.addLight(this.x + this.config.offset.x, this.y + this.config.offset.y, this.config.graphicLight.radius).setIntensity(this.config.graphicLight.intensity);
-            this.room.lightSource.graphicLights.push(this.graphicLight);
+            if (this.config.graphicLight !== null) {
+                this.graphicLight = this.room.lights.addLight(this.x + this.config.offset.x, this.y + this.config.offset.y, this.config.graphicLight.radius).setIntensity(this.config.graphicLight.intensity);
+                this.room.lightSource.graphicLights.push(this.graphicLight);
+            }
 
             this.isOn = true;
         }
@@ -87,8 +82,6 @@ class LightSource extends WorldObject {
     stopSoftFlickering(backToInitialIntensity) {
         this.behaviour.softFlickering.stop(...arguments);
     }
-
-
 
     startSoftFlickeringAndTrembling(minTimeSoftFlickering, maxTimeSoftFlickering, minPercentageIntensity, maxPercentageIntensity, minTimeTrembling, maxTimeTrembling, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
         this.behaviour.softFlickeringAndTrembling.start(...arguments);

@@ -1,5 +1,10 @@
 class Lamp extends LightSource {
-    constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset) {
-        super(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset);
+
+    static get TYPE(){
+        return 'Lamp'
+    }
+
+    constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours) {
+        super(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours);
     }
 }

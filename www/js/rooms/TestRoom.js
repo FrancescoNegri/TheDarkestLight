@@ -31,8 +31,11 @@ class TestRoom extends Room {
         this.debugger = new Debugger(this, 100, 100);
         this.cameras.main.startFollow(this.debugger);
 
-        this.lamp1 = new TestLamp(this, 200, 96);
+        //this.lamp1 = new TestLamp(this, 200, 96);
         this.lamp2 = new TestLamp(this, 600, 96);
+
+        this.diffusedLightSource1 = new TestDiffusedLightSource(this, 200, 96);
+        this.blankLightSource1= new TestBlankLightSource(this, 350, 200);
 
         //this.lamp1.startFlickering(10, 400);
         //this.lamp2.startFlickering(10, 400);

@@ -60,7 +60,10 @@ class LightSource extends WorldObject {
      * Turn off the lights of the LightSource by deleting the existing ones.
      */
 
-    turnOff() {
+     //Rinominare FLAG --> se true blocca tutti i behaviour, altrimenti no
+    turnOff(flag = false) {
+
+        if (flag) this.behaviour.stopAllBehaviours();
         if (this.isOn) {
             var diffusedLightindex = this.room.lightSource.diffusedLights.indexOf(this.diffusedLight);
             if (diffusedLightindex > -1) {
@@ -73,6 +76,7 @@ class LightSource extends WorldObject {
                 this.room.lightSource.graphicLights.splice(graphicLightindex, 1);
                 this.room.lights.removeLight(this.graphicLight);
             }
+
 
             this.isOn = false;
         }

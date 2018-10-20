@@ -20,7 +20,7 @@ class HardFlickeringBehaviour extends LightSourceBehaviour {
                         }
 
                         if (isRunning) {
-                            if (this.component.gameObject.isOn) this.component.gameObject.turnOff();
+                            if (this.component.gameObject.isOn) this.component.gameObject.turnOff(false);
                             else if (!this.component.gameObject.isOn) this.component.gameObject.turnOn();
                             setTimer(this);
                         }

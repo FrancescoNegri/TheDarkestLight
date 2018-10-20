@@ -18,7 +18,6 @@ class LightSource extends WorldObject {
      * @param {Object[]} allowedBehaviours - List of names of the allowed Behaviour for this light
      * @param {boolean} [isOn=true] - Light created as switched on or off.
      */
-
     constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours, isOn = true) {
         super(room, x, y, texture, layer, false);
 
@@ -40,7 +39,6 @@ class LightSource extends WorldObject {
     /**
      * Turn on the lights of the LightSource by creating new ones.
      */
-
     turnOn() {
         if (!this.isOn) {
             if (this.config.diffusedLight !== null) {
@@ -56,14 +54,14 @@ class LightSource extends WorldObject {
             this.isOn = true;
         }
     }
+
     /**
      * Turn off the lights of the LightSource by deleting the existing ones.
+     * @param {boolean} [stopBehaviours=true] - If true, turning off the light stops all the behaviours.
      */
+    turnOff(stopBehaviours = true) {
 
-     //Rinominare FLAG --> se true blocca tutti i behaviour, altrimenti no
-    turnOff(flag = false) {
-
-        if (flag) this.behaviour.stopAllBehaviours();
+        if (stopBehaviours) this.behaviour.stopAllBehaviours();
         if (this.isOn) {
             var diffusedLightindex = this.room.lightSource.diffusedLights.indexOf(this.diffusedLight);
             if (diffusedLightindex > -1) {
@@ -87,10 +85,10 @@ class LightSource extends WorldObject {
      * @param {number} [minTime=10] - Minimum time gap between two switch in milliseconds.
      * @param {number} [maxTime=400] - Maximum time gap between two switch in milliseconds.
      */
-
     startFlickering(minTime, maxTime) {
         this.behaviour.hardFlickering.start(...arguments);
     }
+
     /**
      * Stop of the flickering effect.
      * @param {string} [finalState='on'] - (on/off) Set the light switched on or off at the end of the effect. 
@@ -113,6 +111,7 @@ class LightSource extends WorldObject {
     startTrembling(minTime, maxTime, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
         this.behaviour.trembling.start(...arguments);
     }
+    
     /**
      * Stop the trembling behaviour. 
      * @param {boolean} [backToInitialPosition=true] - Back to the sarting position of the light at the end of the effect.
@@ -131,6 +130,7 @@ class LightSource extends WorldObject {
     startSoftFlickering(minTime, maxTime, minPercentageIntensity, maxPercentageIntensity) {
         this.behaviour.softFlickering.start(...arguments);
     }
+
     /**
      * Stop flickering the intenisity of the light.
      * @param {boolean} [backToInitialIntensity=true] - Back to the initial light position before the effect.
@@ -157,6 +157,7 @@ class LightSource extends WorldObject {
     startSoftFlickeringAndTrembling(minTimeSoftFlickering, maxTimeSoftFlickering, minPercentageIntensity, maxPercentageIntensity, minTimeTrembling, maxTimeTrembling, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
         this.behaviour.softFlickeringAndTrembling.start(...arguments);
     }
+
     /**
      * Stop the soft flickering and trembling behaviour.
      * @param {boolean} [backToInitialIntensity=true] - Back to the initial light position before the effect.
@@ -182,6 +183,7 @@ class LightSource extends WorldObject {
     startHardFlickeringAndTrembling(minTimeHardFlickering, maxTimeHardFlickering, minTimeTrembling, maxTimeTrembling, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
         this.behaviour.hardFlickeringAndTrembling.start(...arguments);
     }
+
     /**
      * Stop the hard flickering and trembling behaviour.
      * @param {string} finalState - (on/off) Set the light switched on or off at the end of the effect.

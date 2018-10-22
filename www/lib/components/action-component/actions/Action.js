@@ -4,15 +4,16 @@ class Action {
         this.actor = actor;
         this.target = target;
         this.config = config;
+        this.name = this.constructor.name;
     }
 
     start(callback) {
         callback();
-        this.component.register();
+        this.component.register(this);
     }
 
     stop(callback) {
         callback();
-        this.component.unregister();
+        this.component.unregister(this);
     }
 }

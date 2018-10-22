@@ -6,6 +6,7 @@ class Action {
         this.config = config;
 
         this.start();
+        this.name = this.constructor.name;
     }
 
     start(callback) {

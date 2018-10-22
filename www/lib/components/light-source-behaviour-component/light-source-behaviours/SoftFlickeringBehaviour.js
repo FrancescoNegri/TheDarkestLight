@@ -1,8 +1,23 @@
+/**
+ * Class representing a soft flickering behaviour of a LightSource. 
+ */
 class SoftFlickeringBehaviour extends LightSourceBehaviour {
+    /**
+     * Create a SoftFlickeringBehaviour.
+     * @param {LightSourceBehaviourComponent} component - The component which called the behaviour.
+     * @param {LightSourceBehaviour} [calledByBehaviour=null] - The behaviour which is invoking this as a subBehaviour, if exists.
+     */
     constructor(component, calledByBehaviour = null) {
         super(component, calledByBehaviour);
     }
 
+    /**
+     * Start soft flickering behavior (only flicker the intensity) if it's an allowed behavior.
+     * @param {number} [minTime=10] - Minimum time gap between two flickers in milliseconds.
+     * @param {number} [maxTime=100] - Maximum time gap between two flickers in milliseconds.
+     * @param {number} [minPercentageIntensity=0.8] - Minimum light intensity reacheable during the effect. Value between 0 and 1. 
+     * @param {number} [maxPercentageIntensity=1] - Minimum light intensity reacheable during the effect. Value between 0 and 1.
+     */
     start(minTime = 10, maxTime = 100, minPercentageIntensity = 0.8, maxPercentageIntensity = 1) {
         super.start(() => {
             
@@ -36,6 +51,10 @@ class SoftFlickeringBehaviour extends LightSourceBehaviour {
         });
     }
 
+    /**
+     * Stop flickering the intenisity of the light.
+     * @param {boolean} [backToInitialIntensity=true] - Back to the initial light position before the effect.
+     */
     stop(backToInitialIntensity = true) {
         super.stop(() => {
             if (backToInitialIntensity) {

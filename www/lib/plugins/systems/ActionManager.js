@@ -5,8 +5,10 @@ class ActionManager extends TDLRoomPlugin {
         this.stack = {};
     }
 
+    //Spostare ogni actor's stack nel proprio action component ?? PROBABILMENTE Sì!
+
     register(actor, action) {
-        if (!(actor.name in stack)) {
+        if (!(actor.name in this.stack)) {
             this.stack.actor = [];
         }
         this.stack.actor.push(action);

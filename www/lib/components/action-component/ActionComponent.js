@@ -6,6 +6,10 @@ class ActionComponent extends TDLComponent {
         this.room = gameObject.room;
     }
 
+    start(action, target, config) {
+        new action(this, this.actor, target, config);
+    }
+
     register(action) {
         this.room.actions.register(this.actor, action);
     }

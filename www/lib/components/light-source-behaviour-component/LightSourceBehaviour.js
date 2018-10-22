@@ -20,7 +20,7 @@ class LightSourceBehaviour {
     start(callback) {
         if (this.calledByBehaviour === null) {
             if (this.component.allowedBehaviours.length > 0) {
-                if (this.component.allowedBehaviours.includes(this.name)) {
+                if (this.component.allowedBehaviours.find(behaviour => this instanceof behaviour)) {
                     if (this.component.runningBehaviour !== this.name) {
                         this.isStarting = true; //Necessaria per non stoppare il behaviour durante lo stop generale
                         this.component.stopAllBehaviours(this.name);

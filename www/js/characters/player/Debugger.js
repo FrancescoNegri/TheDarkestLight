@@ -1,6 +1,6 @@
 class Debugger extends Player {
     constructor(room, x, y) {
-        super(room, x, y, 'debugger');
+        super(room, x, y, 'player');
     }
 
     create() {

@@ -32,8 +32,8 @@ class TestRoom extends Room {
         this.lamp1 = new TestLamp(this, 200, 96);
         this.lamp2 = new TestLamp(this, 600, 96);
 
-
-        this.player.actions.start(IdleAction, {x: 45});
+        this.player.actions.add(AIdle);
+        //this.player.actions.start(IdleAction, {x: 45});
         //this.diffusedLightSource1 = new TestDiffusedLightSource(this, 200, 96);
         //this.blankLightSource1= new TestBlankLightSource(this, 350, 200);
 

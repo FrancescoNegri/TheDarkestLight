@@ -12,7 +12,7 @@ class ActionManager extends TDLRoomPlugin {
             this.stack.actor = [];
         }
         this.stack.actor.push(action);
-        console.log('ACTIONS STACK:', this.stack);
+        //console.log('ACTIONS STACK:', this.stack);
     }
 
     unregister(actor, action) {

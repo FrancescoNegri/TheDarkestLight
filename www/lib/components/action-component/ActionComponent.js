@@ -1,24 +1,25 @@
 class ActionComponent extends TDLComponent {
-    constructor(gameObject) {
-        super(gameObject);
+    constructor(actor) {
+        super(actor);
 
-        this.actor = gameObject;
-        this.room = gameObject.room;
+        this.actor = actor;
+
+        //Posizione 0: azione in esecuzione
+        this.queue = ['prova0', 'prova1'];
+
+        /*
+        3 possibili comportamenti:
+            - default: la queue si svuota, l'azione in 0 viene abortita e inizia la nuova azione
+            - case 1: la nuova azione viene messa in fila nel primo posto libero in queue
+            - case 2: metti in pausa l'azione 0 e inserisci la nuova azione al posto 0 (tutto scala indietro di una posizione)
+        */
     }
 
-    start(action, target, config) {
-        new action(this, this.actor, target, config);
-    }
+    add(action, config) {
+        let newAction = new action(config);
+        this.queue.unshift(newAction);
 
-    register(action) {
-        this.room.actions.register(this.actor, action);
-    }
-
-    unregister(action) {
-        this.room.actions.unregister(this.actor, action);
-    }
-
-    abort(action) {
-
+        console.log(this.queue);
+        return newAction;
     }
 }

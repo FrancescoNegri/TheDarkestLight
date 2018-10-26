@@ -1,9 +1,9 @@
 class ACount extends TDLAction {
-    constructor(invoker) {
+    constructor(invoker, config) {
         super(
             invoker,
             () => {
-                this.i = 0;
+                this.i = config.startingNumber;
             },
             () => {
                 console.log('Il valore i vale:', this.i);

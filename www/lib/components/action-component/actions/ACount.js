@@ -2,7 +2,7 @@ class ACount extends TDLAction {
     constructor(invoker) {
         super(
             invoker,
-            (context) => {
+            () => {
                 this.i = 0;
             },
             () => {

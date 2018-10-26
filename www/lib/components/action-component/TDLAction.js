@@ -1,15 +1,29 @@
 class TDLAction {
-    constructor() {
-        this.start();
+    constructor(invoker, startCallback, finishCallback) {
+        this.invoker = invoker;
+        this.name = this.constructor.name;
+
+        this.startCallback = startCallback;
+        this.finishCallback = finishCallback;
     }
 
-    start(callback) {
-        callback();
-        //this.component.register(this);
+    start() {
+        console.log(this.name, 'started');
+        this.startCallback();
     }
 
-    stop(callback) {
-        callback();
-        //this.component.unregister(this);
+    finish() {
+        this.finishCallback();
+        this.invoker.remove();
+        console.log(this.name, 'finished');
+    }
+
+    abort() {
+        this.finishCallback();
+        console.log(this.name, 'aborted');
+    }
+
+    update() {
+        console.log(this.name, 'updating...');
     }
 }

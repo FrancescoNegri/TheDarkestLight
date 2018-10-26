@@ -1,12 +1,12 @@
-class AIdle extends TDLAction {
+class ATest extends TDLAction {
     constructor(invoker) {
         super(
             invoker,
             () => {
-                alert('AIDLE è partito!');
+                alert('ATEST è partito!');
             },
             () => {
-                alert('AIDLE è finito!');
+                alert('ATEST è finito!');
             }
         );
     }

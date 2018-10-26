@@ -85,6 +85,12 @@ class Room extends Phaser.Scene {
     update() {
         this.updateMasksByLightDiffusion();
         this.lightsContribute = this.lightSource.calculateLightsContribuitePoint(this.player);
+
+        this.children.list.forEach(element => {
+            if ('actions' in element) {
+                element.actions.update();
+            }
+        });
         //console.log(this.lightsContribute);
     }
 

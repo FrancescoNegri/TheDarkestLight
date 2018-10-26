@@ -57,7 +57,7 @@ class TestRoom extends Room {
             /*
             this.lamp1.behaviour.stopAllBehaviours();
             this.lamp2.behaviour.stopAllBehaviours();*/
-            this.player.actions.add(ATest);
+            this.player.actions.add(ACount);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
             //this.lamp2.startFlickering(1,50);

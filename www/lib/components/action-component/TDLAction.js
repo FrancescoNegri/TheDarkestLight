@@ -14,8 +14,8 @@ class TDLAction {
 
     finish() {
         this.finishCallback();
-        this.invoker.remove();
         console.log(this.name, 'finished');
+        this.invoker.remove();
     }
 
     abort() {
@@ -23,7 +23,8 @@ class TDLAction {
         console.log(this.name, 'aborted');
     }
 
-    update() {
-        console.log(this.name, 'updating...');
+    update(callback = () => { }) {
+        //console.log(this.name, 'updating...');
+        callback();
     }
 }

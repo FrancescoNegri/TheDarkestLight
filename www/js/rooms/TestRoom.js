@@ -54,13 +54,16 @@ class TestRoom extends Room {
         super.update();
 
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
+            /*
             this.lamp1.behaviour.stopAllBehaviours();
-            this.lamp2.behaviour.stopAllBehaviours();
+            this.lamp2.behaviour.stopAllBehaviours();*/
+            this.player.actions.add(ATest);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
             //this.lamp2.startFlickering(1,50);
-            this.lamp1.turnOff();
-            this.lamp2.turnOff();
+            /*this.lamp1.turnOff();
+            this.lamp2.turnOff();*/
+            this.player.actions.add(ATest, null, ActionComponent.QUEUE_MODE);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
             this.lamp2.startTrembling(1, 50, true, 0, 200, false);

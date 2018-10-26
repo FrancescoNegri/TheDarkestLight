@@ -3,10 +3,10 @@ class AIdle extends TDLAction {
         super(
             invoker,
             () => {
-                alert('AIDLE è partito!');
+                //alert('AIDLE è partito!');
             },
             () => {
-                alert('AIDLE è finito!');
+                //alert('AIDLE è finito!');
             }
         );
     }

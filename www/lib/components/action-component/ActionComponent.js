@@ -4,7 +4,7 @@ class ActionComponent extends TDLComponent {
 
         this.actor = actor;
 
-        this.defaultAction = new AIdle();
+        this.defaultAction = new AIdle(this);
         this.queue = [this.defaultAction];
         this.queue[0].start();
     }
@@ -28,7 +28,7 @@ class ActionComponent extends TDLComponent {
             - case 1: la nuova azione viene messa in fila nel primo posto libero in queue
             - case 2: metti in pausa l'azione 0 e inserisci la nuova azione al posto 0 (tutto scala indietro di una posizione)
         */
-        let newAction = new action(config);
+        let newAction = new action(this, config);
 
         switch (mode) {
             case ActionComponent.DEFAULT_MODE: {
@@ -51,7 +51,7 @@ class ActionComponent extends TDLComponent {
             };
                 break;
         }
-        
+
 
         console.log(this.queue);
         return newAction;
@@ -64,6 +64,13 @@ class ActionComponent extends TDLComponent {
     }
 
     update() {
+        if (this.queue.length == 0) this.queue.push(this.defaultAction);
+        else if (this.queue.length > 1 && this.queue[0].name == 'AIdle') {
+            this.queue.shift();
+            this.queue[0].start();
+        }
+
         this.queue[0].update();
+        console.log(this.queue);
     }
 }

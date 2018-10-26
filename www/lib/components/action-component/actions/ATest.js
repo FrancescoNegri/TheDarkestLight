@@ -4,6 +4,7 @@ class ATest extends TDLAction {
             invoker,
             () => {
                 alert('ATEST è partito!');
+                this.finish();
             },
             () => {
                 alert('ATEST è finito!');

@@ -7,7 +7,8 @@ class ACount extends TDLAction {
             },
             () => {
                 console.log('Il valore i vale:', this.i);
-            }
+            },
+            () => { }
         );
     }
 

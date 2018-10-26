@@ -1,10 +1,14 @@
 class TDLAction {
-    constructor(invoker, startCallback, finishCallback) {
+    constructor(invoker, startCallback = () => { }, finishCallback = () => { }, resumeCallback = startCallback, pauseCallback = finishCallback) {
         this.invoker = invoker;
         this.name = this.constructor.name;
 
         this.startCallback = startCallback;
         this.finishCallback = finishCallback;
+        this.resumeCallback = resumeCallback;
+        this.pauseCallback = pauseCallback;
+
+        this.isPaused = false;
     }
 
     start() {
@@ -21,6 +25,16 @@ class TDLAction {
     abort() {
         this.finishCallback();
         console.log(this.name, 'aborted');
+    }
+
+    resume() {
+        this.isPaused = false;
+        this.resumeCallback();
+    }
+
+    pause() {
+        this.pauseCallback();
+        this.isPaused = true;
     }
 
     update(callback = () => { }) {

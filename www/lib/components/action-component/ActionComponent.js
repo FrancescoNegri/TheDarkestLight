@@ -45,7 +45,7 @@ class ActionComponent extends TDLComponent {
                 break;
 
             case ActionComponent.PAUSE_MODE: {
-                console.log('Faccio il pause di action in [0]');
+                this.queue[0].pause();
                 this.queue.unshift(newAction);
                 this.queue[0].start();
             };
@@ -60,14 +60,16 @@ class ActionComponent extends TDLComponent {
     remove() {
         this.queue.shift();
         if (this.queue.length == 0) this.queue.push(this.defaultAction);
-        this.queue[0].start();
+        if (this.queue[0].isPaused) this.queue[0].resume();
+        else this.queue[0].start();
     }
 
     update() {
         if (this.queue.length == 0) this.queue.push(this.defaultAction);
         else if (this.queue.length > 1 && this.queue[0].name == 'AIdle') {
             this.queue.shift();
-            this.queue[0].start();
+            if (this.queue[0].isPaused) this.queue[0].resume();
+            else this.queue[0].start();
         }
 
         this.queue[0].update();

@@ -4,7 +4,7 @@ class ActionComponent extends TDLComponent {
 
         this.actor = actor;
 
-        this.defaultAction = new AIdle(this);
+        this.defaultAction = new AIdle(this, this.actor);
         this.queue = [this.defaultAction];
         this.queue[0].start();
     }

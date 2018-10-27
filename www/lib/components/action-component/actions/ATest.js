@@ -6,17 +6,16 @@ class ATest extends TDLAction {
                 new TDLAction.BaseAction(
                     this,
                     () => {
-                        this.j = 400;
+                        this.startingX = this.actor.x;
+                        this.actor.body.setVelocity(120);
+                        this.actor.anims.play('walk');
                     },
                     () => {
-                        console.log('Il valore j vale:', this.j);
+                        this.actor.body.setVelocity(0);
+                        this.actor.anims.play('idle');
                     },
                     () => {
-                        if (this.j <= 0) this.finish();
-                        else {
-                            this.j--;
-                            console.log('CONTANDO J:', this.j);
-                        }
+                        if (this.actor.x >= this.startingX + 350) this.finish();
                     },
                     () => { }
                 )

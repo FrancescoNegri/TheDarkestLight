@@ -22,8 +22,8 @@ class TestRoom extends Room {
     preload() {
         super.preload();
 
-        //this.load.spritesheet('player', ['assets/player.png', 'assets/player_n.png'], { frameWidth: 52, frameHeight: 100});
-        this.load.image('player', ['assets/player_temp.png', 'assets/player_temp_n.png']);
+        this.load.spritesheet('player', ['assets/player.png', 'assets/player_n.png'], { frameWidth: 52, frameHeight: 100});
+        //this.load.image('player', ['assets/player_temp.png', 'assets/player_temp_n.png']);
     }
 
     create() {

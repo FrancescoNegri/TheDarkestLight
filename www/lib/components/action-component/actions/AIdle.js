@@ -5,8 +5,10 @@ class AIdle extends TDLAction {
             [
                 new TDLAction.BaseAction(
                     this,
-                    () => { alert('AIdle started!'); },
-                    () => { alert('AIdle stopped!'); }
+                    () => { 
+                        this.actor.body.setVelocity(0);
+                        this.actor.anims.play('idle');
+                    }
                 )
             ]
         );

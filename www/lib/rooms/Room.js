@@ -86,18 +86,17 @@ class Room extends Phaser.Scene {
         this.updateMasksByLightDiffusion();
         this.lightsContribute = this.lightSource.calculateLightsContribuitePoint(this.player);
 
+        //Updates all Actions in  every ActionComponent (if present)
         this.children.list.forEach(element => {
             if ('actions' in element) {
                 element.actions.update();
             }
         });
-        //console.log(this.lightsContribute);
     }
 
     updateMasksByLightDiffusion() {
         var averageLightsContribute = this.lightSource.calculateAverageLightsContribute();
         this.layers.wallsMaskLayer.setAlpha(1 - averageLightsContribute);
-        //console.log(averageLightsContribute);
     }
 
 }

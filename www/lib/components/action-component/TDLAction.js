@@ -1,44 +1,91 @@
+//Questa classe deve essere fatta come l'action component, tuttavia contiene in maniera statica anche la classe BaseAction (o BlankAction)
+//Aggiungere actor, target, config, ecc....
 class TDLAction {
-    constructor(invoker, startCallback = () => { }, finishCallback = () => { }, resumeCallback = startCallback, pauseCallback = finishCallback) {
+    constructor(invoker) {
         this.invoker = invoker;
         this.name = this.constructor.name;
-
-        this.startCallback = startCallback;
-        this.finishCallback = finishCallback;
-        this.resumeCallback = resumeCallback;
-        this.pauseCallback = pauseCallback;
+        this.queue = [];
 
         this.isPaused = false;
+    }
+
+    addQueue(queue) {
+        this.queue = queue;
+    }
+
+    static get BaseAction() {
+        return class BaseAction {
+            constructor(invoker, startCallback = () => { }, finishCallback = () => { }, updateCallback = () => { }, resumeCallback = startCallback, pauseCallback = finishCallback) {
+                this.invoker = invoker;
+
+                this.startCallback = startCallback;
+                this.finishCallback = finishCallback;
+                this.updateCallback = updateCallback;
+                this.resumeCallback = resumeCallback;
+                this.pauseCallback = pauseCallback;
+
+                this.isPaused = false;
+            }
+
+            start() {
+                this.startCallback(this);
+            }
+
+            finish() {
+                this.finishCallback(this);
+                this.invoker.remove();
+            }
+
+            abort() {
+                this.finishCallback(this);
+            }
+
+            resume() {
+                this.isPaused = false;
+                this.resumeCallback(this);
+            }
+
+            pause() {
+                this.pauseCallback(this);
+                this.isPaused = true;
+            }
+
+            update() {
+                this.updateCallback(this);
+            }
+        }
+    }
+
+    abort() {
+        console.log(this.name, 'aborted');
+        this.queue[0].abort();
     }
 
     start() {
         console.log(this.name, 'started');
-        this.startCallback();
+        this.queue[0].start();
     }
 
-    finish() {
-        this.finishCallback();
+    remove() {
         console.log(this.name, 'finished');
-        this.invoker.remove();
-    }
-
-    abort() {
-        this.finishCallback();
-        console.log(this.name, 'aborted');
-    }
-
-    resume() {
-        this.isPaused = false;
-        this.resumeCallback();
+        this.queue.shift();
+        if (this.queue.length <= 0) this.invoker.remove();
+        else this.queue[0].start();
     }
 
     pause() {
-        this.pauseCallback();
+        console.log(this.name, 'paused');
+        this.queue[0].pause();
         this.isPaused = true;
     }
 
-    update(callback = () => { }) {
-        //console.log(this.name, 'updating...');
-        callback();
+    resume() {
+        console.log(this.name, 'resumed');
+        this.isPaused = false;
+        this.queue[0].resume();
+    }
+
+    update() {
+        this.queue[0].update();
     }
 }

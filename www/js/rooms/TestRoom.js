@@ -32,7 +32,7 @@ class TestRoom extends Room {
         this.lamp1 = new TestLamp(this, 200, 96);
         this.lamp2 = new TestLamp(this, 600, 96);
 
-        this.player.actions.add(ATest);
+        //this.player.actions.add(ACount);
         //this.diffusedLightSource1 = new TestDiffusedLightSource(this, 200, 96);
         //this.blankLightSource1= new TestBlankLightSource(this, 350, 200);
 
@@ -57,19 +57,19 @@ class TestRoom extends Room {
             /*
             this.lamp1.behaviour.stopAllBehaviours();
             this.lamp2.behaviour.stopAllBehaviours();*/
-            this.player.actions.add(ACount, {startingNumber: 34}, ActionComponent.QUEUE_MODE);
+            this.player.actions.add(ACount, {startingNumber: 34}, ActionComponent.PAUSE_MODE);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
             //this.lamp2.startFlickering(1,50);
             /*this.lamp1.turnOff();
             this.lamp2.turnOff();*/
-            this.player.actions.add(ATest, null, ActionComponent.PAUSE_MODE);
+            this.player.actions.add(AComposedTest);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
-            this.lamp2.startTrembling(1, 50, true, 0, 200, false);
+            this.lamp2.startTrembling();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-            this.lamp2.startSoftFlickering(1, 50, 0.2, 0.7);
+            this.lamp2.startSoftFlickering();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
             this.lamp1.startHardFlickeringAndTrembling();

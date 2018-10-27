@@ -52,20 +52,18 @@ class ActionComponent extends TDLComponent {
                 break;
         }
 
-
-        console.log(this.queue);
         return newAction;
     }
 
     remove() {
         this.queue.shift();
-        if (this.queue.length == 0) this.queue.push(this.defaultAction);
+        if (this.queue.length <= 0) this.queue.push(this.defaultAction);
         if (this.queue[0].isPaused) this.queue[0].resume();
         else this.queue[0].start();
     }
 
     update() {
-        if (this.queue.length == 0) this.queue.push(this.defaultAction);
+        if (this.queue.length <= 0) this.queue.push(this.defaultAction);
         else if (this.queue.length > 1 && this.queue[0].name == 'AIdle') {
             this.queue.shift();
             if (this.queue[0].isPaused) this.queue[0].resume();
@@ -73,6 +71,6 @@ class ActionComponent extends TDLComponent {
         }
 
         this.queue[0].update();
-        console.log(this.queue);
+        //console.log(this.queue);
     }
 }

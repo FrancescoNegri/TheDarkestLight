@@ -21,14 +21,14 @@ class ActionComponent extends TDLComponent {
         return 2;
     }
 
-    add(action, config = null, mode = ActionComponent.DEFAULT_MODE) {
+    add(action, config = {}, mode = ActionComponent.DEFAULT_MODE) {
         /*
         3 possibili comportamenti:
             - default: la queue si svuota, l'azione in 0 viene abortita e inizia la nuova azione
             - case 1: la nuova azione viene messa in fila nel primo posto libero in queue
             - case 2: metti in pausa l'azione 0 e inserisci la nuova azione al posto 0 (tutto scala indietro di una posizione)
         */
-        let newAction = new action(this, config);
+        let newAction = new action(this, this.actor, config);
 
         switch (mode) {
             case ActionComponent.DEFAULT_MODE: {
@@ -71,6 +71,5 @@ class ActionComponent extends TDLComponent {
         }
 
         this.queue[0].update();
-        //console.log(this.queue);
     }
 }

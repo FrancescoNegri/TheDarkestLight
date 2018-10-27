@@ -1,9 +1,13 @@
-//Questa classe deve essere fatta come l'action component, tuttavia contiene in maniera statica anche la classe BaseAction (o BlankAction)
-//Aggiungere actor, target, config, ecc....
+//Eventualmente è possbile a questo punto creare una funzione che permetta di aggiungere in coda alla queue nuove azioni (dopo un controllo)
 class TDLAction {
-    constructor(invoker) {
+    constructor(invoker, actor, config = { }) {
         this.invoker = invoker;
         this.name = this.constructor.name;
+
+        this.actor = actor;
+        this.target = config.target;
+        this.config = config;
+
         this.queue = [];
 
         this.isPaused = false;
@@ -28,30 +32,30 @@ class TDLAction {
             }
 
             start() {
-                this.startCallback(this);
+                this.startCallback();
             }
 
             finish() {
-                this.finishCallback(this);
+                this.finishCallback();
                 this.invoker.remove();
             }
 
             abort() {
-                this.finishCallback(this);
+                this.finishCallback();
             }
 
             resume() {
                 this.isPaused = false;
-                this.resumeCallback(this);
+                this.resumeCallback();
             }
 
             pause() {
-                this.pauseCallback(this);
+                this.pauseCallback();
                 this.isPaused = true;
             }
 
             update() {
-                this.updateCallback(this);
+                this.updateCallback();
             }
         }
     }
@@ -66,10 +70,16 @@ class TDLAction {
         this.queue[0].start();
     }
 
+    finish() {
+        this.queue[0].finish();
+    }
+
     remove() {
-        console.log(this.name, 'finished');
         this.queue.shift();
-        if (this.queue.length <= 0) this.invoker.remove();
+        if (this.queue.length <= 0) {
+            console.log(this.name, 'finished');
+            this.invoker.remove();
+        }
         else this.queue[0].start();
     }
 

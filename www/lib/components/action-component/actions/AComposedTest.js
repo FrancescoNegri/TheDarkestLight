@@ -1,10 +1,10 @@
 class AComposedTest extends TDLAction {
-    constructor(invoker) {
-        super(invoker);
+    constructor(invoker, actor, config) {
+        super(...arguments);
         this.addQueue(
             [
-                new ACount(this, {startingNumber: 10}),
-                new ATest(this)
+                new ACount(this, this.actor, this.config),
+                new ATest(this, this.actor, this.config)
             ]
         );
     }

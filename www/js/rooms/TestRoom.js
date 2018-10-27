@@ -63,7 +63,7 @@ class TestRoom extends Room {
             //this.lamp2.startFlickering(1,50);
             /*this.lamp1.turnOff();
             this.lamp2.turnOff();*/
-            this.player.actions.add(AComposedTest);
+            this.player.actions.add(AComposedTest, {startingNumber: 10});
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
             this.lamp2.startTrembling();

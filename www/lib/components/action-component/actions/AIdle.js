@@ -1,12 +1,12 @@
 class AIdle extends TDLAction {
-    constructor(invoker) {
-        super(invoker);
+    constructor(invoker, actor, config) {
+        super(...arguments);
         this.addQueue(
             [
                 new TDLAction.BaseAction(
                     this,
-                    (_this) => { alert('AIdle started!'); },
-                    (_this) => { alert('AIdle stopped!'); }
+                    () => { alert('AIdle started!'); },
+                    () => { alert('AIdle stopped!'); }
                 )
             ]
         );

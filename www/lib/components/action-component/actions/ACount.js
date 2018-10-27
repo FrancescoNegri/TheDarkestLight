@@ -1,24 +1,24 @@
 class ACount extends TDLAction {
-    constructor(invoker, config) {
-        super(invoker);
+    constructor(invoker, actor, config) {
+        super(...arguments);
         this.addQueue(
             [
                 new TDLAction.BaseAction(
                     this,
-                    (_this) => {
-                        _this.i = config.startingNumber;
+                    () => {
+                        this.i = this.config.startingNumber;
                     },
-                    (_this) => {
-                        console.log('Il valore i vale:', _this.i);
+                    () => {
+                        console.log('Il valore i vale:', this.i);
                     },
-                    (_this) => {
-                        if (_this.i >= 100) _this.finish();
+                    () => {
+                        if (this.i >= 100) this.finish();
                         else {
-                            _this.i++;
-                            console.log('CONTANDO:', _this.i);
+                            this.i++;
+                            console.log('CONTANDO:', this.i);
                         }
                     },
-                    (_this) => { }
+                    () => { }
                 )
             ]
         )

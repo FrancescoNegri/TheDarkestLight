@@ -1,4 +1,4 @@
-class Entity extends Phaser.Physics.Arcade.Sprite {
+class TDLSprite extends Phaser.Physics.Arcade.Sprite {
     /**
 		 * Permette di reimpostare gli asset del frame.
 		 *

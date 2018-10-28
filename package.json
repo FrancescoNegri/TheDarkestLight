@@ -7,7 +7,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build-index": "node utility/indexBuilder.js",
-        "browser": " npm run build-index && cordova run browser -- --live-reload"
+        "browser": " npm run build-index && cordova run browser -- --live-reload",
+        "docs": "jsdoc -d ./docs -r ./www/lib/ ./www/js"
     },
     "author": "Apache Cordova Team",
     "license": "Apache-2.0",

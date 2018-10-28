@@ -1,4 +1,4 @@
-class TDLObject extends Entity {
+class TDLObject extends TDLSprite {
     constructor(room, x, y, texture, layer, hasBody) {
         super(
             room,

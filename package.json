@@ -8,7 +8,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "build-index": "node utility/indexBuilder.js",
         "browser": " npm run build-index && cordova run browser -- --live-reload",
-        "docs": "jsdoc -d ./docs -r ./www/lib/ ./www/js"
+        "docs": "./node_modules/.bin/jsdoc -d ./docs -t ./node_modules/ink-docstrap/template -R README.md -r ./www/TDLib/"
     },
     "author": "Apache Cordova Team",
     "license": "Apache-2.0",
@@ -41,6 +41,7 @@
     },
     "devDependencies": {
         "glob": "^5.0.15",
+        "ink-docstrap": "^1.3.2",
         "jsdoc": "^3.5.5"
     }
 }

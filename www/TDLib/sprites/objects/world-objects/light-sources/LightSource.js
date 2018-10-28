@@ -15,7 +15,7 @@ class LightSource extends WorldObject {
      * @param {Object} offset - Offset of the graphic light respect the center of the sprite.
      * @param {number} offset.x - X offset.
      * @param {number} offset.y - Y offset.
-     * @param {Object[]} allowedBehaviours - List of names of the allowed Behaviour for this light
+     * @param {Array} allowedBehaviours - List of names of the allowed Behaviour for this light
      * @param {boolean} [isOn=true] - Light created as switched on or off.
      */
     constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours, isOn = true) {

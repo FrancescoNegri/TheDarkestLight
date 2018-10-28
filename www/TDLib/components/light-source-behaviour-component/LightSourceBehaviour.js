@@ -1,5 +1,6 @@
 /**
  * Class representing a behaviour of a LightSource.
+ * @memberof TDLib.Components.LightSourceBehaviours
  */
 class LightSourceBehaviour {
     /**
@@ -15,7 +16,7 @@ class LightSourceBehaviour {
 
     /**
      * Start a behaviour.
-     * @param {*} callback - The callback to execute once the behaviour is started.
+     * @param {function} callback - The callback to execute once the behaviour is started.
      */
     start(callback) {
         if (this.calledByBehaviour === null) {
@@ -48,7 +49,7 @@ class LightSourceBehaviour {
 
     /**
      * Stop a behaviour.
-     * @param {*} callback - The callback to execute once the behaviour is stopped.
+     * @param {function} callback - The callback to execute once the behaviour is stopped.
      */
     stop(callback) {
         if (!this.isStarting) {

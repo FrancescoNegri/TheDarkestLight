@@ -1,30 +1,30 @@
 /**
  * The actions namespace.
- * @namespace Components.Actions
+ * @namespace TDLib.Components.Actions
  */
 
 /**
  * Class representing a component responsible of every TDLAction preformed.
- * @extends Components.TDLComponent
- * @memberof Components
+ * @extends TDLib.Components.TDLComponent
+ * @memberof TDLib.Components
  */
 class ActionComponent extends TDLComponent {
     /**
      * Create an ActionComponent.
-     * @param {TDLSprite} actor - The performer of the action.
+     * @param {TDLib.Sprites.TDLSprite} actor - The performer of the action.
      */
     constructor(actor) {
         super(actor);
 
         /**
          * The performer of the action.
-         * @type {TDLSprite}
+         * @type {TDLib.Sprites.TDLSprite}
          */
         this.actor = actor;
 
         /**
          * The default action to be played.
-         * @type {Components.Actions.TDLAction}
+         * @type {TDLib.Components.Actions.TDLAction}
          */
         this.defaultAction = new AIdle(this, this.actor);
 
@@ -60,7 +60,7 @@ class ActionComponent extends TDLComponent {
 
     /**
      * Start a new action or add that to the queue.
-     * @param {TDLAction} action - The action to add or execute.
+     * @param {TDLib.Components.Actions.TDLAction} action - The action to add or execute.
      * @param {Object} config - The config object for the action.
      * @param {Object} config.target - The target of the action.
      * @param {number} config.target.x - The x of the target of the action.
@@ -97,6 +97,7 @@ class ActionComponent extends TDLComponent {
 
     /**
      * Remove a completed action from the queue.
+     * @private
      */
     remove() {
         this._queue.shift();
@@ -107,6 +108,7 @@ class ActionComponent extends TDLComponent {
 
     /**
      * Update the currently performed action.
+     * @private
      */
     update() {
         if (this._queue.length <= 0) this._queue.push(this.defaultAction);

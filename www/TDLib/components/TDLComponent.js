@@ -1,16 +1,16 @@
 /**
  * The namespace of components.
- * @namespace Components
+ * @namespace TDLib.Components
  */
 
 /**
  * Class representing a generic TDLComponent. A TDLComponent extends the members and methods of a TDLSprite which uses it.
- * @memberof Components
+ * @memberof TDLib.Components
  */
 class TDLComponent {
     /**
      * Creates a new TDLComponent.
-     * @param {TDLSprite} gameObject - The TDLSprite which owns the component.
+     * @param {TDLib.Sprites.TDLSprite} gameObject - The TDLSprite which owns the component.
      */
     constructor(gameObject) {
 
@@ -22,7 +22,7 @@ class TDLComponent {
 
         /**
          * The TDLSprite which owns the component.
-         * @type {TDLSprite}
+         * @type {TDLib.Sprites.TDLSprite}
          */
         this.gameObject = gameObject;
     }

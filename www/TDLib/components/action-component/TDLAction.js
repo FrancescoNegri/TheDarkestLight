@@ -2,7 +2,7 @@
 
 /**
  * Class representing a TDLAction.
- * @memberof Components.Actions
+ * @memberof TDLib.Components.Actions
  */
 class TDLAction {
     /**
@@ -16,7 +16,7 @@ class TDLAction {
     constructor(invoker, actor, config = { }) {
         /**
          * The invoker of the action.
-         * @type {Components.ActionComponent|Components.Actions.TDLAction}
+         * @type {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction}
          */
         this.invoker = invoker;
         
@@ -28,13 +28,13 @@ class TDLAction {
 
         /**
          * The actor who performs the action.
-         * @type {TDLSprite}
+         * @type {TDLib.Sprites.TDLSprite}
          */
         this.actor = actor;
 
         /**
          * The target of the action.
-         * @type {Object|TDLSprite}
+         * @type {Object|TDLib.Sprites.TDLSprite}
          */
         this.target = config.target;
 
@@ -115,6 +115,7 @@ class TDLAction {
 
     /**
      * Abort an uncompleted action.
+     * @private
      */
     abort() {
         console.log(this.name, 'aborted');
@@ -123,6 +124,7 @@ class TDLAction {
 
     /**
      * Start an action.
+     * @private
      */
     start() {
         console.log(this.name, 'started');
@@ -131,6 +133,7 @@ class TDLAction {
 
     /**
      * Finish a completed action.
+     * @private
      */
     finish() {
         this._queue[0].finish();
@@ -138,6 +141,7 @@ class TDLAction {
 
     /**
      * Remove a completed action from the queue.
+     * @private
      */
     remove() {
         this._queue.shift();
@@ -150,6 +154,7 @@ class TDLAction {
 
     /**
      * Pause an action.
+     * @private
      */
     pause() {
         console.log(this.name, 'paused');
@@ -159,6 +164,7 @@ class TDLAction {
 
     /**
      * Resume a paused action.
+     * @private
      */
     resume() {
         console.log(this.name, 'resumed');
@@ -168,6 +174,7 @@ class TDLAction {
 
     /**
      * Update the currently performed action.
+     * @private
      */
     update() {
         this._queue[0].update();

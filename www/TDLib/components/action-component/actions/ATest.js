@@ -7,7 +7,8 @@ class ATest extends TDLAction {
                     this,
                     () => {
                         this.startingX = this.actor.x;
-                        this.actor.body.setVelocity(120);
+                        if (this.actor.facing == TDLCharacter.FACING().RIGHT) this.actor.body.setVelocity(120);
+                        else if (this.actor.facing == TDLCharacter.FACING().LEFT) this.actor.body.setVelocity(-120);
                         this.actor.anims.play('walk');
                     },
                     () => {
@@ -15,7 +16,12 @@ class ATest extends TDLAction {
                         this.actor.anims.play('idle');
                     },
                     () => {
-                        if (this.actor.x >= this.startingX + 350) this.finish();
+                        if (this.actor.facing == TDLCharacter.FACING().RIGHT) {
+                            if (this.actor.x >= this.startingX + 350) this.finish();
+                        }
+                        else if (this.actor.facing == TDLCharacter.FACING().LEFT) {
+                            if (this.actor.x <= this.startingX - 350) this.finish();
+                        }
                     },
                     () => { }
                 )

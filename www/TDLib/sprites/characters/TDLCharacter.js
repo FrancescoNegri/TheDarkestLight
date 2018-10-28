@@ -1,6 +1,12 @@
 /**
+ * The characters namespace.
+ * @namespace TDLib.Sprites.Characters
+ */
+
+/**
  * Class representing a TDLCharacter.
- * @extends TDLSprite
+ * @extends TDLib.Sprites.TDLSprite
+ * @memberof TDLib.Sprites.Characters
  */
 class TDLCharacter extends TDLSprite {
     /**
@@ -19,5 +25,30 @@ class TDLCharacter extends TDLSprite {
          * @type {Components.ActionComponent}
          */
         this.actions = new ActionComponent(this);
+
+        /**
+         * The facing of the character.
+         * @type {TDLCharacter.FACING}
+         */
+        this.facing = TDLCharacter.FACING().RIGHT;
+    }
+
+    static FACING() {
+        return {
+            RIGHT: 'facing_right',
+            LEFT: 'facing_left'
+        }
+    }
+
+    create() {
+        super.create();
+
+        this.room.input.on('pointerdown', function (pointer) {
+            if (pointer.camera == this.room.cameras.main) this.actions.add(AFaceTo, { target: { x: pointer.worldX } });
+        }, this);
+    }
+
+    update() {
+        super.update();
     }
 }

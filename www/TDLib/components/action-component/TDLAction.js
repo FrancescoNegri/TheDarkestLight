@@ -19,7 +19,7 @@ class TDLAction {
          * @type {Components.ActionComponent|Components.Actions.TDLAction}
          */
         this.invoker = invoker;
-
+        
         /**
          * The name of the action.
          * @type {string}

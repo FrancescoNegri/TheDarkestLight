@@ -1,3 +1,19 @@
+/**
+ * The Darkest Lib.
+ * @namespace TDLib
+ */
+
+/**
+ * The actions namespace.
+ * @namespace TDLib.Sprites
+ */
+
+/**
+ * Class representing a TDLSprite.
+ * @extends Phaser.Physics.Arcade.Sprite
+ * @memberof TDLib.Sprites
+ */
+
 class TDLSprite extends Phaser.Physics.Arcade.Sprite {
     /**
 		 * Permette di reimpostare gli asset del frame.

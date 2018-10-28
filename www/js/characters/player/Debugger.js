@@ -26,6 +26,7 @@ class Debugger extends Player {
     }
 
     update() {
+        super.update();
         /*this.body.setVelocity(0);
 
         if (this.room.cursors.left.isDown) {

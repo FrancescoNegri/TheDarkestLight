@@ -37,7 +37,7 @@ getDirectories('../www', function (err, res) {
         basePath = 'www/'
     }
 
-    getDirectories(basePath + 'lib', function (err, res) {
+    getDirectories(basePath + 'TDLib', function (err, res) {
         var fileArray = [];
         if (err) {
             console.log('Error', err);

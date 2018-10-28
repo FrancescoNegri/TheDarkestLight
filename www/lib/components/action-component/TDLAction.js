@@ -7,7 +7,7 @@
 class TDLAction {
     /**
      * Start a new TDLAction.
-     * @param {ActionComponent|TDLAction} invoker - The invoker of the action.
+     * @param {Components.ActionComponent|Components.Actions.TDLAction} invoker - The invoker of the action.
      * @param {TDLSprite} actor - The actor who performs the action.
      * @param {Object} config - The config object for the action.
      * @param {Object} config.target - The target of the action.
@@ -16,7 +16,7 @@ class TDLAction {
     constructor(invoker, actor, config = { }) {
         /**
          * The invoker of the action.
-         * @type {ActionComponent|TDLAction}
+         * @type {Components.ActionComponent|Components.Actions.TDLAction}
          */
         this.invoker = invoker;
 
@@ -47,8 +47,9 @@ class TDLAction {
         /**
          * The queue of actions.
          * @type {Array}
+         * @private
          */
-        this.queue = [];
+        this._queue = [];
 
         /**
          * Tells if the action has been paused.
@@ -62,7 +63,7 @@ class TDLAction {
      * @param {Array} queue - The queue of actions to add.
      */
     addQueue(queue) {
-        this.queue = queue;
+        this._queue = queue;
     }
 
     /**
@@ -117,7 +118,7 @@ class TDLAction {
      */
     abort() {
         console.log(this.name, 'aborted');
-        this.queue[0].abort();
+        this._queue[0].abort();
     }
 
     /**
@@ -125,26 +126,26 @@ class TDLAction {
      */
     start() {
         console.log(this.name, 'started');
-        this.queue[0].start();
+        this._queue[0].start();
     }
 
     /**
      * Finish a completed action.
      */
     finish() {
-        this.queue[0].finish();
+        this._queue[0].finish();
     }
 
     /**
      * Remove a completed action from the queue.
      */
     remove() {
-        this.queue.shift();
-        if (this.queue.length <= 0) {
+        this._queue.shift();
+        if (this._queue.length <= 0) {
             console.log(this.name, 'finished');
             this.invoker.remove();
         }
-        else this.queue[0].start();
+        else this._queue[0].start();
     }
 
     /**
@@ -152,7 +153,7 @@ class TDLAction {
      */
     pause() {
         console.log(this.name, 'paused');
-        this.queue[0].pause();
+        this._queue[0].pause();
         this.isPaused = true;
     }
 
@@ -162,13 +163,13 @@ class TDLAction {
     resume() {
         console.log(this.name, 'resumed');
         this.isPaused = false;
-        this.queue[0].resume();
+        this._queue[0].resume();
     }
 
     /**
      * Update the currently performed action.
      */
     update() {
-        this.queue[0].update();
+        this._queue[0].update();
     }
 }

@@ -54,11 +54,13 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
 
         this.room = room;
         this.name = this.constructor.name;
+        
+        this.behaviour = new SpriteBehaviourComponent(this, behaviourType);
 
         /**
         * Indica il tipo di interazione possibile con l'oggetto. INERT\EXAMINABLE\INTERACTIVE
         */
-        this.behaviourType = behaviourType;
+        //this.behaviour.type = behaviourType; --> dentro a this.behaviour.type
 
 		/**
 		 * Testo visualizzato sulla testa del player nel momento in cui si osserva un oggetto alla luce (ovvero entro il livello di minLightLevelToObserve).
@@ -123,8 +125,6 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
 		 */
         this.alreadyExaminedOrInteracted;
 
-        this.behaviour = new EntityBehaviourComponent(this);
-
         this.room.add.existing(this);
         if (hasBody) this.room.physics.add.existing(this);
 
@@ -141,7 +141,7 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
     }
 
     create() {
-        console.log('Created:', this.name, 'with', this.behaviourType, 'behaviour');
+        console.log('Created:', this.name, 'with', this.behaviour.type, 'behaviour');
     }
 
     update() {

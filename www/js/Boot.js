@@ -11,6 +11,6 @@ class Boot extends Phaser.Scene {
     }
 
     configPlugins() {
-        this.room.scene = GAME.scene;
+        this.room.configure(GAME.scene);
     }
 }

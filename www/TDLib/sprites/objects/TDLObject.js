@@ -19,6 +19,6 @@ class TDLObject extends TDLSprite {
      * @param {*} hasBody - Specify if the object has a body and is subjected to physics.
      */
     constructor(room, x, y, texture, layer, hasBody) {
-        super(...arguments, EntityBehaviourComponent.EXAMINABLE);
+        super(...arguments, SpriteBehaviourComponent.EXAMINABLE);
     }
 }

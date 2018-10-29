@@ -23,13 +23,14 @@ document.addEventListener('deviceready', function () {
         pixelArt: true,
         plugins: {
             global: [
-                { key: 'RoomManager', plugin: RoomManager, start: false, mapping: 'room' }
+                { key: 'RoomManager', plugin: RoomManager, start: false, mapping: 'room' },
+                { key: 'CursorManager', plugin: CursorManager, start: false, mapping: 'cursors' }
             ],
             scene: [
                 { key: 'UpdatePlugin', plugin: UpdatePlugin, mapping: 'updates' },
-                { key: 'LightSourceManager', plugin: LightSourceManager, mapping: 'lightSource'},
-                { key: 'LayerManager', plugin: LayerManager, mapping: 'layers'},
-                { key: 'ActionManager', plugin: ActionManager, mapping: 'actions'}
+                { key: 'LightSourceManager', plugin: LightSourceManager, mapping: 'lightSource' },
+                { key: 'LayerManager', plugin: LayerManager, mapping: 'layers' },
+                { key: 'ActionManager', plugin: ActionManager, mapping: 'actions' }
             ]
         }
     };

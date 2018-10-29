@@ -32,7 +32,7 @@ class LightSource extends WorldObject {
         }
 
         this.room.lightSource.add(this);
-        this.behaviour = new LightSourceBehaviourComponent(this, allowedBehaviours);
+        this.lightBehaviour = new LightSourceBehaviourComponent(this, allowedBehaviours);
     }
 
     /**
@@ -60,7 +60,7 @@ class LightSource extends WorldObject {
      */
     turnOff(stopBehaviours = true) {
 
-        if (stopBehaviours) this.behaviour.stopAllBehaviours();
+        if (stopBehaviours) this.lightBehaviour.stopAllBehaviours();
         if (this.isOn) {
             var diffusedLightindex = this.room.lightSource.diffusedLights.indexOf(this.diffusedLight);
             if (diffusedLightindex > -1) {
@@ -85,7 +85,7 @@ class LightSource extends WorldObject {
      * @param {number} [maxTime=400] - Maximum time gap between two switch in milliseconds.
      */
     startFlickering(minTime, maxTime) {
-        this.behaviour.hardFlickering.start(...arguments);
+        this.lightBehaviour.hardFlickering.start(...arguments);
     }
 
     /**
@@ -93,7 +93,7 @@ class LightSource extends WorldObject {
      * @param {string} [finalState='on'] - (on/off) Set the light switched on or off at the end of the effect. 
      */
     stopFlickering(finalState) {
-        this.behaviour.hardFlickering.stop(...arguments);
+        this.lightBehaviour.hardFlickering.stop(...arguments);
     }
 
     /**
@@ -108,7 +108,7 @@ class LightSource extends WorldObject {
      * @param {number} [yMaxOscillation=-1] - Maximum displcement on Y axis in pixels.
      */
     startTrembling(minTime, maxTime, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
-        this.behaviour.trembling.start(...arguments);
+        this.lightBehaviour.trembling.start(...arguments);
     }
     
     /**
@@ -116,7 +116,7 @@ class LightSource extends WorldObject {
      * @param {boolean} [backToInitialPosition=true] - Back to the sarting position of the light at the end of the effect.
      */
     stopTrembling(backToInitialPosition) {
-        this.behaviour.trembling.stop(...arguments);
+        this.lightBehaviour.trembling.stop(...arguments);
     }
 
     /**
@@ -127,7 +127,7 @@ class LightSource extends WorldObject {
      * @param {number} [maxPercentageIntensity=1] - Minimum light intensity reacheable during the effect. Value between 0 and 1.
      */
     startSoftFlickering(minTime, maxTime, minPercentageIntensity, maxPercentageIntensity) {
-        this.behaviour.softFlickering.start(...arguments);
+        this.lightBehaviour.softFlickering.start(...arguments);
     }
 
     /**
@@ -135,7 +135,7 @@ class LightSource extends WorldObject {
      * @param {boolean} [backToInitialIntensity=true] - Back to the initial light position before the effect.
      */
     stopSoftFlickering(backToInitialIntensity) {
-        this.behaviour.softFlickering.stop(...arguments);
+        this.lightBehaviour.softFlickering.stop(...arguments);
     }
 
     /**
@@ -154,7 +154,7 @@ class LightSource extends WorldObject {
      * @param {number} [yMaxOscillation=-1] - Maximum displcement on Y axis in pixels.
      */
     startSoftFlickeringAndTrembling(minTimeSoftFlickering, maxTimeSoftFlickering, minPercentageIntensity, maxPercentageIntensity, minTimeTrembling, maxTimeTrembling, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
-        this.behaviour.softFlickeringAndTrembling.start(...arguments);
+        this.lightBehaviour.softFlickeringAndTrembling.start(...arguments);
     }
 
     /**
@@ -163,7 +163,7 @@ class LightSource extends WorldObject {
      * @param {boolean} [backToInitialPosition=true] - Back to the sarting position of the light at the end of the effect.
      */
     stopSoftFlickeringAndTrembling(backToInitialIntensity, backToInitialPosition) {
-        this.behaviour.softFlickeringAndTrembling.stop(...arguments);
+        this.lightBehaviour.softFlickeringAndTrembling.stop(...arguments);
     }
 
     /**
@@ -180,7 +180,7 @@ class LightSource extends WorldObject {
      * @param {number} [yMaxOscillation=-1] - Maximum displcement on Y axis in pixels.
      */
     startHardFlickeringAndTrembling(minTimeHardFlickering, maxTimeHardFlickering, minTimeTrembling, maxTimeTrembling, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
-        this.behaviour.hardFlickeringAndTrembling.start(...arguments);
+        this.lightBehaviour.hardFlickeringAndTrembling.start(...arguments);
     }
 
     /**
@@ -189,7 +189,7 @@ class LightSource extends WorldObject {
      * @param {boolean} [backToInitialPosition=true] - Back to the sarting position of the light at the end of the effect.
      */
     stopHardFlickeringAndTrembling(finalState, backToInitialPosition) {
-        this.behaviour.hardFlickeringAndTrembling.stop(...arguments);
+        this.lightBehaviour.hardFlickeringAndTrembling.stop(...arguments);
     }
 
 

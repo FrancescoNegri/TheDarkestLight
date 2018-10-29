@@ -18,7 +18,7 @@ class TDLCharacter extends TDLSprite {
      * @param {string} layer - The character's layer.
      */
     constructor(room, x, y, texture, layer) {
-        super(...arguments, true, EntityBehaviourComponent.INTERACTIVE);
+        super(...arguments, true, SpriteBehaviourComponent.INTERACTIVE);
 
         /**
          * The ActionComponent for this character.
@@ -43,9 +43,9 @@ class TDLCharacter extends TDLSprite {
     create() {
         super.create();
 
-        this.room.input.on('pointerdown', function (pointer) {
+        /*this.room.input.on('pointerdown', function (pointer) {
             if (pointer.camera == this.room.cameras.main) this.actions.add(AFaceTo, { target: { x: pointer.worldX } });
-        }, this);
+        }, this);*/
     }
 
     update() {

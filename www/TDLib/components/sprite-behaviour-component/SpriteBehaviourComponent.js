@@ -1,10 +1,12 @@
-class EntityBehaviourComponent extends TDLComponent {
-    constructor(gameObject) {
+class SpriteBehaviourComponent extends TDLComponent {
+    constructor(gameObject, type) {
         super(gameObject);
 
         (typeof this.gameObject.room.player === 'undefined') ? this.player = this.gameObject : this.player = this.gameObject.room.player;
         this.interact = {};
         this.examine = {};
+
+        this.type = type;
 
         this.addBehaviours();
     }
@@ -25,11 +27,9 @@ class EntityBehaviourComponent extends TDLComponent {
         return 'INVENTORY';
     }
 
-    //RIFARE TUTTI I CURSORI: SONO TROPPO BLOCCATI
-
     addBehaviours() {
         //Se l'oggetto è osservabile (cioè esaminabile o interagibile) setto il cursore appropriato 
-        if (this.gameObject.behaviourType === EntityBehaviourComponent.EXAMINABLE || this.gameObject.behaviourType === EntityBehaviourComponent.INTERACTIVE) {
+        if (this.type === SpriteBehaviourComponent.EXAMINABLE || this.type === SpriteBehaviourComponent.INTERACTIVE) {
 
             this.observe = new ObservableBehaviour(this);
 

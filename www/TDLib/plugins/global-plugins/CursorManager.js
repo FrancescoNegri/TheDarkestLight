@@ -69,6 +69,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
 
     /**
      * The key of the inert cursor.
+     * @type {string}
      */
     static get DEFAULT_CURSOR() {
         return 'cursorMove';
@@ -76,6 +77,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
 
     /**
      * The key of the examine cursor.
+     * @type {string}
      */
     static get EXAMINABLE_CURSOR() {
         return 'cursorExamine';
@@ -83,6 +85,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
 
     /**
      * The key of the interact cursor.
+     * @type {string}
      */
     static get INTERACTIVE_CURSOR() {
         return 'cursorInteract';
@@ -90,6 +93,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
 
     /**
      * The key of the hold cursor.
+     * @type {string}
      */
     static get HOLD_CURSOR() {
         return 'cursorHold';
@@ -97,6 +101,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
 
     /**
      * The key of the talk cursor.
+     * @type {string}
      */
     static get TALKABLE_CURSOR() {
         return 'cursorTalk';
@@ -104,6 +109,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
 
     /**
      * The key of the choice cursor.
+     * @type {string}
      */
     static get CHOICE_CURSOR() {
         return 'cursorChoice';
@@ -111,6 +117,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
 
     /**
      * The key of the choice pressed cursor.
+     * @type {string}
      */
     static get CHOICE_PRESSED_CURSOR() {
         return 'cursorChoicePressed';

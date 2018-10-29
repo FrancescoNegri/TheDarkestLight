@@ -45,6 +45,7 @@ class Room extends Phaser.Scene {
     create(player) {
         this.player = player;
         this.lights.enable(); //Boot Phaser's LightManager
+        this.scene.bringToTop(CursorManager.CURSOR_SCENE_KEY); //Add the cursor to the Room
         
         this.setCameraViewport();
         this.createRoom();

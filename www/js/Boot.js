@@ -3,14 +3,16 @@ class Boot extends Phaser.Scene {
         super('Boot');
     }
 
+    preload() {
+    }
+
     create() {
         this.configPlugins();
-
-        //this.input.setDefaultCursor('url(assets/Cursors/CursorMove.cur), pointer');
         this.room.add('TestRoom', TestRoom, true);
     }
 
     configPlugins() {
+        this.cursors.configure(GAME.scene);
         this.room.configure(GAME.scene);
     }
 }

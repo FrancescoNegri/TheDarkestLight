@@ -7,7 +7,7 @@
 class TDLAction {
     /**
      * Start a new TDLAction.
-     * @param {Components.ActionComponent|Components.Actions.TDLAction} invoker - The invoker of the action.
+     * @param {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction} invoker - The invoker of the action.
      * @param {TDLSprite} actor - The actor who performs the action.
      * @param {Object} config - The config object for the action.
      * @param {Object} config.target - The target of the action.

@@ -1,3 +1,8 @@
+/**
+ * Class representing any LightSource object
+ * @extends TDlib.TDLSprites.TDLObjects.WorldObjects.WorldObject
+ * @memberof TDlib.TDLSprites.TDLObjects.WorldObjects.lightSources
+ */
 class LightSource extends WorldObject {
     /**
      * constructor of the class
@@ -80,7 +85,7 @@ class LightSource extends WorldObject {
     }
 
     /**
-     * Start the flickering behaviour if it's an allowed behavior.
+     * Start the hard flickering behaviour if it's an allowed behavior.
      * @param {number} [minTime=10] - Minimum time gap between two switch in milliseconds.
      * @param {number} [maxTime=400] - Maximum time gap between two switch in milliseconds.
      */

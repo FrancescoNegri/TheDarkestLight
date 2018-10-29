@@ -1,5 +1,7 @@
 /**
  * Class representing a soft flickering behaviour of a LightSource. 
+ * @extends TDLib.Components.LightSourceBehaviours.LightSourceBehaviour
+ * @memberof TDLib.Components.LightSourceBehaviour
  */
 class SoftFlickeringBehaviour extends LightSourceBehaviour {
     /**

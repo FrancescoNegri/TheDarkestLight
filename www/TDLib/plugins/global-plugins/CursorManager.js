@@ -27,6 +27,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
     /**
      * It's a Phaser.Scene representing the scene containing the cursor which will be put on the rooms level.
      * @type {Phaser.Scene}
+     * @private
      */
     static CURSOR_SCENE() {
         return class CursorScene extends Phaser.Scene {

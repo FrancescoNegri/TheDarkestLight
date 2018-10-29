@@ -1,5 +1,7 @@
 /**
- * Class representing a trembling behaviour of a LightSource. 
+ * Class representing a trembling behaviour of a LightSource.
+ * @extends TDLib.Components.LightSourceBehaviours.LightSourceBehaviour
+ * @memberof TDLib.Components.LightSourceBehaviour
  */
 class TremblingBehaviour extends LightSourceBehaviour {
     /**

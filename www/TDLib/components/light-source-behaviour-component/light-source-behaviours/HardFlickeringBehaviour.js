@@ -1,8 +1,24 @@
+/**
+ * Class representing a hard flickering behaviour of a LightSource. 
+ * @extends TDLib.Components.LightSourceBehaviours.LightSourceBehaviour
+ * @memberof TDLib.Components.LightSourceBehaviour
+ */
 class HardFlickeringBehaviour extends LightSourceBehaviour {
+    
+    /**
+     * Create a SoftFlickeringAndTremblingBehaviour.
+     * @param {LightSourceBehaviourComponent} component - The component which called the behaviour.
+     * @param {LightSourceBehaviour} [calledByBehaviour=null] - The behaviour which is invoking this as a subBehaviour, if exists.
+     */
     constructor(component, calledByBehaviour = null) {
         super(component, calledByBehaviour);
     }
 
+    /**
+     * Start the hard flickering behaviour if it's an allowed behavior.
+     * @param {number} [minTime=10] - Minimum time gap between two switch in milliseconds.
+     * @param {number} [maxTime=400] - Maximum time gap between two switch in milliseconds.
+     */
     start(minTime = 10, maxTime = 400) {
         super.start(() => {
             /*var minTime = minTime;
@@ -34,6 +50,10 @@ class HardFlickeringBehaviour extends LightSourceBehaviour {
         });
     }
 
+    /**
+     * Stop of the flickering effect.
+     * @param {string} [finalState='on'] - (on/off) Set the light switched on or off at the end of the effect. 
+     */
     stop(finalState = 'on') {
         super.stop(() => {
             if (finalState == 'on') this.component.gameObject.turnOn();

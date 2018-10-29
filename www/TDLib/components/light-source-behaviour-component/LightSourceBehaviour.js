@@ -9,8 +9,19 @@ class LightSourceBehaviour {
      * @param {LightSourceBehaviour} [calledByBehaviour=null] - The behaviour which is invoking this as a subBehaviour, if exists.
      */
     constructor(component, calledByBehaviour = null) {
+        /**
+         * The name of the lightSourceBehaviour
+         */
         this.name = this.constructor.name;
+
+        /**
+         * Specify the component which own this lightSourceBehaviour
+         */
         this.component = component;
+
+        /**
+         * Specify the complex behaviour of which this lightSourceBehaviour is part
+         */
         this.calledByBehaviour = calledByBehaviour;
     }
 

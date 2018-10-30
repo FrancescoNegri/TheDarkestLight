@@ -57,13 +57,17 @@ class TestRoom extends Room {
             /*
             this.lamp1.behaviour.stopAllBehaviours();
             this.lamp2.behaviour.stopAllBehaviours();*/
-            this.player.actions.add(ACount, {startingNumber: 34}, ActionComponent.PAUSE_MODE);
+            //this.player.actions.add(ACount, {startingNumber: 34}, ActionComponent.PAUSE_MODE);
+            this.player.isBlocked = true;
+            this.cursors.hideCursor();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
             //this.lamp2.startFlickering(1,50);
             /*this.lamp1.turnOff();
             this.lamp2.turnOff();*/
-            this.player.actions.add(AComposedTest, {startingNumber: 10});
+            //this.player.actions.add(AComposedTest, {startingNumber: 10});
+            this.player.isBlocked = false;
+            this.cursors.showCursor();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
             this.lamp2.startTrembling();

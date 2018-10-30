@@ -26,7 +26,9 @@ class ObservableBehaviour extends SpriteBehaviour {
         }.bind(this));
     }
 
-    //Delete the timer which starts the AObserve action.
+    /**
+     * Delete the timer which starts the AObserve action.
+     */
     abort() {
         this._timer.remove(false);
     }

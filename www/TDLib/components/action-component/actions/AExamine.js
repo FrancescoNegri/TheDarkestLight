@@ -7,11 +7,11 @@ class AExamine extends TDLAction {
                 new TDLAction.BaseAction(
                     this,
                     () => {
-                        console.log(this.config.target.examineOrInteractText);
+                        alert(this.config.target.examineOrInteractText);
                         this.finish();
                     }
                 )
             ]
         )
     }
-}
+}   

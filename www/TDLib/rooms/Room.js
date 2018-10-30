@@ -3,6 +3,11 @@ class Room extends Phaser.Scene {
         super(sceneKey);
 
         this.assets = { raw: rawAssets, array: [] };
+        this.averageLightsContribute;
+        this.layers;
+        this.map;
+        this.name = this.constructor.name;
+        this.player;
     }
 
     preload() {
@@ -46,7 +51,7 @@ class Room extends Phaser.Scene {
         this.player = player;
         this.lights.enable(); //Boot Phaser's LightManager
         this.scene.bringToTop(CursorManager.CURSOR_SCENE_KEY); //Add the cursor to the Room
-        
+
         this.setCameraViewport();
         this.createRoom();
         this.applyBorderMasks();
@@ -85,7 +90,7 @@ class Room extends Phaser.Scene {
 
     update() {
         this.updateMasksByLightDiffusion();
-        this.lightsContribute = this.lightSource.calculateLightsContribuitePoint(this.player);
+        //this.lightsContribute = this.lightSource.calculateLightsContribuitePoint(this.player);
 
         //Updates all Actions in  every ActionComponent (if present)
         this.children.list.forEach(element => {
@@ -96,8 +101,8 @@ class Room extends Phaser.Scene {
     }
 
     updateMasksByLightDiffusion() {
-        var averageLightsContribute = this.lightSource.calculateAverageLightsContribute();
-        this.layers.wallsMaskLayer.setAlpha(1 - averageLightsContribute);
+        this.averageLightsContribute = this.lightSource.calculateAverageLightsContribute();
+        this.layers.wallsMaskLayer.setAlpha(1 - this.averageLightsContribute);
     }
 
 }

@@ -19,6 +19,7 @@ class LightSourceManager extends TDLRoomPlugin {
         return source;
     }
 
+    //Le luci che flickerano o con comportamenti strani vanno contate?
     calculateLightsContribuitePoint(target) {
         var singleLightContributeAccumulator = 0;
         this.diffusedLights.forEach(light => {

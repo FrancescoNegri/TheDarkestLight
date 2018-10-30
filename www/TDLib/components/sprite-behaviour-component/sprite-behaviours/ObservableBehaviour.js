@@ -1,6 +1,8 @@
 class ObservableBehaviour extends SpriteBehaviour {
     constructor(component) {
         super(component);
+
+        this._timer;
     }
 
     add() {
@@ -9,8 +11,8 @@ class ObservableBehaviour extends SpriteBehaviour {
         this.gameObject.on('pointerover', function (pointer) {
             this.cursors.setCursor(this.gameObject);
 
-            this.timer = this.gameObject.room.time.addEvent({
-                delay: ObservableBehaviour.MIN_TIME_TO_OBSERVE * 1000,
+            this._timer = this.gameObject.room.time.addEvent({
+                delay: this.gameObject.minTimeToObserve,
                 callback: () => {
                     if (!this.room.player.isBlocked) this.room.player.actions.add(AObserve, { target: this.gameObject });
                 },
@@ -19,7 +21,7 @@ class ObservableBehaviour extends SpriteBehaviour {
         }.bind(this));
 
         this.gameObject.on('pointerout', function (pointer) {
-            this.timer.remove(false);
+            this._timer.remove(false);
             this.cursors.setCursor();
         }.bind(this));
     }

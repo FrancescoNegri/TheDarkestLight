@@ -110,7 +110,7 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
 		/**
 		 * E'il tempo minimo di mouse over necessario per far iniziare l'azione di osserva del player.
 		 */
-        this.minTimeToObserve;
+        this.minTimeToObserve = ObservableBehaviour.MIN_TIME_TO_OBSERVE * 1000;
 
 		/**
 		 * Indica che il giocatore ha già osservato l'oggetto quindi non sarà più osservabile fino a quando 

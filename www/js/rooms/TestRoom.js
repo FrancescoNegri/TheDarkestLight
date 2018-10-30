@@ -27,7 +27,7 @@ class TestRoom extends Room {
     }
 
     create() {
-        super.create(new Debugger(this, 100, 250));
+        super.create(new Debugger(this, 300, 250));
 
         this.lamp1 = new TestLamp(this, 200, 96);
         this.lamp2 = new TestLamp(this, 600, 96);

@@ -7,24 +7,27 @@ class HardFlickeringAndTremblingBehaviour extends LightSourceBehaviour {
     
     /**
      * Create a HardFlickeringAndTremblingBehaviour.
-     * @param {LightSourceBehaviourComponent} component - The component which called the behaviour.
-     * @param {LightSourceBehaviour} [calledByBehaviour=null] - The behaviour which is invoking this as a subBehaviour, if exists.
+     * @param {TDlib.Components.LightSourceBehaviours.LightSourceBehaviourComponent} component - The component which called the behaviour.
+     * @param {TDlib.Components.LightSourceBehaviours.LightSourceBehaviour} [calledByBehaviour=null] - The behaviour which is invoking this as a subBehaviour, if exists.
      */
     constructor(component, calledByBehaviour = null) {
         super(component, calledByBehaviour);
         
         /**
          * Set as defined the runningSubBehaviours array 
+         * @type {Array}
          */
         this.runningSubBehaviours = [];
         
         /**
          * Create statically hardFlickeringBehaviour instance that will be a subBehaviour
+         * @type {TDlib.Components.LightSourceBehaviours.HardFlickeringBehaviour}
          */
         this.hardFlickeringBehaviour = new HardFlickeringBehaviour(this.component,this);
         
         /**
          * Create statically tremblingBehaviour instance that will be a subBehaviour
+         * @type {TDlib.Components.LightSourceBehaviours.TremblingBehaviour}
          */
         this.tremblingBehaviour = new TremblingBehaviour(this.component,this);
     }

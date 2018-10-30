@@ -22,6 +22,12 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
          * @type {Phaser.Scenes.SceneManager}
          */
         this.sceneManager;
+
+        /**
+         * Save the last sprite who called the function setCursor().
+         * @type {TDLib.Sprites.TDLSprite}
+         */
+        this.lastTarget;
     }
 
     /**
@@ -135,9 +141,32 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
 
     /**
      * Handle the pointer down event.
+     * @param {TDLib.Sprites.Characters.TDLCharacter} player - The current player.
      */
-    pointerDown() {
-        console.log(this.cursorScene.cursor.texture);
+    pointerDown(player) {
+        if (!player.isBlocked) {
+            switch (this.cursorScene.cursor.texture.key) {
+                case CursorManager.DEFAULT_CURSOR: {
+                    player.actions.add(AWalkTo, { target: { x: player.room.input.activePointer.worldX } });
+                }
+                    break;
+
+                case CursorManager.EXAMINABLE_CURSOR: {
+                    player.actions.add(AExamine, { target: this.lastTarget });
+                }
+                    break;
+
+                case CursorManager.INTERACTIVE_CURSOR: {
+                    player.actions.add(AInteract, { target: this.lastTarget });
+                }
+                    break;
+
+                case CursorManager.TALKABLE_CURSOR: {
+                    player.actions.add(ATalkTo, { target: this.lastTarget });
+                }
+                    break;
+            }
+        }
     }
 
     /**
@@ -168,5 +197,21 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
             }
                 break;
         }
+
+        this.lastTarget = target;
+    }
+
+    /**
+     * Show the cursor.
+     */
+    showCursor() {
+        this.cursorScene.cursor.setVisible(true);
+    }
+
+    /**
+     * Hide the cursor.
+     */
+    hideCursor() {
+        this.cursorScene.cursor.setVisible(false);
     }
 }

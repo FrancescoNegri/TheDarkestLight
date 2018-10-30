@@ -43,9 +43,8 @@ class TDLCharacter extends TDLSprite {
     create() {
         super.create();
 
-        /*this.room.input.on('pointerdown', function (pointer) {
-            if (pointer.camera == this.room.cameras.main) this.actions.add(AFaceTo, { target: { x: pointer.worldX } });
-        }, this);*/
+        this.setCollideWorldBounds(true); 
+        //this.setPipeline('Light2D');
     }
 
     update() {

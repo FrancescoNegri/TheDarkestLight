@@ -1,7 +1,7 @@
 /**
  * Class representing any LightSource object
- * @extends TDlib.TDLSprites.TDLObjects.WorldObjects.WorldObject
- * @memberof TDlib.TDLSprites.TDLObjects.WorldObjects.lightSources
+ * @extends TDlib.Sprites.Objects.WorldObject
+ * @memberof TDlib.Sprites.Objects.WorldObjects.LightSources
  */
 class LightSource extends WorldObject {
     /**

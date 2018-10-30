@@ -63,13 +63,6 @@ class Room extends Phaser.Scene {
         this.physics.world.setBounds(Global.TILE_SIZE, Global.TILE_SIZE, this.layers.wallsLayer.width - 2 * Global.TILE_SIZE, this.layers.wallsLayer.height - 2 * Global.TILE_SIZE);
     }
 
-    createRoom() {
-        this.map = this.make.tilemap({ key: findFileNameFromPath(this.assets.raw.tilemapTiledJSON.path), tileWidth: Global.TILE_SIZE, tileHeight: Global.TILE_SIZE });
-        this.layers.backgroundLayer = this.map.createDynamicLayer('Background', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.background.path)), 0, 0).setPipeline('Light2D');
-        this.layers.wallsLayer = this.map.createDynamicLayer('Walls', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.path)), 0, 0);
-        this.layers.wallsMaskLayer = this.map.createDynamicLayer('WallsMask', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.bPath)), 0, 0);
-    }
-
     setCameraViewport() {
         if (DEVICE == 'MOBILE') {
             this.cameras.main.setPosition((ROOM_FRAME_IN_TILES_MOBILE + INVENTORY_WIDTH_IN_TILES_MOBILE) * Global.TILE_SIZE, (ROOM_FRAME_IN_TILES_MOBILE + INVENTORY_HEIGHT_IN_TILES_MOBILE) * Global.TILE_SIZE);
@@ -81,6 +74,13 @@ class Room extends Phaser.Scene {
         }
     }
 
+    createRoom() {
+        this.map = this.make.tilemap({ key: findFileNameFromPath(this.assets.raw.tilemapTiledJSON.path), tileWidth: Global.TILE_SIZE, tileHeight: Global.TILE_SIZE });
+        this.layers.backgroundLayer = this.map.createDynamicLayer('Background', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.background.path)), 0, 0).setPipeline('Light2D');
+        this.layers.wallsLayer = this.map.createDynamicLayer('Walls', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.path)), 0, 0);
+        this.layers.wallsMaskLayer = this.map.createDynamicLayer('WallsMask', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.bPath)), 0, 0);
+    }
+    
     applyBorderMasks() {
         this.layers.borderMasksLayer.create(0, 0, 'top-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);
         this.layers.borderMasksLayer.create(0, 0, 'left-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);

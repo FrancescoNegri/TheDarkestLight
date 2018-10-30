@@ -59,8 +59,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
             }
 
             update() {
-                this.cursor.x = this.input.activePointer.x;
-                this.cursor.y = this.input.activePointer.y;
+                this.cursor.setPosition(this.input.activePointer.x, this.input.activePointer.y);
             }
 
         }
@@ -152,11 +151,13 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
                     break;
 
                 case CursorManager.EXAMINABLE_CURSOR: {
+                    this.lastTarget.behaviour.observe.abort();
                     player.actions.add(AExamine, { target: this.lastTarget });
                 }
                     break;
 
                 case CursorManager.INTERACTIVE_CURSOR: {
+                    this.lastTarget.behaviour.observe.abort();
                     player.actions.add(AInteract, { target: this.lastTarget });
                 }
                     break;

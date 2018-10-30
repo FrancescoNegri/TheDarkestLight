@@ -26,10 +26,15 @@ class ObservableBehaviour extends SpriteBehaviour {
         }.bind(this));
     }
 
+    //Delete the timer which starts the AObserve action.
+    abort() {
+        this._timer.remove(false);
+    }
+
     /**
 	* E'il tempo minimo di mouse over necessario per far iniziare l'azione di osserva del player in secondi!
 	*/
     static get MIN_TIME_TO_OBSERVE() {
-        return 2;
+        return 1.5;
     }
 }

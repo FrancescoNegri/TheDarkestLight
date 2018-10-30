@@ -7,13 +7,13 @@ class AWalkTo extends TDLAction {
                 new TDLAction.BaseAction(
                     this,
                     () => {
-                            if (this.actor.x < this.target.x) {
-                                this.actor.anims.play('walk');
-                                //this.actor.anims.play('walkRight');
-                                this.actor.body.setVelocity(120);
-                            }
-                        
-                        else 
+                        if (this.actor.x < this.target.x) {
+                            this.actor.anims.play('walk');
+                            //this.actor.anims.play('walkRight');
+                            this.actor.body.setVelocity(120);
+                        }
+
+                        else
                             if (this.actor.x > this.target.x) {
                                 this.actor.anims.play('walk');
                                 //this.actor.anims.play('walkLeft');
@@ -25,7 +25,7 @@ class AWalkTo extends TDLAction {
                         this.actor.body.setVelocity(0);
                     },
                     () => {
-                        if (Math.abs(this.actor.body.x-this.target.x)<10 ) this.finish();
+                        if (Math.abs(this.actor.x - this.target.x) < 1) this.finish();
                     }
                 )
             ]

@@ -1,7 +1,7 @@
 /**
  * Class representing a hard flickering behaviour of a LightSource. 
  * @extends TDLib.Components.LightSourceBehaviours.LightSourceBehaviour
- * @memberof TDLib.Components.LightSourceBehaviour
+ * @memberof TDLib.Components.LightSourceBehaviours
  */
 class HardFlickeringBehaviour extends LightSourceBehaviour {
     

@@ -18,9 +18,26 @@ class AIdle extends TDLAction {
             [
                 new TDLAction.BaseAction(
                     this,
-                    () => { 
+                    () => {
                         this.actor.body.setVelocity(0);
-                        this.actor.anims.play('idle');
+                        switch (this.actor.facing) {
+
+                            case TDLCharacter.FACING().LEFT: {
+                                this.actor.anims.play('idle');
+                                //this.actor.anims.play('idleLeft');
+                                console.log('start idleLeft');
+                                }
+                                break;
+
+                            case TDLCharacter.FACING().RIGHT: {
+                                this.actor.anims.play('idle');
+                                //this.actor.anims.play('idleRight');
+                                console.log('start idleRight');
+                                }
+                                break;
+                            
+                            //possibili altri casi di facing (es girato di spalle o da davanti)
+                        }
                     }
                 )
             ]

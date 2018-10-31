@@ -14,7 +14,7 @@ class ObservableBehaviour extends SpriteBehaviour {
             this._timer = this.gameObject.room.time.addEvent({
                 delay: this.gameObject.minTimeToObserve,
                 callback: () => {
-                    if (!this.room.player.isBlocked) this.room.player.actions.add(AObserve, { target: this.gameObject });
+                    if (this.gameObject != this.room.player && !this.room.player.isBlocked) this.room.player.actions.add(AObserve, { target: this.gameObject });
                 },
                 callbackScope: this
             });

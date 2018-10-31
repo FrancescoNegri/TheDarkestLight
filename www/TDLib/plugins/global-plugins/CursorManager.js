@@ -176,30 +176,32 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
      * @param {TDLib.Components.ActionComponent} target.behaviour - The SpriteBehaviourComponent of the target.
      * @param {string} [target.behaviour.type=SpriteBehaviourComponent.INERT] - The type of the sprite behaviour for this target.
      */
-    setCursor(target = { behaviour: { type: SpriteBehaviourComponent.INERT } }) {
-        switch (target.behaviour.type) {
-            case SpriteBehaviourComponent.INERT: {
-                this.cursorScene.cursor.setTexture(CursorManager.DEFAULT_CURSOR).setOrigin(0.4, 0.33);
-            }
-                break;
+    setCursor(target = { behaviour: { type: SpriteBehaviourComponent.INERT }, room: {} }) {
+        if ('room' in target && target != target.room.player) {
+            switch (target.behaviour.type) {
+                case SpriteBehaviourComponent.INERT: {
+                    this.cursorScene.cursor.setTexture(CursorManager.DEFAULT_CURSOR).setOrigin(0.4, 0.33);
+                }
+                    break;
 
-            case SpriteBehaviourComponent.EXAMINABLE: {
-                this.cursorScene.cursor.setTexture(CursorManager.EXAMINABLE_CURSOR).setOrigin(0.33, 0.29);
-            }
-                break;
+                case SpriteBehaviourComponent.EXAMINABLE: {
+                    this.cursorScene.cursor.setTexture(CursorManager.EXAMINABLE_CURSOR).setOrigin(0.33, 0.29);
+                }
+                    break;
 
-            case SpriteBehaviourComponent.INTERACTIVE: {
-                this.cursorScene.cursor.setTexture(CursorManager.INTERACTIVE_CURSOR).setOrigin(0.4, 0.33);
-            }
-                break;
+                case SpriteBehaviourComponent.INTERACTIVE: {
+                    this.cursorScene.cursor.setTexture(CursorManager.INTERACTIVE_CURSOR).setOrigin(0.4, 0.33);
+                }
+                    break;
 
-            case SpriteBehaviourComponent.TALKABLE: {
-                this.cursorScene.cursor.setTexture(CursorManager.TALKABLE_CURSOR);
+                case SpriteBehaviourComponent.TALKABLE: {
+                    this.cursorScene.cursor.setTexture(CursorManager.TALKABLE_CURSOR);
+                }
+                    break;
             }
-                break;
+
+            this.lastTarget = target;
         }
-
-        this.lastTarget = target;
     }
 
     /**

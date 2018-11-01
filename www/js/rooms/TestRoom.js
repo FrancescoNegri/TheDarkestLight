@@ -1,4 +1,4 @@
-class TestRoom extends Room {
+class TestRoom extends TDLRoom {
 
     constructor() {
         super(

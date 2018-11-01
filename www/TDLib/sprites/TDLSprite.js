@@ -12,30 +12,28 @@
  * Class representing a TDLSprite.
  * @extends Phaser.Physics.Arcade.Sprite
  * @memberof TDLib.Sprites
+ * @since 1.0.0
  */
-
 class TDLSprite extends Phaser.Physics.Arcade.Sprite {
     /**
-		 * Permette di reimpostare gli asset del frame.
-		 *
-         * @param   room                                        room in cui è creato l'oggetto.
-         * @param	x									        coordinata X dell'oggetto.
-		 * @param	y									        coordinata Y dell'oggetto.
-		 * @param	texture								        grafica dell'oggetto (se ha un cShadow la grafica sarà la sua silhouette).
-         * @param   layer     D null                            noome del layer in cui inserire l'oggetto
-         * @param   hasBody   D true                            determina se l'oggetto è soggetto alla fisica
-         * @param	behaviourType	 D INERT 	                determina l'interagibilità dell'oggetto. INERT, EXAMINABLE,	INTERACTIVE.
-		 * @param	observeText		D text)         	        è il testo che appare quando si osserva l'oggetto (mouseOver).
-		 * @param	examineOrInteractText		D text	        è il testo che appare quando si esamina l'oggetto (click).
-		 * @param	blockExamineText	D null	                se è diverso da null, indica il testo che sarà visualizzato una sola volta in modo bloccante.
-		 * @param	noLightObserveText		D text		        è il testo che sarà visualizzato quando si osserva l'oggetto ad un livello di luce inferiore a minLightLevelToObserve.
-		 * @param	noLightExamineOrInteractText D text	        è il testo che sarà visualizzato quando si esamina o si interagisce l'oggetto ad un livello di luce inferiore a minLightLevelToExamineOrInteract.
-		 * @param	examineOrInteractOffsetX	D 0		        indica di quanto è spostato il punto nel quale il player si muoverà per esaminare o interagire con l'oggetto. (debug mode: punto viola).
-		 * @param	examineOrInteractThreshold D valore         indica quanto è ampio il margine di tolleranza dal examineOrInteractPoint (debug mode: punto viola) entro il quale il player potrà esaminare o interagire con l'oggetto senza bisogno di muoversi.
-		 * @param	minLightLevelToExamineOrInteract D valore	indica il livello minimo di luce necessario per poter esaminare o interagire con l'oggetto.
-		 * @param	minLightLevelToObserve		D valore		indica il livello minimo di luce necessario per poter osservare l'oggetto.
-		 * @param   precisePosition			????		        indica se l'agent, nel portarsi sull'oggetto, può avere un margine di tolleranza per evitare dei micromovimenti di aggiustamento (nel caso si trovi giù molto vicino) o se è necessario che si porti nella posizione al pixel.
-		 */
+     * @param {TDLib.Rooms.TDLRoom} room - The room where the sprite is created.
+     * @param {number} x - The sprite x coordinate.
+	 * @param {number} y - The sprite y coordinate.
+	 * @param {string} texture - The graphic of the sprite.
+     * @param {string} [layer=null] - The key of the layer which will contain the sprite.
+     * @param {boolean} [hasBody=true] - Specify if the sprite has physics.
+     * @param {string} [behaviourType=SpriteBehaviourComponent.INERT] - Specify the behaviour of the sprite.
+	 * @param {string} [observeText] - The text which appears when observing the sprite.
+	 * @param {string} [examineOrInteractText] -  The text which appears when examine or interact with the sprite.
+	 * @param {string} [blockExamineText=null] - If not null it's the blocking text which appears the first time the sprite is examined.
+	 * @param {string} [noLightObserveText] -  The text which appears when observing the sprite when the diffused light is not sufficient.
+	 * @param {string} [noLightExamineOrInteractText] - The text which appears when examine or interact with the sprite when the diffused light is not sufficient.
+	 * @param {number} [examineOrInteractOffsetX=0] - indica di quanto è spostato il punto nel quale il player si muoverà per esaminare o interagire con l'oggetto. (debug mode: punto viola).
+	 * @param {number} [examineOrInteractThreshold=0] - indica quanto è ampio il margine di tolleranza dal examineOrInteractPoint (debug mode: punto viola) entro il quale il player potrà esaminare o interagire con l'oggetto senza bisogno di muoversi.
+	 * @param {number} [minLightLevelToExamineOrInteract=???] D valore	indica il livello minimo di luce necessario per poter esaminare o interagire con l'oggetto.
+	 * @param {number} [minLightLevelToObserve=???] - indica il livello minimo di luce necessario per poter osservare l'oggetto.
+	 * @param {boolean} [precisePosition=false] - indica se l'agent, nel portarsi sull'oggetto, può avere un margine di tolleranza per evitare dei micromovimenti di aggiustamento (nel caso si trovi giù molto vicino) o se è necessario che si porti nella posizione al pixel.
+	 */
     constructor(
         room,
         x, y,
@@ -45,22 +43,33 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         behaviourType = EntityBehaviourComponent.INERT,
         observeText = 'Observe default text',
         examineOrInteractText = 'ExamineOrInteract default text',
-        blockExamineText = 'BlockExamine default text',
+        blockExamineText = null,
         noLightObserveText = 'NoLightObserve default text',
         noLightExamineOrInteractText = 'NoLightExamineOrInteract default text'
 
     ) {
         super(room, x, y, texture);
 
+        /**
+         * The room where the sprite is created.
+         * @type {TDLib.Rooms.TDLRoom}
+         * @since 1.0.0
+         */
         this.room = room;
-        this.name = this.constructor.name;
-        
-        this.behaviour = new SpriteBehaviourComponent(this, behaviourType);
 
         /**
-        * Indica il tipo di interazione possibile con l'oggetto. INERT\EXAMINABLE\INTERACTIVE
-        */
-        //this.behaviour.type = behaviourType; --> dentro a this.behaviour.type
+         * The name of the sprite.
+         * @type {string}
+         * @since 1.0.0
+         */
+        this.name = this.constructor.name; //Pensare se aggiungere una parte random in fondo --> altrimenti più oggetti uguali con lo stesso nome
+
+        /**
+         * The sprite behaviour component instance.
+         * @type {TDLib.Components.SpriteBehaviourComponent}
+         * @since 1.0.0
+         */
+        this.behaviour = new SpriteBehaviourComponent(this, behaviourType);
 
 		/**
 		 * Testo visualizzato sulla testa del player nel momento in cui si osserva un oggetto alla luce (ovvero entro il livello di minLightLevelToObserve).

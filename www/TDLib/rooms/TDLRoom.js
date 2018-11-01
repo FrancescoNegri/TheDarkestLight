@@ -1,4 +1,14 @@
-class Room extends Phaser.Scene {
+/**
+ * The rooms namespace.
+ * @namespace TDLib.Rooms
+ */
+
+ /**
+  * Class representing a TDLRoom.
+  * @extends Phaser.Scene
+  * @memberof TDLib.Rooms
+  */
+class TDLRoom extends Phaser.Scene {
     constructor(sceneKey, rawAssets) {
         super(sceneKey);
 

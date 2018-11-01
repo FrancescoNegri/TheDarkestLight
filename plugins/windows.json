@@ -8,10 +8,10 @@
   },
   "installed_plugins": {
     "cordova-plugin-browsersync": {
-      "PACKAGE_NAME": "HelloCordova"
+      "PACKAGE_NAME": "The Darkest Light"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "HelloCordova"
+      "PACKAGE_NAME": "The Darkest Light"
     }
   },
   "dependent_plugins": {}

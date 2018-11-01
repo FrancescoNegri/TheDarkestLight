@@ -7,19 +7,24 @@ class AWalkTo extends TDLAction {
                 new TDLAction.BaseAction(
                     this,
                     () => {
-                        if (this.actor.x < this.target.x) {
-                            this.actor.anims.play('walk');
-                            //this.actor.anims.play('walkRight');
-                            this.actor.body.setVelocity(AWalkTo.WALK_VELOCITY);
-                        }
-
-                        else
-                            if (this.actor.x > this.target.x) {
+                        if (Math.abs(this.actor.x - this.target.x) > AWalkTo.MICRO_MOVEMENT_RADIUS) {
+                            if (this.actor.x < this.target.x) {
                                 this.actor.anims.play('walk');
-                                //this.actor.anims.play('walkLeft');
-                                this.actor.body.setVelocity(-AWalkTo.WALK_VELOCITY);
+                                //this.actor.anims.play('walkRight');
+                                this.actor.body.setVelocity(AWalkTo.WALK_VELOCITY);
                             }
-                        console.log('start to walk to ', config.target.x);
+
+                            else
+                                if (this.actor.x > this.target.x) {
+                                    this.actor.anims.play('walk');
+                                    //this.actor.anims.play('walkLeft');
+                                    this.actor.body.setVelocity(-AWalkTo.WALK_VELOCITY);
+                                }
+                            console.log('start to walk to ', config.target.x);
+                        }
+                        else {
+                            this.finish();
+                        }
                     },
                     () => {
                         this.actor.body.setVelocity(0);
@@ -34,5 +39,9 @@ class AWalkTo extends TDLAction {
 
     static get WALK_VELOCITY() {
         return 120;
+    }
+
+    static get MICRO_MOVEMENT_RADIUS() {
+        return 20;
     }
 }

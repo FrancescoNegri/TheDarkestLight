@@ -13,13 +13,13 @@ class TDLAction {
      * @param {Object} config.target - The target of the action.
      * @param {number} config.target.x - The x of the target of the action.
      */
-    constructor(invoker, actor, config = { }) {
+    constructor(invoker, actor, config = {}) {
         /**
          * The invoker of the action.
          * @type {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction}
          */
         this.invoker = invoker;
-        
+
         /**
          * The name of the action.
          * @type {string}
@@ -118,8 +118,10 @@ class TDLAction {
      * @private
      */
     abort() {
-        console.log(this.name, 'aborted');
-        this._queue[0].abort();
+        if (this._queue.length > 0) {
+            this._queue[0].abort();
+            console.log(this.name, 'aborted');
+        }
     }
 
     /**
@@ -127,8 +129,10 @@ class TDLAction {
      * @private
      */
     start() {
-        console.log(this.name, 'started');
-        this._queue[0].start();
+        if (this._queue.length > 0) {
+            this._queue[0].start();
+            console.log(this.name, 'started');
+        }
     }
 
     /**
@@ -136,7 +140,7 @@ class TDLAction {
      * @private
      */
     finish() {
-        this._queue[0].finish();
+        if (this._queue.length > 0) this._queue[0].finish();
     }
 
     /**
@@ -144,7 +148,8 @@ class TDLAction {
      * @private
      */
     remove() {
-        this._queue.shift();
+        if (this._queue.length > 0) this._queue.shift();
+
         if (this._queue.length <= 0) {
             console.log(this.name, 'finished');
             this.invoker.remove();
@@ -157,9 +162,11 @@ class TDLAction {
      * @private
      */
     pause() {
-        console.log(this.name, 'paused');
-        this._queue[0].pause();
-        this.isPaused = true;
+        if (this._queue.length > 0) {
+            console.log(this.name, 'paused');
+            this._queue[0].pause();
+            this.isPaused = true;
+        }
     }
 
     /**
@@ -167,9 +174,11 @@ class TDLAction {
      * @private
      */
     resume() {
-        console.log(this.name, 'resumed');
-        this.isPaused = false;
-        this._queue[0].resume();
+        if (this._queue.length > 0) {
+            console.log(this.name, 'resumed');
+            this.isPaused = false;
+            this._queue[0].resume();
+        }
     }
 
     /**
@@ -177,6 +186,6 @@ class TDLAction {
      * @private
      */
     update() {
-        this._queue[0].update();
+        if (this._queue.length > 0) this._queue[0].update();
     }
 }

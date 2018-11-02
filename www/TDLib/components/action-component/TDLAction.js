@@ -127,10 +127,7 @@ class TDLAction {
      * @since 1.0.0
      */
     abort() {
-        if (this._queue.length > 0) {
-            this._queue[0].abort();
-            console.log(this.name, 'aborted');
-        }
+        if (this._queue.length > 0) this._queue[0].abort();
     }
 
     /**
@@ -139,10 +136,7 @@ class TDLAction {
      * @since 1.0.0
      */
     start() {
-        if (this._queue.length > 0) {
-            this._queue[0].start();
-            console.log(this.name, 'started');
-        }
+        if (this._queue.length > 0) this._queue[0].start();
     }
 
     /**
@@ -162,10 +156,7 @@ class TDLAction {
     remove() {
         if (this._queue.length > 0) this._queue.shift();
 
-        if (this._queue.length <= 0) {
-            console.log(this.name, 'finished');
-            this.invoker.remove();
-        }
+        if (this._queue.length <= 0) this.invoker.remove();
         else this._queue[0].start();
     }
 
@@ -176,7 +167,6 @@ class TDLAction {
      */
     pause() {
         if (this._queue.length > 0) {
-            console.log(this.name, 'paused');
             this._queue[0].pause();
             this.isPaused = true;
         }
@@ -189,7 +179,6 @@ class TDLAction {
      */
     resume() {
         if (this._queue.length > 0) {
-            console.log(this.name, 'resumed');
             this.isPaused = false;
             this._queue[0].resume();
         }

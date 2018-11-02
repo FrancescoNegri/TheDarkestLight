@@ -31,8 +31,7 @@ class TestRoom extends TDLRoom {
 
         this.lamp1 = new TestLamp(this, 200, 96);
         this.lamp2 = new TestLamp(this, 600, 96);
-
-        //this.player.actions.add(ACount);
+        
         //this.diffusedLightSource1 = new TestDiffusedLightSource(this, 200, 96);
         //this.blankLightSource1= new TestBlankLightSource(this, 350, 200);
 
@@ -42,33 +41,22 @@ class TestRoom extends TDLRoom {
         this.keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
         this.keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
-
-        /*this.input.on('pointermove', function (pointer) {
-
-            this.light.setPosition(pointer.x, pointer.y);
-    
-        });*/
     }
 
     update() {
         super.update();
 
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
-            //this.player.actions.add(ACount, {startingNumber: 34}, ActionComponent.PAUSE_MODE);
             this.player.isBlocked = true;
             this.cursors.hideCursor();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
-            //this.lamp2.startFlickering(1,50);
-            /*this.lamp1.turnOff();
-            this.lamp2.turnOff();*/
-            //this.player.actions.add(AComposedTest, {startingNumber: 10});
             this.player.isBlocked = false;
             this.cursors.showCursor();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
             //this.lamp2.startTrembling();
-            this.player.actions.add(ARunTo,{target: {x: this.input.activePointer.x}})
+            this.player.actions.add(ARunTo,{target: {x: this.input.activePointer.worldX}})
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
             this.lamp2.startRadiusFlickering();

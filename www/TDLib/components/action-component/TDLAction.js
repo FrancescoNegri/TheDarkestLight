@@ -65,7 +65,7 @@ class TDLAction {
     }
 
     /**
-     * Add new actions to the queue.
+     * Add one or more new actions to the queue.
      * @param {TDLib.Components.Actions.TDLAction|TDLib.Components.Actions.TDLAction[]} actions - The new actions to add.
      * @since 1.0.0
      */

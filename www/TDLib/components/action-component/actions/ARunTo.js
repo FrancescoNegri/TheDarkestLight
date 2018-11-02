@@ -1,3 +1,4 @@
+// da cambiare e mettere tutta dentro l'AWalkTo e fare un Move to che distingua che azioni chiamare?
 class ARunTo extends TDLAction {
     constructor(invoker, actor, config) {
         super(...arguments);
@@ -7,19 +8,24 @@ class ARunTo extends TDLAction {
                 new TDLAction.BaseAction(
                     this,
                     () => {
-                        if (Math.abs(this.actor.x - this.target.x) > AWalkTo.MICRO_MOVEMENT_RADIUS) {
-                            this.actor.anims.play('run');
-                            //this.actor.anims.play('runRight');
-                            this.actor.body.setVelocity(ARunTo.RUN_VELOCITY);
-                        }
-
-                        else
-                            if (this.actor.x > this.target.x) {
+                        if (Math.abs(this.actor.x - this.target.x) > ARunTo.MICRO_MOVEMENT_RADIUS) {
+                            if (this.actor.x < this.target.x) {
                                 this.actor.anims.play('run');
-                                //this.actor.anims.play('runleft');
-                                this.actor.body.setVelocity(-ARunTo.RUN_VELOCITY);
+                                //this.actor.anims.play('runRight');
+                                this.actor.body.setVelocity(ARunTo.RUN_VELOCITY);
                             }
-                        console.log('start to run to ', config.target.x);
+
+                            else
+                                if (this.actor.x > this.target.x) {
+                                    this.actor.anims.play('run');
+                                    //this.actor.anims.play('runLeft');
+                                    this.actor.body.setVelocity(-ARunTo.RUN_VELOCITY);
+                                }
+                            console.log('start to run to ', config.target.x);
+                        }
+                        else {
+                            this.finish();
+                        }
                     },
                     () => {
                         this.actor.body.setVelocity(0);
@@ -34,5 +40,9 @@ class ARunTo extends TDLAction {
 
     static get RUN_VELOCITY() {
         return 240;
+    }
+
+    static get MICRO_MOVEMENT_RADIUS() {
+        return 20;
     }
 }

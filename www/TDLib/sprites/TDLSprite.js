@@ -1,11 +1,13 @@
 /**
  * The Darkest Lib.
  * @namespace TDLib
+ * @since 1.0.0
  */
 
 /**
  * The actions namespace.
  * @namespace TDLib.Sprites
+ * @since 1.0.0
  */
 
 /**

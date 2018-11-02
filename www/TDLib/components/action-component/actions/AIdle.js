@@ -24,14 +24,12 @@ class AIdle extends TDLAction {
                         case TDLCharacter.FACING().LEFT: {
                             this.actor.anims.play('idle');
                             //this.actor.anims.play('idleLeft');
-                            console.log('start idleLeft');
                         }
                             break;
 
                         case TDLCharacter.FACING().RIGHT: {
                             this.actor.anims.play('idle');
                             //this.actor.anims.play('idleRight');
-                            console.log('start idleRight');
                         }
                             break;
 

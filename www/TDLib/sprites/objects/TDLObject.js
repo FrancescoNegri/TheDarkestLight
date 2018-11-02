@@ -1,12 +1,14 @@
 /**
  * The objects namespace.
  * @namespace TDLib.Sprites.Objects
+ * @since 1.0.0
  */
 
 /**
  * Class representing a TDLObject.
  * @extends TDLib.Sprites.TDLSprite
  * @memberof TDLib.Sprites.Objects
+ * @since 1.0.0
  */
 class TDLObject extends TDLSprite {
     /**

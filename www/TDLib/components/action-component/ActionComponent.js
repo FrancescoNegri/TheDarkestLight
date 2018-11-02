@@ -1,12 +1,14 @@
 /**
  * The actions namespace.
  * @namespace TDLib.Components.Actions
+ * @since 1.0.0
  */
 
 /**
  * Class representing a component responsible of every TDLAction preformed.
  * @extends TDLib.Components.TDLComponent
  * @memberof TDLib.Components
+ * @since 1.0.0
  */
 class ActionComponent extends TDLComponent {
     /**
@@ -19,12 +21,14 @@ class ActionComponent extends TDLComponent {
         /**
          * The performer of the action.
          * @type {TDLib.Sprites.TDLSprite}
+         * @since 1.0.0
          */
         this.actor = actor;
 
         /**
          * The default action to be played.
          * @type {TDLib.Components.Actions.TDLAction}
+         * @since 1.0.0
          */
         this.defaultAction = new AIdle(this, this.actor);
 
@@ -32,6 +36,7 @@ class ActionComponent extends TDLComponent {
          * The queue of actions.
          * @type {Array}
          * @private
+         * @since 1.0.0
          */
         this._queue = [this.defaultAction];
         this._queue[0].start();
@@ -39,6 +44,7 @@ class ActionComponent extends TDLComponent {
 
     /**
      * The queue is emptied and the new action is immediately performed.
+     * @since 1.0.0
      */
     static get DEFAULT_MODE() {
         return 0;
@@ -46,6 +52,7 @@ class ActionComponent extends TDLComponent {
 
     /**
      * The new action is added to the queue.
+     * @since 1.0.0
      */
     static get QUEUE_MODE() {
         return 1;
@@ -53,6 +60,7 @@ class ActionComponent extends TDLComponent {
 
     /**
      * The currently performed action is paused and the new action is immediately performed. Then the paused action is resumed.
+     * @since 1.0.0
      */
     static get PAUSE_MODE() {
         return 2;
@@ -65,6 +73,7 @@ class ActionComponent extends TDLComponent {
      * @param {Object} config.target - The target of the action.
      * @param {number} config.target.x - The x of the target of the action.
      * @param {number} [mode=ActionComponent.DEFAULT_MODE] - The mode to execute the action: ActionComponent.DEFAULT_MODE, ActionComponent.QUEUE_MODE or ActionComponent.PAUSE_MODE.
+     * @since 1.0.0
      */
     add(action, config, mode = ActionComponent.DEFAULT_MODE) {
         
@@ -98,6 +107,7 @@ class ActionComponent extends TDLComponent {
     /**
      * Remove a completed action from the queue.
      * @private
+     * @since 1.0.0
      */
     remove() {
         this._queue.shift();
@@ -109,6 +119,7 @@ class ActionComponent extends TDLComponent {
     /**
      * Update the currently performed action.
      * @private
+     * @since 1.0.0
      */
     update() {
         if (this._queue.length <= 0) this._queue.push(this.defaultAction);

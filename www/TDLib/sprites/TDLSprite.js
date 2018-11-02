@@ -28,11 +28,11 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
 	 * @param {string} [blockExamineText=null] - If not null it's the blocking text which appears the first time the sprite is examined.
 	 * @param {string} [noLightObserveText] -  The text which appears when observing the sprite when the diffused light is not sufficient.
 	 * @param {string} [noLightExamineOrInteractText] - The text which appears when examine or interact with the sprite when the diffused light is not sufficient.
-	 * @param {number} [examineOrInteractOffsetX=0] - indica di quanto è spostato il punto nel quale il player si muoverà per esaminare o interagire con l'oggetto. (debug mode: punto viola).
-	 * @param {number} [examineOrInteractThreshold=0] - indica quanto è ampio il margine di tolleranza dal examineOrInteractPoint (debug mode: punto viola) entro il quale il player potrà esaminare o interagire con l'oggetto senza bisogno di muoversi.
-	 * @param {number} [minLightLevelToExamineOrInteract=???] D valore	indica il livello minimo di luce necessario per poter esaminare o interagire con l'oggetto.
-	 * @param {number} [minLightLevelToObserve=???] - indica il livello minimo di luce necessario per poter osservare l'oggetto.
-	 * @param {boolean} [precisePosition=false] - indica se l'agent, nel portarsi sull'oggetto, può avere un margine di tolleranza per evitare dei micromovimenti di aggiustamento (nel caso si trovi giù molto vicino) o se è necessario che si porti nella posizione al pixel.
+	 * @param {number} [examineOrInteractOffsetX=0] - The offset on x axis of the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+	 * @param {number} [examineOrInteractThresholdRadius=0] - The radius of the tolerance in reaching the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+	 * @param {number} [minLightLevelToExamineOrInteract=???] - The minimum value of diffused light to examine or interact with the sprite.
+	 * @param {number} [minLightLevelToObserve=???] - The minimum value of diffused light to observe the sprite.
+	 * @param {boolean} [precisePosition=false] - Specify if to examine or interact with the sprite it's required to be precisely at the examineOrInteractPoint. (Probably not needed)
 	 */
     constructor(
         room,
@@ -58,11 +58,18 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         this.room = room;
 
         /**
-         * The name of the sprite.
+         * The name of the sprite, composed by the sprite type and a 4 digits random integer number.
          * @type {string}
          * @since 1.0.0
          */
-        this.name = this.constructor.name; //Pensare se aggiungere una parte random in fondo --> altrimenti più oggetti uguali con lo stesso nome
+        this.name = this.constructor.name + Math.floor(Math.random() * (9999 - 1000 + 1));
+
+        /**
+         * The type of the sprite.
+         * @type {string}
+         * @since 1.0.0
+         */
+        this.type = this.constructor.name;
 
         /**
          * The sprite behaviour component instance.
@@ -72,67 +79,74 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         this.behaviour = new SpriteBehaviourComponent(this, behaviourType);
 
 		/**
-		 * Testo visualizzato sulla testa del player nel momento in cui si osserva un oggetto alla luce (ovvero entro il livello di minLightLevelToObserve).
+		 * The text which appears when observing the sprite.
+         * @type {string}
+         * @since 1.0.0
 		 */
         this.observeText = observeText;
 
         /**
-		 * Testo visualizzato sulla testa del player nel momento in cui si esamina un oggetto alla luce (ovvero entro il livello di minLightLevelToExaminOrInteract).
+		 * The text which appears when examine or interact with the sprite.
+         * @type {string}
+         * @since 1.0.0
 		 */
         this.examineOrInteractText = examineOrInteractText;
 
 		/**
-		 * Testo visualizzato sulla testa del player nel momento in cui si esamina un oggetto per la prima volta ed è illuminato. Il testo non è saltabile e disabilita il mouse. Può non essere specificato.
+		 * If not null it's the blocking text which appears the first time the sprite is examined.
+         * @type {string}
+         * @since 1.0.0
 		 */
         this.blockExamineText = blockExamineText;
 
 		/**
-		 * Testo visualizzato sulla testa del player nel momento in cui si osserva un oggetto al buio (ovvero sotto il livello di minLightLevelToObserve).
+		 * The text which appears when observing the sprite when the diffused light is not sufficient.
+         * @type {string}
+         * @since 1.0.0
 		 */
         this.noLightObserveText = noLightObserveText;
 
         /**
-		 * Testo visualizzato sulla testa del player nel momento in cui si esamina un oggetto al buio (ovvero sotto il livello di minLightLevelToExaminOrInteract).
-		 */
+		 * The text which appears when examine or interact with the sprite when the diffused light is not sufficient.
+         * @type {string}
+         * @since 1.0.0
+         */
         this.noLightExamineOrInteractText = noLightExamineOrInteractText;
 
 		/**
-		 * Indica di quanto è spostato il punto nel quale il player si muoverà per esaminare o interagire con l'oggetto. (debug mode: punto viola).
+		 * The offset on x axis of the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+         * @type {number}
+         * @since 1.0.0
 		 */
         this.examineOrInteractOffsetX;
 
 		/**
-		 * Indica quanto è ampio il margine di tolleranza dal examineOrInteractPoint (debug mode: punto viola) entro il quale il player potrà esaminare o interagire con l'oggetto senza bisogno di muoversi.
-		 */
-        this.examineOrInteractThreshold;
+		 * The radius of the tolerance in reaching the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+         * @type {number}
+         * @since 1.0.0
+         */
+        this.examineOrInteractThresholdRadius;
 
 		/**
-		 * Indica il livello minimo di luce necessario per poter esaminare o interagire con l'oggetto.
-		 */
+		 * The minimum value of diffused light to examine or interact with the sprite.
+         * @type {number}
+         * @since 1.0.0
+         */
         this.minLightLevelToExamineOrInteract;
 
         /**
-		 * Indica il livello minimo di luce necessario per poter osservare l'oggetto.
-		 */
+		 * The minimum value of diffused light to observe the sprite.
+         * @type {number}
+         * @since 1.0.0
+         */
         this.minLightLevelToObserve;
 
 		/**
-		 * E'il tempo minimo di mouse over necessario per far iniziare l'azione di osserva del player.
-		 */
+		 * The time of mouseover needed to start the observe action on the sprite
+         * @type {number}
+         * @since 1.0.0
+         */
         this.minTimeToObserve = ObservableBehaviour.MIN_TIME_TO_OBSERVE * 1000;
-
-		/**
-		 * Indica che il giocatore ha già osservato l'oggetto quindi non sarà più osservabile fino a quando 
-		 * non uscirà con il cursore dalla hitbox dello stesso (azione che risetterà a false alreadyObserved).
-		 */
-        this.alreadyObserved;
-
-		/**
-		 * Indica che il giocatore sta già esaminando l'oggetto e l'azione è in corso. Non sarà  quindi più esaminabile fino a quando 
-		 * non sarà terminata la precedente azione di esamina.
-		 * Per quanto riguarda Interact: se è in corso l'interazione non sarà possibile rieseguirla prima che venga terminata.
-		 */
-        this.alreadyExaminedOrInteracted;
 
         this.room.add.existing(this);
         if (hasBody) this.room.physics.add.existing(this);
@@ -149,10 +163,18 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         this.room.updates.add(this);
     }
 
+    /**
+     * The create function is executed once, immediately after the initialization of the sprite.
+     * @since 1.0.0
+     */
     create() {
-        console.log('Created:', this.name, 'with', this.behaviour.type, 'behaviour');
+        console.log('Created:', this.name, '- Type:', this.type, '- Behaviour:', this.behaviour.type);
     }
 
+    /**
+     * The update is executed at every cycle of the game loop.
+     * @since 1.0.0
+     */
     update() {
 
     }

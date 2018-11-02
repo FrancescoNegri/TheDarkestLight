@@ -54,9 +54,6 @@ class TestRoom extends TDLRoom {
         super.update();
 
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
-            /*
-            this.lamp1.behaviour.stopAllBehaviours();
-            this.lamp2.behaviour.stopAllBehaviours();*/
             //this.player.actions.add(ACount, {startingNumber: 34}, ActionComponent.PAUSE_MODE);
             this.player.isBlocked = true;
             this.cursors.hideCursor();
@@ -70,17 +67,21 @@ class TestRoom extends TDLRoom {
             this.cursors.showCursor();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
-            this.lamp2.startTrembling();
+            //this.lamp2.startTrembling();
+            this.player.actions.add(ARunTo,{target: {x: this.input.activePointer.x}})
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-            this.lamp2.startSoftFlickering();
+            this.lamp2.startRadiusFlickering();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
-            this.lamp1.startHardFlickeringAndTrembling();
+            /*this.lamp1.startHardFlickeringAndTrembling();
             this.lamp2.startHardFlickeringAndTrembling();
+            */
+           this.lamp2.startSoftFlickeringAndTrembling();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
-            this.lamp2.startSoftFlickeringAndTrembling();
+            this.lamp1.lightBehaviour.stopAllBehaviours();
+            this.lamp2.lightBehaviour.stopAllBehaviours();
         }
     }
 }

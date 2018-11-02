@@ -50,6 +50,10 @@ class LightSourceBehaviourComponent extends TDLComponent {
                 mapping: 'hardFlickeringAndTrembling'
             },
             {
+                behaviour: RadiusFlickeringBehaviour,
+                mapping: 'radiusFlickering'
+            },
+            {
                 behaviour: SoftFlickeringBehaviour,
                 mapping: 'softFlickering'
             },

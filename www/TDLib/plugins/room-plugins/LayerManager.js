@@ -40,13 +40,13 @@ class LayerManager extends TDLRoomPlugin {
          * The layer containing the objects fixed to the background wall.
          * @type {Phaser.GameObjects.Group}
          */
-        this.rearWallObjectsLayer = this.room.add.group();
+        this.wallFurnitureLayer = this.room.add.group();
 
         /**
          * The layer containing the objects in the room.
          * @type {Phaser.GameObjects.Group}
          */
-        this.roomObjectsLayer = this.room.add.group();
+        this.roomFurnitureLayer = this.room.add.group();
 
         /**
          * The layer containing the side doors.
@@ -110,9 +110,9 @@ class LayerManager extends TDLRoomPlugin {
         var i = this.strartingDepth;
         this.backgroundLayer.setDepth(this.layerSize * i);
         i++;
-        this.rearWallObjectsLayer.setDepth(this.layerSize * i);
+        this.wallFurnitureLayer.setDepth(this.layerSize * i);
         i++;
-        this.roomObjectsLayer.setDepth(this.layerSize * i);
+        this.roomFurnitureLayer.setDepth(this.layerSize * i);
         i++;
         this.sideDoorsLayer.setDepth(this.layerSize * i);
         i++;

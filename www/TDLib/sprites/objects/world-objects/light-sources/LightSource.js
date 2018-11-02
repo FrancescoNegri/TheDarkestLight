@@ -24,7 +24,7 @@ class LightSource extends WorldObject {
      * @param {boolean} [isOn=true] - Light created as switched on or off.
      */
     constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours, isOn = true) {
-        super(room, x, y, texture, layer, false);
+        super(room, x, y, texture, layer, false, SpriteBehaviourComponent.EXAMINABLE);
         this.config = {
             graphicLight: graphicLightConfig,
             diffusedLight: diffusedLightConfig,

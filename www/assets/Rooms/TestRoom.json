@@ -14,6 +14,28 @@
          "y":0
         }, 
         {
+         "draworder":"topdown",
+         "name":"RoomFurniture",
+         "objects":[
+                {
+                 "gid":53,
+                 "height":164,
+                 "id":8,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":124,
+                 "x":542,
+                 "y":236
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
          "data":"DgAAABAAAAAOAAAADwAAAA4AAAAOAAAADgAAAA8AAAAOAAAADgAAABAAAAAPAAAADgAAAA4AAAAQAAAADgAAAA8AAAAOAAAAEgAAABQAAAAVAAAAFAAAABQAAAAUAAAAFQAAABQAAAAUAAAAFAAAABUAAAAUAAAAFAAAABQAAAAVAAAAFAAAABQAAAAWAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAHQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAfAAAA",
          "encoding":"base64",
          "height":6,
@@ -37,7 +59,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":1,
+ "nextobjectid":9,
  "orientation":"orthogonal",
  "renderorder":"left-down",
  "tiledversion":"1.1.6",
@@ -81,6 +103,38 @@
          "tilecount":20,
          "tileheight":48,
          "tilewidth":48
+        }, 
+        {
+         "columns":0,
+         "firstgid":53,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"RoomFurniture",
+         "spacing":0,
+         "tilecount":2,
+         "tileheight":164,
+         "tiles":
+            {
+             "0":
+                {
+                 "image":"..\/NaziBanner01.png",
+                 "imageheight":164,
+                 "imagewidth":124,
+                 "type":"TestObject"
+                },
+             "1":
+                {
+                 "image":"..\/debugger.png",
+                 "imageheight":48,
+                 "imagewidth":48
+                }
+            },
+         "tilewidth":124
         }],
  "tilewidth":48,
  "type":"map",

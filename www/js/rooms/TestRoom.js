@@ -11,6 +11,9 @@ class TestRoom extends TDLRoom {
                     },
                     lightSources: {
                         testLamp: { path: 'assets/CeilingLamp.png', nPath: 'assets/CeilingLamp_n.png' }
+                    },
+                    sprites: {
+                        nazi: { path: 'assets/NaziBanner01.png', nPath: 'assets/NaziBanner01_n.png'}
                     }
                 },
                 tilemapTiledJSON:
@@ -28,6 +31,8 @@ class TestRoom extends TDLRoom {
 
     create() {
         super.create(new Debugger(this, 300, 250));
+
+        this.nazi = new TestObject(this, 604, 154); //Tiled mette le cordinate in basso a sinistra !??!?!
 
         this.lamp1 = new TestLamp(this, 200, 96);
         this.lamp2 = new TestLamp(this, 600, 96);
@@ -62,10 +67,10 @@ class TestRoom extends TDLRoom {
             this.lamp2.startRadiusFlickering();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
-            /*this.lamp1.startHardFlickeringAndTrembling();
+            //this.lamp1.startHardFlickeringAndTrembling();
             this.lamp2.startHardFlickeringAndTrembling();
-            */
-           this.lamp2.startSoftFlickeringAndTrembling();
+            
+           //this.lamp2.startSoftFlickeringAndTrembling();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
             this.lamp1.lightBehaviour.stopAllBehaviours();

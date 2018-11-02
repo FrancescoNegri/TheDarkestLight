@@ -18,6 +18,7 @@
  */
 class TDLSprite extends Phaser.Physics.Arcade.Sprite {
     /**
+     * Create a TDLSprite.
      * @param {TDLib.Rooms.TDLRoom} room - The room where the sprite is created.
      * @param {number} x - The sprite x coordinate.
 	 * @param {number} y - The sprite y coordinate.
@@ -47,7 +48,11 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         examineOrInteractText = 'ExamineOrInteract default text',
         blockExamineText = null,
         noLightObserveText = 'NoLightObserve default text',
-        noLightExamineOrInteractText = 'NoLightExamineOrInteract default text'
+        noLightExamineOrInteractText = 'NoLightExamineOrInteract default text',
+        examineOrInteractOffsetX = 0,
+        examineOrInteractThresholdRadius = 0,
+        minLightLevelToExamineOrInteract = 0.4,
+        minLightLevelToObserve = 0.5
 
     ) {
         super(room, x, y, texture);
@@ -120,28 +125,28 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
          * @type {number}
          * @since 1.0.0
 		 */
-        this.examineOrInteractOffsetX;
+        this.examineOrInteractOffsetX = examineOrInteractOffsetX;
 
 		/**
 		 * The radius of the tolerance in reaching the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
          * @type {number}
          * @since 1.0.0
          */
-        this.examineOrInteractThresholdRadius;
+        this.examineOrInteractThresholdRadius = examineOrInteractThresholdRadius;
 
 		/**
 		 * The minimum value of diffused light to examine or interact with the sprite.
          * @type {number}
          * @since 1.0.0
          */
-        this.minLightLevelToExamineOrInteract;
+        this.minLightLevelToExamineOrInteract = minLightLevelToExamineOrInteract;
 
         /**
 		 * The minimum value of diffused light to observe the sprite.
          * @type {number}
          * @since 1.0.0
          */
-        this.minLightLevelToObserve;
+        this.minLightLevelToObserve = minLightLevelToObserve;
 
 		/**
 		 * The time of mouseover needed to start the observe action on the sprite

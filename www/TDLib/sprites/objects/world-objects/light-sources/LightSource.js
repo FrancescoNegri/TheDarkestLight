@@ -137,10 +137,32 @@ class LightSource extends WorldObject {
 
     /**
      * Stop flickering the intenisity of the light.
-     * @param {boolean} [backToInitialIntensity=true] - Back to the initial light position before the effect.
+     * @param {boolean} [backToInitialIntensity=true] - Back to the initial light intensity before the effect.
      */
     stopSoftFlickering(backToInitialIntensity) {
         this.lightBehaviour.softFlickering.stop(...arguments);
+    }
+
+    /**
+     * Start radius flickering behavior (flicker radius and intensity) if it's an allowed behavior.
+     * @param {number} [minTime=10] - Minimum time gap between two flickers in milliseconds.
+     * @param {number} [maxTime=100] - Maximum time gap between two flickers in milliseconds.
+     * @param {number} [minPercentageIntensity=0.8] - Minimum light intensity reacheable during the effect. Value between 0 and 1. 
+     * @param {number} [maxPercentageIntensity=1] - Maximum light intensity reacheable during the effect. Value between 0 and 1.
+     * @param {number} [minPercentageRadius = 0.8] - Minimum light radius reacheable during the effect. Value between 0 and 1.
+     * @param {number} [maxPercentageRadius = 1] - Maximum light radius reacheable during the effect. Value between 0 and 1.
+     */
+    startRadiusFlickering(minTime, maxTime, minPercentageIntensity, maxPercentageIntensity, minPercentageRadius, maxPercentageRadius){
+        this.lightBehaviour.radiusFlickering.start(...arguments);
+    }
+
+    /**
+     * Stop flickering the intenisity of the light.
+     * @param {boolean} [backToInitialIntensity=true] - Back to the initial light intensity before the effect.
+     * @param {boolean} [backToInitialRadius=true] - Back to the initial light radius before the effect.
+     */
+    stopRadiusFlickering(backToInitialIntensity,backToInitialRadius){
+        this.lightBehaviour.radiusFlickering.stop(...arguments);
     }
 
     /**

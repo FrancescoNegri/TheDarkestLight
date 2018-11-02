@@ -30,8 +30,7 @@ class AWalkTo extends TDLAction {
                         this.actor.body.setVelocity(0);
                     },
                     () => {
-                        if (Math.abs(this.actor.x - this.target.x) < 1) this.finish();
-                    }
+                        if ((this.actor.x - this.target.x)*this.actor.body.velocity.x >0) this.finish();                    }
                 )
             ]
         )
@@ -44,4 +43,5 @@ class AWalkTo extends TDLAction {
     static get MICRO_MOVEMENT_RADIUS() {
         return 20;
     }
+
 }

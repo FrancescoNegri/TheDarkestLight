@@ -14,6 +14,14 @@ class Debugger extends Player {
         };
         this.anims.animationManager.create(config);
 
+        config ={
+            key: 'run',
+            frames: this.anims.animationManager.generateFrameNumbers('player',{ start: 8, end: 13}),
+            frameRate: 8,
+            repeat: -1
+        };
+        this.anims.animationManager.create(config);
+
         config = {
             key: 'idle',
             frames: this.anims.animationManager.generateFrameNumbers('player', { start: 0, end: 0 }),
@@ -21,6 +29,7 @@ class Debugger extends Player {
             repeat: -1
         };
         this.anims.animationManager.create(config);
+
     }
 
     update() {

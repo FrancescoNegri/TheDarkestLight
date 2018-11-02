@@ -1,7 +1,7 @@
 class AExamine extends TDLAction {
     constructor(invoker, actor, config) {
         super(...arguments);
-        this.addQueue(
+        this.addActions(
             [
                 new AWalkTo(this, this.actor, this.config),
                 new TDLAction.BaseAction(

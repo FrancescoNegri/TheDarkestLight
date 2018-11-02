@@ -1,8 +1,7 @@
-//Eventualmente è possbile a questo punto creare una funzione che permetta di aggiungere in coda alla queue nuove azioni (dopo un controllo)
-
 /**
  * Class representing a TDLAction.
  * @memberof TDLib.Components.Actions
+ * @since 1.0.0
  */
 class TDLAction {
     /**
@@ -17,30 +16,35 @@ class TDLAction {
         /**
          * The invoker of the action.
          * @type {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction}
+         * @since 1.0.0
          */
         this.invoker = invoker;
 
         /**
          * The name of the action.
          * @type {string}
+         * @since 1.0.0
          */
         this.name = this.constructor.name;
 
         /**
          * The actor who performs the action.
          * @type {TDLib.Sprites.TDLSprite}
+         * @since 1.0.0
          */
         this.actor = actor;
 
         /**
          * The target of the action.
          * @type {Object|TDLib.Sprites.TDLSprite}
+         * @since 1.0.0
          */
         this.target = config.target;
 
         /**
          * The config object for the action.
          * @type {Object}
+         * @since 1.0.0
          */
         this.config = config;
 
@@ -48,27 +52,31 @@ class TDLAction {
          * The queue of actions.
          * @type {Array}
          * @private
+         * @since 1.0.0
          */
         this._queue = [];
 
         /**
          * Tells if the action has been paused.
          * @type {boolean}
+         * @since 1.0.0
          */
         this.isPaused = false;
     }
 
     /**
-     * Add a queue of actions.
-     * @param {Array} queue - The queue of actions to add.
+     * Add new actions to the queue.
+     * @param {TDLib.Components.Actions.TDLAction|TDLib.Components.Actions.TDLAction[]} actions - The new actions to add.
+     * @since 1.0.0
      */
-    addQueue(queue) {
-        this._queue = queue;
+    addActions(actions) {
+        this._queue = this._queue.concat(this._queue, actions);
     }
 
     /**
      * The blank action to create new actions extending TDLAction.
      * @type {ActionComponent.BaseAction}
+     * @since 1.0.0
      */
     static get BaseAction() {
         return class BaseAction {
@@ -116,6 +124,7 @@ class TDLAction {
     /**
      * Abort an uncompleted action.
      * @private
+     * @since 1.0.0
      */
     abort() {
         if (this._queue.length > 0) {
@@ -127,6 +136,7 @@ class TDLAction {
     /**
      * Start an action.
      * @private
+     * @since 1.0.0
      */
     start() {
         if (this._queue.length > 0) {
@@ -138,6 +148,7 @@ class TDLAction {
     /**
      * Finish a completed action.
      * @private
+     * @since 1.0.0
      */
     finish() {
         if (this._queue.length > 0) this._queue[0].finish();
@@ -146,6 +157,7 @@ class TDLAction {
     /**
      * Remove a completed action from the queue.
      * @private
+     * @since 1.0.0
      */
     remove() {
         if (this._queue.length > 0) this._queue.shift();
@@ -160,6 +172,7 @@ class TDLAction {
     /**
      * Pause an action.
      * @private
+     * @since 1.0.0
      */
     pause() {
         if (this._queue.length > 0) {
@@ -172,6 +185,7 @@ class TDLAction {
     /**
      * Resume a paused action.
      * @private
+     * @since 1.0.0
      */
     resume() {
         if (this._queue.length > 0) {
@@ -184,6 +198,7 @@ class TDLAction {
     /**
      * Update the currently performed action.
      * @private
+     * @since 1.0.0
      */
     update() {
         if (this._queue.length > 0) this._queue[0].update();

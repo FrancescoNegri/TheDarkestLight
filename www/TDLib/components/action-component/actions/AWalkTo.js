@@ -1,7 +1,7 @@
 class AWalkTo extends TDLAction {
     constructor(invoker, actor, config) {
         super(...arguments);
-        this.addQueue(
+        this.addActions(
             [
                 new AFaceTo(this, this.actor, this.config),
                 new TDLAction.BaseAction(
@@ -20,7 +20,6 @@ class AWalkTo extends TDLAction {
                                     //this.actor.anims.play('walkLeft');
                                     this.actor.body.setVelocity(-AWalkTo.WALK_VELOCITY);
                                 }
-                            console.log('start to walk to ', config.target.x);
                         }
                         else {
                             this.finish();

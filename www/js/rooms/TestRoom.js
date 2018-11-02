@@ -60,8 +60,7 @@ class TestRoom extends TDLRoom {
             this.cursors.showCursor();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
-            //this.lamp2.startTrembling();
-            this.player.actions.add(ARunTo,{target: {x: this.input.activePointer.worldX}})
+            this.player.actions.add(ARunTo,{target: {x: this.input.activePointer.worldX}});
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
             this.lamp2.startRadiusFlickering();

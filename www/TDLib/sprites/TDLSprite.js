@@ -65,11 +65,11 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         this.room = room;
 
         /**
-         * The name of the sprite, composed by the sprite type and a 4 digits random integer number.
+         * The unique key of the sprite, composed by the sprite type and a 4 digits random integer number.
          * @type {string}
          * @since 1.0.0
          */
-        this.name = this.constructor.name + Math.floor(Math.random() * (9999 - 1000 + 1));
+        this.key = this.constructor.name + Math.floor(Math.random() * (9999 - 1000 + 1));
 
         /**
          * The type of the sprite.

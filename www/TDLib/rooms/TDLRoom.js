@@ -4,12 +4,12 @@
  * @since 1.0.0
  */
 
- /**
-  * Class representing a TDLRoom.
-  * @extends Phaser.Scene
-  * @memberof TDLib.Rooms
-  * @since 1.0.0
-  */
+/**
+ * Class representing a TDLRoom.
+ * @extends Phaser.Scene
+ * @memberof TDLib.Rooms
+ * @since 1.0.0
+ */
 class TDLRoom extends Phaser.Scene {
     /**
      * Create a new TDLRoom.
@@ -89,7 +89,7 @@ class TDLRoom extends Phaser.Scene {
         this.load.image('left-border-mask-camera', 'assets/Masks/leftMaskCamera.png');
         this.load.image('right-border-mask-camera', 'assets/Masks/rightMaskCamera.png');
     }
-    
+
     /**
      * Scrape the object of raw assets.
      * @private
@@ -122,7 +122,9 @@ class TDLRoom extends Phaser.Scene {
 
         this._setCameraViewport();
         this._createRoom();
+        this._createSprites();
         this._applyBorderMasks();
+        this.layers.setLayersDepth();
 
         //Camera bounds, anche il wallsLayer
         this.cameras.main.setBounds(0, 0, this.layers.wallsLayer.width, this.layers.wallsLayer.height);
@@ -154,11 +156,25 @@ class TDLRoom extends Phaser.Scene {
      */
     _createRoom() {
         this.map = this.make.tilemap({ key: findFileNameFromPath(this.assets.raw.tilemapTiledJSON.path), tileWidth: Global.TILE_SIZE, tileHeight: Global.TILE_SIZE });
-        this.layers.backgroundLayer = this.map.createDynamicLayer('Background', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.background.path)), 0, 0);//.setPipeline('Light2D');
-        this.layers.wallsLayer = this.map.createDynamicLayer('Walls', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.path)), 0, 0);
-        this.layers.wallsMaskLayer = this.map.createDynamicLayer('WallsMask', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.bPath)), 0, 0);
+
+        this.layers.backgroundLayer = this.map.createDynamicLayer('backgroundLayer', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.background.path)), 0, 0);//.setPipeline('Light2D');
+        this.layers.wallsLayer = this.map.createDynamicLayer('wallsLayer', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.path)), 0, 0);
+        this.layers.wallsMaskLayer = this.map.createDynamicLayer('wallsMaskLayer', this.map.addTilesetImage(findFileNameFromPath(this.assets.raw.image.tiles.walls.bPath)), 0, 0);
     }
-    
+
+    /**
+     * Create all the objects present in Tiled JSON map.
+     * @private
+     * @since 1.0.0
+     */
+    _createSprites() {
+        this.map.objects.forEach(layer => {
+            layer.objects.forEach(element => {
+                this[element.name] = eval('new ' + element.type + '(this,' + (element.x + element.width / 2) + ', ' + (element.y - element.height / 2) + ');');
+            });
+        });
+    }
+
     /**
      * Apply the four border masks to the camera.
      * @private

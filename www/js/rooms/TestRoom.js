@@ -13,11 +13,11 @@ class TestRoom extends TDLRoom {
                         testLamp: { path: 'assets/CeilingLamp.png', nPath: 'assets/CeilingLamp_n.png' }
                     },
                     sprites: {
-                        nazi: { path: 'assets/NaziBanner01.png', nPath: 'assets/NaziBanner01_n.png'}
+                        nazi: { path: 'assets/NaziBanner01.png', nPath: 'assets/NaziBanner01_n.png' }
                     }
                 },
                 tilemapTiledJSON:
-                    { path: 'assets/Rooms/TestRoom.json' }
+                    { path: 'assets/Rooms/TestRoomNew.json' }
             }
         );
     }
@@ -25,18 +25,13 @@ class TestRoom extends TDLRoom {
     preload() {
         super.preload();
 
-        this.load.spritesheet('player', ['assets/player.png', 'assets/player_n.png'], { frameWidth: 52, frameHeight: 100});
+        this.load.spritesheet('player', ['assets/player.png', 'assets/player_n.png'], { frameWidth: 52, frameHeight: 100 });
         //this.load.image('player', ['assets/player_temp.png', 'assets/player_temp_n.png']);
     }
 
     create() {
         super.create(new Debugger(this, 300, 250));
 
-        this.nazi = new TestObject(this, 604, 154); //Tiled mette le cordinate in basso a sinistra !??!?!
-
-        this.lamp1 = new TestLamp(this, 200, 96);
-        this.lamp2 = new TestLamp(this, 600, 96);
-        
         //this.diffusedLightSource1 = new TestDiffusedLightSource(this, 200, 96);
         //this.blankLightSource1= new TestBlankLightSource(this, 350, 200);
 
@@ -60,7 +55,7 @@ class TestRoom extends TDLRoom {
             this.cursors.showCursor();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
-            this.player.actions.add(ARunTo,{target: {x: this.input.activePointer.worldX}});
+            this.player.actions.add(ARunTo, { target: { x: this.input.activePointer.worldX } });
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
             this.lamp2.startRadiusFlickering();
@@ -68,8 +63,8 @@ class TestRoom extends TDLRoom {
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
             //this.lamp1.startHardFlickeringAndTrembling();
             this.lamp2.startHardFlickeringAndTrembling();
-            
-           //this.lamp2.startSoftFlickeringAndTrembling();
+
+            //this.lamp2.startSoftFlickeringAndTrembling();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
             this.lamp1.lightBehaviour.stopAllBehaviours();

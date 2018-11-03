@@ -7,7 +7,7 @@ class AObserve extends TDLAction {
                 new TDLAction.BaseAction(
                     this,
                     () => {
-                        alert(this.config.target.observeText);
+                        console.log(this.config.target.observeText);
                         this.finish();
                     }
                 )

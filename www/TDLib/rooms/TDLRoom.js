@@ -116,7 +116,7 @@ class TDLRoom extends Phaser.Scene {
      * @since 1.0.0
      */
     create(player) {
-        this.player = player;
+        this.player = player.setName('player');
         this.lights.enable(); //Boot Phaser's LightManager
         this.scene.bringToTop(CursorManager.CURSOR_SCENE_KEY); //Add the cursor to the Room
 
@@ -171,6 +171,7 @@ class TDLRoom extends Phaser.Scene {
         this.map.objects.forEach(layer => {
             layer.objects.forEach(element => {
                 this[element.name] = eval('new ' + element.type + '(this,' + (element.x + element.width / 2) + ', ' + (element.y - element.height / 2) + ');');
+                this[element.name].setName(element.name);
             });
         });
     }

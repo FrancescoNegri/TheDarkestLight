@@ -65,6 +65,13 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         this.room = room;
 
         /**
+         * The name of the sprite, to map it in the room. Usually it's obtained by Tiled.
+         * @type {string}
+         * @since 1.0.0
+         */
+        this.name;
+
+        /**
          * The unique key of the sprite, composed by the sprite type and a 4 digits random integer number.
          * @type {string}
          * @since 1.0.0
@@ -175,7 +182,7 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
      * @since 1.0.0
      */
     create() {
-        console.log('Created:', this.name, '- Type:', this.type, '- Behaviour:', this.behaviour.type);
+        console.log('Created:', this.key, '- Type:', this.type, '- Behaviour:', this.behaviour.type);
     }
 
     /**
@@ -184,5 +191,16 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
      */
     update() {
 
+    }
+
+    /**
+     * Set the name property of a sprite.
+     * @param {string} value - The name which is used to map a sprite in the room.
+     * @return {TDLib.Sprites.TDLSprite}
+     * @since 1.0.0
+     */
+    setName(value) {
+        this.name = value;
+        return this;
     }
 }

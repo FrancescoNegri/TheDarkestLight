@@ -34,6 +34,13 @@ class TDLRoom extends Phaser.Scene {
         this.averageLightsContribute;
 
         /**
+         * The global cursor manager.
+         * @type {TDLib.Plugins.GlobalPlugins.CursorManager}
+         * @since 1.0.0
+         */
+        this.cursors;
+
+        /**
          * The layer manager of the room.
          * @type {TDLib.Plugins.RoomPlugins.LayerManager}
          * @since 1.0.0
@@ -60,6 +67,13 @@ class TDLRoom extends Phaser.Scene {
          * @since 1.0.0
          */
         this.player;
+
+        /**
+         * The global room manager.
+         * @type {TDLib.Plugins.GlobalPlugins.RoomManager}
+         * @since 1.0.0
+         */
+        this.rooms;
 
         //Aggiungere tutte le proprietà this.COSE di phaser che vengono utilizzate qui!
     }

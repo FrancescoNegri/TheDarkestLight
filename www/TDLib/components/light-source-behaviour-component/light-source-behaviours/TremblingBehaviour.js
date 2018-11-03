@@ -82,7 +82,15 @@ class TremblingBehaviour extends LightSourceBehaviour {
      */
     stop(backToInitialPosition = true) {
         super.stop(() => {
-            if (backToInitialPosition) this.component.gameObject.graphicLight.setPosition(this.component.gameObject.x + this.component.gameObject.config.offset.x, this.component.gameObject.y + this.component.gameObject.config.offset.y);
+            if (backToInitialPosition) {
+                this.component.gameObject.graphicLight.setPosition(this.component.gameObject.x + this.component.gameObject.config.offset.x, this.component.gameObject.y + this.component.gameObject.config.offset.y);
+            } else {
+                this.component.gameObject.config.offset= {
+                    x: this.component.gameObject.x - this.component.gameObject.graphicLight.x, 
+                    y: this.component.gameObject.y - this.component.gameObject.graphicLight.y
+                }
+            }
+
             console.log('TREMBLING stop');
         });
     }

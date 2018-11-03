@@ -68,9 +68,14 @@ class RadiusFlickeringBehaviour extends LightSourceBehaviour {
             if (backToInitialIntensity) {
                 this.component.gameObject.graphicLight.setIntensity(this.component.gameObject.config.graphicLight.intensity);
                 this.component.gameObject.diffusedLight.setIntensity(this.component.gameObject.config.diffusedLight.intensity);
+            } else {
+                this.component.gameObject.config.graphicLight.intensity= this.component.gameObject.graphicLight.intensity;
+                this.component.gameObject.config.diffusedLight.intensity= this.component.gameObject.diffusedLight.intensity;
             }
             if (backToInitialRadius) {
                 this.component.gameObject.graphicLight.setRadius(this.component.gameObject.config.graphicLight.radius);
+            } else {
+                this.component.gameObject.config.graphicLight.radius = this.component.gameObject.graphicLight.radius;
             }
             console.log('RADIUSFLICKERING stop');
         });

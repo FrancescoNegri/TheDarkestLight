@@ -25,18 +25,20 @@ class LightSource extends WorldObject {
      */
     constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours, isOn = true) {
         super(room, x, y, texture, layer, false);
-        this.config = {
+        this.initialConfig = {
             graphicLight: graphicLightConfig,
             diffusedLight: diffusedLightConfig,
             offset: offset
         }
+
+        this.config = this.initialConfig;
 
         this.isOn = false;
         if (isOn) {
             this.turnOn();
         }
 
-        this.room.lightSource.add(this);
+        this.room.lightSources.add(this);
         this.lightBehaviour = new LightSourceBehaviourComponent(this, allowedBehaviours);
     }
 
@@ -45,14 +47,14 @@ class LightSource extends WorldObject {
      */
     turnOn() {
         if (!this.isOn) {
-            if (this.config.diffusedLight !== null) {
-                this.diffusedLight = this.room.lights.addLight(this.x + this.config.offset.x, this.y + this.config.offset.y, this.config.diffusedLight.radius).setIntensity(this.config.diffusedLight.intensity);
-                this.room.lightSource.diffusedLights.push(this.diffusedLight);
+            if (this.initialConfig.diffusedLight !== null) {
+                this.diffusedLight = this.room.lights.addLight(this.x + this.initialConfig.offset.x, this.y + this.initialConfig.offset.y, this.initialConfig.diffusedLight.radius).setIntensity(this.initialConfig.diffusedLight.intensity);
+                this.room.lightSources.diffusedLights.push(this.diffusedLight);
             }
 
-            if (this.config.graphicLight !== null) {
-                this.graphicLight = this.room.lights.addLight(this.x + this.config.offset.x, this.y + this.config.offset.y, this.config.graphicLight.radius).setIntensity(this.config.graphicLight.intensity);
-                this.room.lightSource.graphicLights.push(this.graphicLight);
+            if (this.initialConfig.graphicLight !== null) {
+                this.graphicLight = this.room.lights.addLight(this.x + this.initialConfig.offset.x, this.y + this.initialConfig.offset.y, this.initialConfig.graphicLight.radius).setIntensity(this.initialConfig.graphicLight.intensity);
+                this.room.lightSources.graphicLights.push(this.graphicLight);
             }
 
             this.isOn = true;
@@ -67,15 +69,15 @@ class LightSource extends WorldObject {
 
         if (stopBehaviours) this.lightBehaviour.stopAllBehaviours();
         if (this.isOn) {
-            var diffusedLightindex = this.room.lightSource.diffusedLights.indexOf(this.diffusedLight);
+            var diffusedLightindex = this.room.lightSources.diffusedLights.indexOf(this.diffusedLight);
             if (diffusedLightindex > -1) {
-                this.room.lightSource.diffusedLights.splice(diffusedLightindex, 1);
+                this.room.lightSources.diffusedLights.splice(diffusedLightindex, 1);
                 this.room.lights.removeLight(this.diffusedLight);
             }
 
-            var graphicLightindex = this.room.lightSource.graphicLights.indexOf(this.graphicLight);
+            var graphicLightindex = this.room.lightSources.graphicLights.indexOf(this.graphicLight);
             if (graphicLightindex > -1) {
-                this.room.lightSource.graphicLights.splice(graphicLightindex, 1);
+                this.room.lightSources.graphicLights.splice(graphicLightindex, 1);
                 this.room.lights.removeLight(this.graphicLight);
             }
 
@@ -115,7 +117,7 @@ class LightSource extends WorldObject {
     startTrembling(minTime, maxTime, movementOnXAxis, xMinOscillation, xMaxOscillation, movementeOnYAxis, yMinOscillation, yMaxOscillation) {
         this.lightBehaviour.trembling.start(...arguments);
     }
-    
+
     /**
      * Stop the trembling behaviour. 
      * @param {boolean} [backToInitialPosition=true] - Back to the sarting position of the light at the end of the effect.
@@ -152,7 +154,7 @@ class LightSource extends WorldObject {
      * @param {number} [minPercentageRadius = 0.8] - Minimum light radius reacheable during the effect. Value between 0 and 1.
      * @param {number} [maxPercentageRadius = 1] - Maximum light radius reacheable during the effect. Value between 0 and 1.
      */
-    startRadiusFlickering(minTime, maxTime, minPercentageIntensity, maxPercentageIntensity, minPercentageRadius, maxPercentageRadius){
+    startRadiusFlickering(minTime, maxTime, minPercentageIntensity, maxPercentageIntensity, minPercentageRadius, maxPercentageRadius) {
         this.lightBehaviour.radiusFlickering.start(...arguments);
     }
 
@@ -161,7 +163,7 @@ class LightSource extends WorldObject {
      * @param {boolean} [backToInitialIntensity=true] - Back to the initial light intensity before the effect.
      * @param {boolean} [backToInitialRadius=true] - Back to the initial light radius before the effect.
      */
-    stopRadiusFlickering(backToInitialIntensity,backToInitialRadius){
+    stopRadiusFlickering(backToInitialIntensity, backToInitialRadius) {
         this.lightBehaviour.radiusFlickering.stop(...arguments);
     }
 

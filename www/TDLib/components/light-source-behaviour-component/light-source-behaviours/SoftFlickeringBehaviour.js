@@ -55,13 +55,16 @@ class SoftFlickeringBehaviour extends LightSourceBehaviour {
 
     /**
      * Stop flickering the intenisity of the light.
-     * @param {boolean} [backToInitialIntensity=true] - Back to the initial light position before the effect.
+     * @param {boolean} [backToInitialIntensity=true] - Back to the initial light intensity before the effect.
      */
     stop(backToInitialIntensity = true) {
         super.stop(() => {
             if (backToInitialIntensity) {
                 this.component.gameObject.graphicLight.setIntensity(this.component.gameObject.config.graphicLight.intensity);
                 this.component.gameObject.diffusedLight.setIntensity(this.component.gameObject.config.diffusedLight.intensity);
+            } else {
+                this.component.gameObject.config.graphicLight.intensity= this.component.gameObject.graphicLight.intensity;
+                this.component.gameObject.config.diffusedLight.intensity= this.component.gameObject.diffusedLight.intensity;
             }
             console.log('SOFTFLICKERING stop');
         });

@@ -28,7 +28,7 @@ document.addEventListener('deviceready', function () {
             ],
             scene: [
                 { key: 'UpdatePlugin', plugin: UpdatePlugin, mapping: 'updates' },
-                { key: 'LightSourceManager', plugin: LightSourceManager, mapping: 'lightSource' },
+                { key: 'LightSourceManager', plugin: LightSourceManager, mapping: 'lightSources' },
                 { key: 'LayerManager', plugin: LayerManager, mapping: 'layers' },
                 { key: 'ActionManager', plugin: ActionManager, mapping: 'actions' }
             ]

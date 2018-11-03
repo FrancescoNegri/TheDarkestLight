@@ -5,7 +5,7 @@ class TestLamp extends LightSource {
             { intensity: .5, radius: 150 },
             { intensity: .8, radius: 4000 },
             { x: 0, y: 20 }, 
-            [HardFlickeringBehaviour, TremblingBehaviour, HardFlickeringAndTremblingBehaviour, RadiusFlickeringBehaviour, SoftFlickeringAndTremblingBehaviour]
+            [HardFlickeringBehaviour, TremblingBehaviour, HardFlickeringAndTremblingBehaviour, RadiusFlickeringBehaviour, SoftFlickeringAndTremblingBehaviour, SoftFlickeringBehaviour]
         );
     }
 }

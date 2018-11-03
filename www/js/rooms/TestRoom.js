@@ -22,7 +22,7 @@ class TestRoom extends TDLRoom {
     preload() {
         super.preload();
 
-        this.load.spritesheet('player', ['assets/player.png', 'assets/player_n.png'], { frameWidth: 52, frameHeight: 100});
+        this.load.spritesheet('player', ['assets/player.png', 'assets/player_n.png'], { frameWidth: 52, frameHeight: 100 });
         //this.load.image('player', ['assets/player_temp.png', 'assets/player_temp_n.png']);
     }
 
@@ -63,23 +63,27 @@ class TestRoom extends TDLRoom {
             /*this.lamp1.turnOff();
             this.lamp2.turnOff();*/
             //this.player.actions.add(AComposedTest, {startingNumber: 10});
-            this.player.isBlocked = false;
-            this.cursors.showCursor();
+            /*this.player.isBlocked = false;
+            this.cursors.showCursor();*/
+            if (this.lamp1.isOn) this.lamp1.turnOff();
+            else if (!this.lamp1.isOn) this.lamp1.turnOn();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
             //this.lamp2.startTrembling();
-            this.player.actions.add(ARunTo,{target: {x: this.input.activePointer.x}})
+            //this.player.actions.add(ARunTo, { target: { x: this.input.activePointer.x } })
+            console.log(this.lightSources.calculateLightsContribuitePoint(this.player));
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-            this.lamp2.startRadiusFlickering();
+            this.lamp2.startSoftFlickering(10, 100, 0.2);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
             /*this.lamp1.startHardFlickeringAndTrembling();
-            this.lamp2.startHardFlickeringAndTrembling();
-            */
-           this.lamp2.startSoftFlickeringAndTrembling();
+            this.lamp2.startHardFlickeringAndTrembling();*/
+            this.lamp2.startFlickering();
+            
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
+            this.lamp2.stopSoftFlickering(false);
             this.lamp1.lightBehaviour.stopAllBehaviours();
             this.lamp2.lightBehaviour.stopAllBehaviours();
         }

@@ -100,7 +100,7 @@ class TDLRoom extends Phaser.Scene {
 
     update() {
         this.updateMasksByLightDiffusion();
-        //this.lightsContribute = this.lightSource.calculateLightsContribuitePoint(this.player);
+        //this.lightsContribute = this.lightSources.calculateLightsContribuitePoint(this.player);
 
         //Updates all Actions in  every ActionComponent (if present)
         this.children.list.forEach(element => {
@@ -111,7 +111,7 @@ class TDLRoom extends Phaser.Scene {
     }
 
     updateMasksByLightDiffusion() {
-        this.averageLightsContribute = this.lightSource.calculateAverageLightsContribute();
+        this.averageLightsContribute = this.lightSources.calculateAverageLightsContribute();
         this.layers.wallsMaskLayer.setAlpha(1 - this.averageLightsContribute);
     }
 

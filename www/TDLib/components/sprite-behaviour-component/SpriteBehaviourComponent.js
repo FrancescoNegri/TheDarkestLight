@@ -1,33 +1,93 @@
+/**
+ * The behaviours namespace.
+ * @namespace TDLib.Components.SpriteBehaviours
+ * @since 1.0.0
+ */
+
+/**
+ * Class representing a component which determines the behaviour of every sprite.
+ * @extends TDLib.Components.TDLComponent
+ * @memberof TDLib.Components
+ * @since 1.0.0
+ */
 class SpriteBehaviourComponent extends TDLComponent {
+    /**
+     * Create a new SpriteBehaviourComponent
+     * @param {TDLib.Sprites.TDLSprite} gameObject - The sprite which implements the component.
+     * @param {string} type - The type of behaviour of the gameObject.
+     */
     constructor(gameObject, type) {
         super(gameObject);
 
+        /**
+         * A reference to the player in the current room.
+         * @type {TDLib.Sprites.Characters.Players.Player}
+         * @since 1.0.0
+         */
+        this.player;
         (typeof this.gameObject.room.player === 'undefined') ? this.player = this.gameObject : this.player = this.gameObject.room.player;
-        this.interact = {};
-        this.examine = {};
 
+        /**
+         * The type of behaviour of the gameObject.
+         * @type {string}
+         * @since 1.0.0
+         */
         this.type = type;
 
-        this.addBehaviours();
+        this._addBehaviours();
     }
 
+    /**
+     * Inert behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
     static get INERT() {
         return 'INERT';
     }
+
+    /**
+     * Examinable behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
     static get EXAMINABLE() {
         return 'EXAMINABLE';
     }
+
+    /**
+     * Interactive behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
     static get INTERACTIVE() {
         return 'INTERACTIVE';
     }
+
+    /**
+     * Talkable behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
     static get TALKABLE() {
         return 'TALKABLE';
     }
+
+    /**
+     * Inventory interactive behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
     static get INVENTORY() {
         return 'INVENTORY';
     }
 
-    addBehaviours() {
+    /**
+     * Select the appropriate behaviours for the gameObject.
+     * @private
+     * @since 1.0.0
+     */
+    _addBehaviours() {
         //Se l'oggetto è osservabile (cioè esaminabile o interagibile) setto il cursore appropriato 
         if (this.type === SpriteBehaviourComponent.EXAMINABLE || this.type === SpriteBehaviourComponent.INTERACTIVE) {
 

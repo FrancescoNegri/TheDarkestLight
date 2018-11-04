@@ -1,3 +1,15 @@
+/**
+ * The wall furnitures namespace.
+ * @namespace TDLib.Sprites.Objects.WorldObjects.WallFurnitures
+ * @since 1.0.0
+ */
+
+/**
+ * Class representing a WallFurniture.
+ * @extends TDLib.Sprites.Objects.WorldObjects.WorldObject
+ * @memberof TDLib.Sprites.Objects.WorldObjects.WallFurnitures
+ * @since 1.0.0
+ */
 class WallFurniture extends WorldObject {
     /**
      * Create a WallFurniture.

@@ -1,3 +1,15 @@
+/**
+ * The world objects namespace.
+ * @namespace TDLib.Sprites.Objects.WorldObjects
+ * @since 1.0.0
+ */
+
+/**
+ * Class representing a WorldObject.
+ * @extends TDLib.Sprites.Objects.TDLObject
+ * @memberof TDLib.Sprites.Objects.WorldObjects
+ * @since 1.0.0
+ */
 class WorldObject extends TDLObject {
     /**
      * Create a WorldObject.
@@ -40,6 +52,6 @@ class WorldObject extends TDLObject {
 
     create() {
         super.create();
-        this.setPipeline('Light2D');
+        this.setPipeline('Light2D'); //Da spostare in TDLSprite non appena il player supporterà la Light2D
     }
 }

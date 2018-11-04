@@ -12,18 +12,6 @@ class ObservableBehaviour extends SpriteBehaviour {
         return 1 * 1000;
     }
 
-    static get DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE() {
-        return 0.5;
-    }
-
-    static get DEFAULT_OBSERVE_TEXT() {
-        return 'Observe default text';
-    }
-
-    static get DEFAULT_NO_LIGHT_OBSERVE_TEXT() {
-        return 'NoLightObserve default text';
-    }
-
     add() {
         super.add();
 

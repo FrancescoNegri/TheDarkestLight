@@ -38,60 +38,15 @@ class SpriteBehaviourComponent extends TDLComponent {
     }
 
     /**
-     * Inert behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-    static get INERT() {
-        return 'INERT';
-    }
-
-    /**
-     * Examinable behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-    static get EXAMINABLE() {
-        return 'EXAMINABLE';
-    }
-
-    /**
-     * Interactive behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-    static get INTERACTIVE() {
-        return 'INTERACTIVE';
-    }
-
-    /**
-     * Talkable behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-    static get TALKABLE() {
-        return 'TALKABLE';
-    }
-
-    /**
-     * Inventory interactive behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-    static get INVENTORY() {
-        return 'INVENTORY';
-    }
-
-    /**
      * Select the appropriate behaviours for the gameObject.
      * @private
      * @since 1.0.0
      */
     _addBehaviours() {
         //Se l'oggetto è osservabile (cioè esaminabile o interagibile) setto il cursore appropriato 
-        if (this.type === SpriteBehaviourComponent.EXAMINABLE || this.type === SpriteBehaviourComponent.INTERACTIVE) {
-
+        if (this.type === SpriteBehaviour.EXAMINABLE || this.type === SpriteBehaviour.INTERACTIVE) {
             this.observe = new ObservableBehaviour(this);
+            if (this.type === SpriteBehaviour.EXAMINABLE) this.examine = new ExaminableBehaviour(this);
 
         }
     }

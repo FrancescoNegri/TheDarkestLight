@@ -25,7 +25,7 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
 	 * @param {string} texture - The graphic of the sprite.
      * @param {string} [layer=null] - The key of the layer which will contain the sprite.
      * @param {boolean} [hasBody=true] - Specify if the sprite has physics.
-     * @param {string} [behaviourType=SpriteBehaviourComponent.INERT] - Specify the behaviour of the sprite.
+     * @param {string} [behaviourType=SpriteBehaviour.INERT] - Specify the behaviour of the sprite.
 	 * @param {string} [observeText] - The text which appears when observing the sprite.
 	 * @param {string} [examineOrInteractText] -  The text which appears when examine or interact with the sprite.
 	 * @param {string} [blockExamineText=null] - If not null it's the blocking text which appears the first time the sprite is examined.
@@ -43,16 +43,16 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         texture,
         layer = null,
         hasBody = true,
-        behaviourType = EntityBehaviourComponent.INERT,
-        observeText = ObservableBehaviour.DEFAULT_OBSERVE_TEXT,
-        examineOrInteractText = 'ExamineOrInteract default text',
+        behaviourType = SpriteBehaviour.INERT,
+        observeText = SpriteBehaviour.DEFAULT_OBSERVE_TEXT,
+        examineOrInteractText = SpriteBehaviour.DEFAULT_EXAMINE_OR_INTERACT_TEXT,
         blockExamineText = null,
-        noLightObserveText = ObservableBehaviour.DEFAULT_NO_LIGHT_OBSERVE_TEXT,
-        noLightExamineOrInteractText = 'NoLightExamineOrInteract default text',
+        noLightObserveText = SpriteBehaviour.DEFAULT_NO_LIGHT_OBSERVE_TEXT,
+        noLightExamineOrInteractText = SpriteBehaviour.DEFAULT_NO_LIGHT_EXAMINE_OR_INTERACT_TEXT,
         examineOrInteractOffsetX = 0,
         examineOrInteractThresholdRadius = 0,
-        minLightLevelToExamineOrInteract = 0.4,
-        minLightLevelToObserve = ObservableBehaviour.DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE
+        minLightLevelToExamineOrInteract = SpriteBehaviour.DEFAULT_MIN_LIGHT_LEVEL_TO_EXAMINE_OR_INTERACT,
+        minLightLevelToObserve = SpriteBehaviour.DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE
 
     ) {
         super(room, x, y, texture);
@@ -166,8 +166,8 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
             else console.warn('ALERT: layer not found for object', this);
         }
 
-        this.create();
         this.room.updates.add(this);
+        this.create();
     }
 
     /**

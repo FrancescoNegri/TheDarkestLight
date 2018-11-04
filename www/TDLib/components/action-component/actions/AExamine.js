@@ -4,13 +4,7 @@ class AExamine extends TDLAction {
         this.addActions(
             [
                 new AWalkTo(this, this.actor, this.config),
-                new TDLAction.BaseAction(
-                    this,
-                    () => {
-                        console.log(this.config.target.examineOrInteractText);
-                        this.finish();
-                    }
-                )
+                this.target.behaviour.examine.getAction(this)
             ]
         )
     }

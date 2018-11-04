@@ -62,4 +62,73 @@ class SpriteBehaviour {
             }
         );
     }
+
+    /**
+     * Inert behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
+    static get INERT() {
+        return 'INERT';
+    }
+
+    /**
+     * Examinable behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
+    static get EXAMINABLE() {
+        return 'EXAMINABLE';
+    }
+
+    /**
+     * Interactive behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
+    static get INTERACTIVE() {
+        return 'INTERACTIVE';
+    }
+
+    /**
+     * Talkable behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
+    static get TALKABLE() {
+        return 'TALKABLE';
+    }
+
+    /**
+     * Inventory interactive behaviour.
+     * @type {string}
+     * @since 1.0.0
+     */
+    static get INVENTORY() {
+        return 'INVENTORY';
+    }
+
+    static get DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE() {
+        return 0.5;
+    }
+
+    static get DEFAULT_OBSERVE_TEXT() {
+        return 'Observe default text';
+    }
+
+    static get DEFAULT_NO_LIGHT_OBSERVE_TEXT() {
+        return 'NoLightObserve default text';
+    }
+
+    static get DEFAULT_MIN_LIGHT_LEVEL_TO_EXAMINE_OR_INTERACT() {
+        return 0.4;
+    }
+
+    static get DEFAULT_EXAMINE_OR_INTERACT_TEXT() {
+        return 'ExamineOrInteract default text';
+    }
+
+    static get DEFAULT_NO_LIGHT_EXAMINE_OR_INTERACT_TEXT() {
+        return 'NoLightExamineOrInteract default text';
+    }
 }

@@ -141,6 +141,7 @@ class TDLRoom extends Phaser.Scene {
         //Camera bounds, anche il wallsLayer
         this.cameras.main.setBounds(0, 0, this.layers.wallsLayer.width, this.layers.wallsLayer.height);
         this.cameras.main.startFollow(this.player);
+        this.cameras.main.setRoundPixels(true);
         //Physics Bounds, sarà solo lo spazio di gioco (togliamo il wall layer tutto attorno!!)
         this.physics.world.setBounds(Global.TILE_SIZE, Global.TILE_SIZE, this.layers.wallsLayer.width - 2 * Global.TILE_SIZE, this.layers.wallsLayer.height - 2 * Global.TILE_SIZE);
     }

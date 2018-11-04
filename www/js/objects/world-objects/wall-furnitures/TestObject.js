@@ -4,7 +4,7 @@ class TestObject extends WallFurniture {
             room,
             x, y,
             'NaziBanner01',
-            SpriteBehaviourComponent.EXAMINABLE,
+            SpriteBehaviour.EXAMINABLE,
             'Sono una bandiera nazista, osservami!',
             'Ora stai esaminando una bandiera con la svastica',
             null,

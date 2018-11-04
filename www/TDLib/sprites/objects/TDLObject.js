@@ -19,7 +19,7 @@ class TDLObject extends TDLSprite {
 	 * @param {string} texture - The graphic of the sprite.
      * @param {string} [layer=null] - The key of the layer which will contain the sprite.
      * @param {boolean} [hasBody=true] - Specify if the sprite has physics.
-     * @param {string} [behaviourType=SpriteBehaviourComponent.INERT] - Specify the behaviour of the sprite.
+     * @param {string} [behaviourType=SpriteBehaviour.INERT] - Specify the behaviour of the sprite.
 	 * @param {string} [observeText] - The text which appears when observing the sprite.
 	 * @param {string} [examineOrInteractText] -  The text which appears when examine or interact with the sprite.
 	 * @param {string} [blockExamineText=null] - If not null it's the blocking text which appears the first time the sprite is examined.

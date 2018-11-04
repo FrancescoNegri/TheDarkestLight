@@ -20,7 +20,7 @@ class TDLCharacter extends TDLSprite {
      * @param {string} layer - The character's layer.
      */
     constructor(room, x, y, texture, layer) {
-        super(...arguments, true, SpriteBehaviourComponent.INTERACTIVE);
+        super(...arguments, true, SpriteBehaviour.INTERACTIVE);
 
         /**
          * The ActionComponent for this character.

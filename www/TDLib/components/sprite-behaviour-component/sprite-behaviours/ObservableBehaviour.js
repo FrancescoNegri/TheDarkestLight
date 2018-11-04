@@ -37,6 +37,6 @@ class ObservableBehaviour extends SpriteBehaviour {
 	* E'il tempo minimo di mouse over necessario per far iniziare l'azione di osserva del player in secondi!
 	*/
     static get MIN_TIME_TO_OBSERVE() {
-        return 1.5;
+        return 1;
     }
 }

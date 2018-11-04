@@ -76,7 +76,7 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
          * @type {string}
          * @since 1.0.0
          */
-        this.key = this.constructor.name + Math.floor(Math.random() * (9999 - 1000 + 1));
+        this.key = this.constructor.name + (Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000);
 
         /**
          * The type of the sprite.

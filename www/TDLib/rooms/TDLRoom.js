@@ -74,8 +74,6 @@ class TDLRoom extends Phaser.Scene {
          * @since 1.0.0
          */
         this.rooms;
-
-        //Aggiungere tutte le proprietà this.COSE di phaser che vengono utilizzate qui!
     }
 
     /**
@@ -226,7 +224,6 @@ class TDLRoom extends Phaser.Scene {
         this.averageLightsContribute = this.lightSource.calculateAverageLightsContribute();
         this.layers.wallsMaskLayer.setAlpha(1 - this.averageLightsContribute);
     }
-
 }
 
 

@@ -44,15 +44,15 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         layer = null,
         hasBody = true,
         behaviourType = EntityBehaviourComponent.INERT,
-        observeText = 'Observe default text',
+        observeText = ObservableBehaviour.DEFAULT_OBSERVE_TEXT,
         examineOrInteractText = 'ExamineOrInteract default text',
         blockExamineText = null,
-        noLightObserveText = 'NoLightObserve default text',
+        noLightObserveText = ObservableBehaviour.DEFAULT_NO_LIGHT_OBSERVE_TEXT,
         noLightExamineOrInteractText = 'NoLightExamineOrInteract default text',
         examineOrInteractOffsetX = 0,
         examineOrInteractThresholdRadius = 0,
         minLightLevelToExamineOrInteract = 0.4,
-        minLightLevelToObserve = 0.5
+        minLightLevelToObserve = ObservableBehaviour.DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE
 
     ) {
         super(room, x, y, texture);
@@ -154,13 +154,6 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
          * @since 1.0.0
          */
         this.minLightLevelToObserve = minLightLevelToObserve;
-
-		/**
-		 * The time of mouseover needed to start the observe action on the sprite
-         * @type {number}
-         * @since 1.0.0
-         */
-        this.minTimeToObserve = ObservableBehaviour.MIN_TIME_TO_OBSERVE * 1000;
 
         this.room.add.existing(this);
         if (hasBody) this.room.physics.add.existing(this);

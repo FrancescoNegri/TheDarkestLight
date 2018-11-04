@@ -70,7 +70,12 @@ class TDLAction {
      * @since 1.0.0
      */
     addActions(actions) {
-        this._queue = this._queue.concat(this._queue, actions);
+        if (Array.isArray(actions)) {
+            actions.forEach(action => {
+                this._queue.push(action);
+            });
+        }
+        else this._queue.push(actions);
     }
 
     /**

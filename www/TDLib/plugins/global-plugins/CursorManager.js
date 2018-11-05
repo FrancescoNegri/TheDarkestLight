@@ -157,11 +157,11 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
      * @param {TDLib.Sprites.Characters.TDLCharacter} player - The current player.
      * @since 1.0.0
      */
-    pointerDown(player) {
+    pointerDown(player, pointer = null) {
         if (!player.isBlocked) {
             switch (this.cursorScene.cursor.texture.key) {
                 case CursorManager.DEFAULT_CURSOR: {
-                    player.actions.add(AWalkTo, { target: { x: player.room.input.activePointer.worldX } });
+                    if (typeof player.room.input.activePointer.camera !== 'undefined') player.actions.add(AWalkTo, { target: { x: player.room.input.activePointer.worldX } });
                 }
                     break;
 

@@ -10,7 +10,7 @@ class TestRoomFurn extends RoomFurniture {
             'Sì, sono sempre una macchina...anche se provi ad interagire con me',
             null,
             'Ora è troppo buio per vedere una macchina',
-            'Ora è troppo buio per interagire con me'
+            'Ora è troppo buio per interagire con me',
         );
     }
 

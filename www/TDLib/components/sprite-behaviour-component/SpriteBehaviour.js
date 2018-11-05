@@ -70,6 +70,11 @@ class SpriteBehaviour {
         );
     }
 
+    checkLight(value) {
+        if (this.room.lightSource.calculateLightsContribuitePoint(this.gameObject) >= value) return true;
+        else return false
+    }
+
     /**
      * Inert behaviour.
      * @type {string}
@@ -121,7 +126,7 @@ class SpriteBehaviour {
      * @since 1.0.0
      */
     static get DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE() {
-        return 0.5;
+        return 0.05;
     }
 
     /**
@@ -148,7 +153,7 @@ class SpriteBehaviour {
      * @since 1.0.0
      */
     static get DEFAULT_MIN_LIGHT_LEVEL_TO_EXAMINE_OR_INTERACT() {
-        return 0.4;
+        return 0.04;
     }
 
     /**

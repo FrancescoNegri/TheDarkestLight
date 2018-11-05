@@ -50,7 +50,8 @@ class ObservableBehaviour extends SpriteBehaviour {
             invoker,
             () => {
                 //Fare i controlli su quanta luce c'è nella stanza!
-                console.log(this.gameObject.observeText);
+                if (this.checkLight(this.gameObject.minLightLevelToObserve)) console.log(this.gameObject.observeText);
+                else console.log(this.gameObject.noLightObserveText);
                 invoker.finish();
             }
         );

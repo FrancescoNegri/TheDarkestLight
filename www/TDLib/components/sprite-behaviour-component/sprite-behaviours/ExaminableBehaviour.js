@@ -13,7 +13,8 @@ class ExaminableBehaviour extends SpriteBehaviour {
             invoker,
             () => {
                 //Fare i controlli su quanta luce c'è nella stanza!
-                console.log(this.gameObject.examineOrInteractText);
+                if (this.checkLight(this.gameObject.minLightLevelToExamineOrInteract)) console.log(this.gameObject.examineOrInteractText);
+                else console.log(this.gameObject.noLightExamineOrInteractText);
                 invoker.finish();
             }
         );

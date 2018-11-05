@@ -56,7 +56,7 @@ class SpriteBehaviourComponent extends TDLComponent {
         if (this.type === SpriteBehaviour.EXAMINABLE || this.type === SpriteBehaviour.INTERACTIVE) {
             this.observe = new ObservableBehaviour(this);
             if (this.type === SpriteBehaviour.EXAMINABLE) this.examine = new ExaminableBehaviour(this);
-
+            else if (this.type === SpriteBehaviour.INTERACTIVE) this.interact = new InteractiveBehaviour(this);
         }
     }
 }

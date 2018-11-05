@@ -50,8 +50,6 @@ class TDLCharacter extends TDLSprite {
 
     create() {
         super.create();
-
-        this.setCollideWorldBounds(true); 
         //this.setPipeline('Light2D');
     }
 }

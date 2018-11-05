@@ -156,7 +156,10 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         this.minLightLevelToObserve = minLightLevelToObserve;
 
         this.room.add.existing(this);
-        if (hasBody) this.room.physics.add.existing(this);
+        if (hasBody) {
+            this.room.physics.add.existing(this);
+            this.setCollideWorldBounds(true);
+        }
 
         if (layer != null) {
             if (layer in this.room.layers) {

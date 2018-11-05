@@ -33,7 +33,6 @@ class SpriteBehaviourComponent extends TDLComponent {
          * @since 1.0.0
          */
         this.type = type;
-
         this._addBehaviours();
     }
 

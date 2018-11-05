@@ -108,26 +108,56 @@ class SpriteBehaviour {
         return 'INVENTORY';
     }
 
+    /**
+     * The default minimum value of diffused light to observe the sprite.
+     * @type {number}
+     * @since 1.0.0
+     */
     static get DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE() {
         return 0.5;
     }
 
+    /**
+     * The default text which appears when observing the sprite.
+     * @type {string}
+     * @since 1.0.0
+     */
     static get DEFAULT_OBSERVE_TEXT() {
         return 'Observe default text';
     }
 
+    /**
+     * The default text which appears when observing the sprite when the diffused light is not sufficient.
+     * @type {string}
+     * @since 1.0.0
+     */
     static get DEFAULT_NO_LIGHT_OBSERVE_TEXT() {
         return 'NoLightObserve default text';
     }
 
+    /**
+     * The default minimum value of diffused light to examine or interact with the sprite.
+     * @type {number}
+     * @since 1.0.0
+     */
     static get DEFAULT_MIN_LIGHT_LEVEL_TO_EXAMINE_OR_INTERACT() {
         return 0.4;
     }
 
+    /**
+     * The default text which appears when examine or interact with the sprite.
+     * @type {string}
+     * @since 1.0.0
+     */
     static get DEFAULT_EXAMINE_OR_INTERACT_TEXT() {
         return 'ExamineOrInteract default text';
     }
 
+    /**
+     * The default text which appears when examine or interact with the sprite when the diffused light is not sufficient.
+     * @type {string}
+     * @since 1.0.0
+     */
     static get DEFAULT_NO_LIGHT_EXAMINE_OR_INTERACT_TEXT() {
         return 'NoLightExamineOrInteract default text';
     }

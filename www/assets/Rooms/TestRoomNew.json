@@ -64,7 +64,19 @@
          "draworder":"topdown",
          "id":3,
          "name":"roomFurnitureLayer",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":55,
+                 "height":112,
+                 "id":7,
+                 "name":"car",
+                 "rotation":0,
+                 "type":"TestRoomFurn",
+                 "visible":true,
+                 "width":312,
+                 "x":627,
+                 "y":238.333333333333
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -177,7 +189,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":7,
+ "nextobjectid":8,
  "orientation":"orthogonal",
  "renderorder":"left-down",
  "tiledversion":"1.2.0",
@@ -269,6 +281,30 @@
                  "type":"TestLamp"
                 }],
          "tilewidth":44
+        }, 
+        {
+         "columns":0,
+         "firstgid":55,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"roomFurniture",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":112,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"..\/GardenCar01.png",
+                 "imageheight":112,
+                 "imagewidth":312,
+                 "type":"TestRoomFurn"
+                }],
+         "tilewidth":312
         }],
  "tilewidth":48,
  "type":"map",

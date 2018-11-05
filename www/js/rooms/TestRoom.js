@@ -12,9 +12,11 @@ class TestRoom extends TDLRoom {
                     lightSources: {
                         testLamp: { path: 'assets/CeilingLamp.png', nPath: 'assets/CeilingLamp_n.png' }
                     },
-                    sprites: {
-                        nazi: { path: 'assets/NaziBanner01.png', nPath: 'assets/NaziBanner01_n.png' }
-                    }
+                    sprites: [
+                        { path: 'assets/NaziBanner01.png', nPath: 'assets/NaziBanner01_n.png' },
+                        { path: 'assets/GardenCar01.png', nPath: 'assets/GardenCar01_n.png' }
+                    ]
+
                 },
                 tilemapTiledJSON:
                     { path: 'assets/Rooms/TestRoomNew.json' }
@@ -31,7 +33,6 @@ class TestRoom extends TDLRoom {
 
     create() {
         super.create(new Debugger(this, 300, 250));
-
         //this.diffusedLightSource1 = new TestDiffusedLightSource(this, 200, 96);
         //this.blankLightSource1= new TestBlankLightSource(this, 350, 200);
 

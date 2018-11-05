@@ -85,6 +85,14 @@ class LightSource extends WorldObject {
     }
 
     /**
+     * If the light source is on, turn it off and vice versa.
+     */
+    switch() {
+        if (this.isOn) this.turnOff();
+        else this.turnOn();
+    }
+
+    /**
      * Start the hard flickering behaviour if it's an allowed behavior.
      * @param {number} [minTime=10] - Minimum time gap between two switch in milliseconds.
      * @param {number} [maxTime=400] - Maximum time gap between two switch in milliseconds.

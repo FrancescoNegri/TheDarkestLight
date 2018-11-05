@@ -199,4 +199,10 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         this.name = value;
         return this;
     }
+
+    //Poichè è stata aggiunta la pixel perfect collision, valutare l'utilità di questa funzione!
+    setHitAreaSize(width = this.width, height = this.height, offsetX = 0, offsetY = 0) {
+        this.input.hitArea.setSize(width, height);
+        this.input.hitArea.setPosition(((this.width - width) / 2) + offsetX, ((this.height - height) / 2) + offsetY);
+    }
 }

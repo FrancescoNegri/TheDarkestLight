@@ -45,7 +45,14 @@ class SpriteBehaviour {
      * @since 1.0.0
      */
     add() {
-        this.component.gameObject.setInteractive();
+        this.component.gameObject.setInteractive(
+            {
+                //Look https://photonstorm.github.io/phaser3-docs/Phaser.Input.html#.InputConfiguration__anchor
+                pixelPerfect: true,
+                alphaTolerance: 1,
+                draggable: false
+            }
+        );
     }
 
     /**

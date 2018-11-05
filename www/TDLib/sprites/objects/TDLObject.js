@@ -20,6 +20,8 @@ class TDLObject extends TDLSprite {
      * @param {string} [layer=null] - The key of the layer which will contain the sprite.
      * @param {boolean} [hasBody=true] - Specify if the sprite has physics.
      * @param {string} [behaviourType=SpriteBehaviour.INERT] - Specify the behaviour of the sprite.
+	 * @param {Object} [pixelPerfect=null] - If not null enable the pixel perfect pointer hit for the sprite.
+     * @param {boolean} [pixelPerfect.alphaTolerance] - The alpha tolerance threshold value.
 	 * @param {string} [observeText] - The text which appears when observing the sprite.
 	 * @param {string} [examineOrInteractText] -  The text which appears when examine or interact with the sprite.
 	 * @param {string} [blockExamineText=null] - If not null it's the blocking text which appears the first time the sprite is examined.
@@ -30,7 +32,7 @@ class TDLObject extends TDLSprite {
 	 * @param {number} [minLightLevelToExamineOrInteract=???] - The minimum value of diffused light to examine or interact with the sprite.
 	 * @param {number} [minLightLevelToObserve=???] - The minimum value of diffused light to observe the sprite.
 	 */
-    constructor(room, x, y, texture, layer, hasBody, behaviourType, observeText, examineOrInteractText, blockExamineText, noLightObserveText, noLightExamineOrInteractText, examineOrInteractOffsetX, examineOrInteractThresholdRadius, minLightLevelToExamineOrInteract, minLightLevelToObserve) {
-        super(...arguments);
-    }
+	constructor(room, x, y, texture, layer, hasBody, behaviourType, pixelPerfect, observeText, examineOrInteractText, blockExamineText, noLightObserveText, noLightExamineOrInteractText, examineOrInteractOffsetX, examineOrInteractThresholdRadius, minLightLevelToExamineOrInteract, minLightLevelToObserve) {
+		super(...arguments);
+	}
 }

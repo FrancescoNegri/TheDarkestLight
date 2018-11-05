@@ -45,11 +45,11 @@ class SpriteBehaviour {
      * @since 1.0.0
      */
     add() {
-        this.component.gameObject.setInteractive(
+        if (this.component.pixelPerfect === null) this.component.gameObject.setInteractive();
+        else this.component.gameObject.setInteractive(
             {
-                //Look https://photonstorm.github.io/phaser3-docs/Phaser.Input.html#.InputConfiguration__anchor
                 pixelPerfect: true,
-                alphaTolerance: 1,
+                alphaTolerance: this.component.pixelPerfect.alphaTolerance,
                 draggable: false
             }
         );

@@ -15,8 +15,10 @@ class SpriteBehaviourComponent extends TDLComponent {
      * Create a new SpriteBehaviourComponent
      * @param {TDLib.Sprites.TDLSprite} gameObject - The sprite which implements the component.
      * @param {string} type - The type of behaviour of the gameObject.
+     * @param {Object} [pixelPerfect=null] - If not null enable the pixel perfect pointer hit for the sprite.
+     * @param {boolean} [pixelPerfect.alphaTolerance] - The alpha tolerance threshold value.
      */
-    constructor(gameObject, type) {
+    constructor(gameObject, type, pixelPerfect) {
         super(gameObject);
 
         /**
@@ -33,6 +35,14 @@ class SpriteBehaviourComponent extends TDLComponent {
          * @since 1.0.0
          */
         this.type = type;
+
+        /**
+         * If not null enable the pixel perfect pointer hit for the sprite.
+         * @type {string}
+         * @since 1.0.0
+         */
+        this.pixelPerfect = pixelPerfect;
+
         this._addBehaviours();
     }
 

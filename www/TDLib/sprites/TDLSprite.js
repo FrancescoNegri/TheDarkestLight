@@ -26,7 +26,9 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
      * @param {string} [layer=null] - The key of the layer which will contain the sprite.
      * @param {boolean} [hasBody=true] - Specify if the sprite has physics.
      * @param {string} [behaviourType=SpriteBehaviour.INERT] - Specify the behaviour of the sprite.
-	 * @param {string} [observeText] - The text which appears when observing the sprite.
+     * @param {Object} [pixelPerfect=null] - If not null enable the pixel perfect pointer hit for the sprite.
+     * @param {boolean} [pixelPerfect.alphaTolerance] - The alpha tolerance threshold value.
+     * @param {string} [observeText] - The text which appears when observing the sprite.
 	 * @param {string} [examineOrInteractText] -  The text which appears when examine or interact with the sprite.
 	 * @param {string} [blockExamineText=null] - If not null it's the blocking text which appears the first time the sprite is examined.
 	 * @param {string} [noLightObserveText] -  The text which appears when observing the sprite when the diffused light is not sufficient.
@@ -44,6 +46,7 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         layer = null,
         hasBody = true,
         behaviourType = SpriteBehaviour.INERT,
+        pixelPerfect = null,
         observeText = SpriteBehaviour.DEFAULT_OBSERVE_TEXT,
         examineOrInteractText = SpriteBehaviour.DEFAULT_EXAMINE_OR_INTERACT_TEXT,
         blockExamineText = null,
@@ -90,7 +93,7 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
          * @type {TDLib.Components.SpriteBehaviourComponent}
          * @since 1.0.0
          */
-        this.behaviour = new SpriteBehaviourComponent(this, behaviourType);
+        this.behaviour = new SpriteBehaviourComponent(this, behaviourType, pixelPerfect);
 
 		/**
 		 * The text which appears when observing the sprite.

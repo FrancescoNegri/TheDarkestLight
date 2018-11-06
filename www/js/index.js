@@ -23,7 +23,7 @@ document.addEventListener('deviceready', function () {
         pixelArt: true,
         plugins: {
             global: [
-                { key: 'RoomManager', plugin: RoomManager, start: false, mapping: 'room' },
+                { key: 'RoomManager', plugin: RoomManager, start: false, mapping: 'rooms' },
                 { key: 'CursorManager', plugin: CursorManager, start: false, mapping: 'cursors' }
             ],
             scene: [

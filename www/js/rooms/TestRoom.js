@@ -11,10 +11,16 @@ class TestRoom extends TDLRoom {
                     },
                     lightSources: {
                         testLamp: { path: 'assets/CeilingLamp.png', nPath: 'assets/CeilingLamp_n.png' }
-                    }
+                    },
+                    sprites: [
+                        { path: 'assets/NaziBanner01.png', nPath: 'assets/NaziBanner01_n.png' },
+                        { path: 'assets/GardenCar01.png', nPath: 'assets/GardenCar01_n.png' },
+                        { path: 'assets/LibraryMap01.png', nPath: 'assets/LibraryMap01_n.png' }
+                    ]
+
                 },
                 tilemapTiledJSON:
-                    { path: 'assets/Rooms/TestRoom.json' }
+                    { path: 'assets/Rooms/TestRoomNew.json' }
             }
         );
     }
@@ -28,11 +34,6 @@ class TestRoom extends TDLRoom {
 
     create() {
         super.create(new Debugger(this, 300, 250));
-
-        this.lamp1 = new TestLamp(this, 200, 96);
-        this.lamp2 = new TestLamp(this, 600, 96);
-
-        //this.player.actions.add(ACount);
         //this.diffusedLightSource1 = new TestDiffusedLightSource(this, 200, 96);
         //this.blankLightSource1= new TestBlankLightSource(this, 350, 200);
 
@@ -42,45 +43,31 @@ class TestRoom extends TDLRoom {
         this.keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
         this.keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
-
-        /*this.input.on('pointermove', function (pointer) {
-
-            this.light.setPosition(pointer.x, pointer.y);
-    
-        });*/
     }
 
     update() {
         super.update();
 
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
-            //this.player.actions.add(ACount, {startingNumber: 34}, ActionComponent.PAUSE_MODE);
             this.player.isBlocked = true;
             this.cursors.hideCursor();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
-            //this.lamp2.startFlickering(1,50);
-            /*this.lamp1.turnOff();
-            this.lamp2.turnOff();*/
-            //this.player.actions.add(AComposedTest, {startingNumber: 10});
-            /*this.player.isBlocked = false;
-            this.cursors.showCursor();*/
-            if (this.lamp1.isOn) this.lamp1.turnOff();
-            else if (!this.lamp1.isOn) this.lamp1.turnOn();
+            this.player.isBlocked = false;
+            this.cursors.showCursor();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
-            //this.lamp2.startTrembling();
-            //this.player.actions.add(ARunTo, { target: { x: this.input.activePointer.x } })
-            console.log(this.lightSources.calculateLightsContribuitePoint(this.player));
+            this.lamp2.switch();
+            //this.player.actions.add(ARunTo, { target: { x: this.input.activePointer.worldX } });
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-            this.lamp2.startSoftFlickering(10, 100, 0.2);
+            this.lamp2.turnOn();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
-            /*this.lamp1.startHardFlickeringAndTrembling();
-            this.lamp2.startHardFlickeringAndTrembling();*/
-            this.lamp2.startFlickering();
-            
+            //this.lamp1.startHardFlickeringAndTrembling();
+            this.lamp2.startHardFlickeringAndTrembling();
+
+            //this.lamp2.startSoftFlickeringAndTrembling();
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
             this.lamp2.stopSoftFlickering(false);

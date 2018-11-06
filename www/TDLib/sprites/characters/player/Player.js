@@ -9,7 +9,7 @@ class Player extends TDLCharacter {
         super.create();
 
         this.room.input.on('pointerdown', function (pointer) {
-            this.room.cursors.pointerDown(this);    
+            this.room.cursors.pointerDown(this);
         }, this);
     }
 }

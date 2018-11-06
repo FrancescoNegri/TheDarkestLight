@@ -11,7 +11,7 @@
 class LightSourceBehaviourComponent extends TDLComponent {
     /**
      * Creates a new LightSourceBehaviourComponent.
-     * @param {TDLib.Sprites.TDLSprite} gameObject - The TDLSprite which owns the component.
+     * @param {TDLib.Sprites.TDLSprite} gameObject - The sprite which owns the component.
      * @param {Array} [allowedBehaviours=[]] - Specify the allowed behaviours for a LightSource.
      */
     constructor(gameObject, allowedBehaviours = []) {

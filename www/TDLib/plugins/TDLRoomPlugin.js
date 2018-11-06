@@ -1,22 +1,26 @@
 /**
  * The plugins namespace.
  * @namespace TDLib.Plugins
+ * @since 1.0.0
  */
 
 /**
  * The global plugins namespace.
  * @namespace TDLib.Plugins.GlobalPlugins
+ * @since 1.0.0
  */
 
  /**
   * The room plugins namespace.
   * @namespace TDLib.Plugins.RoomPlugins
+  * @since 1.0.0
   */
 
 /**
  * Class representing a plugin which manages a room.
  * @extends Phaser.Plugins.ScenePlugin
  * @memberof TDLib.Plugins
+ * @since 1.0.0
  */
 class TDLRoomPlugin extends Phaser.Plugins.ScenePlugin {
     /**
@@ -30,6 +34,7 @@ class TDLRoomPlugin extends Phaser.Plugins.ScenePlugin {
         /**
          * The room containing this plugin.
          * @type {TDLib.Rooms.Room}
+         * @since 1.0.0
          */
         this.room = room;
     }

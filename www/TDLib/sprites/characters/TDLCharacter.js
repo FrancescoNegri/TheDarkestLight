@@ -1,12 +1,14 @@
 /**
  * The characters namespace.
  * @namespace TDLib.Sprites.Characters
+ * @since 1.0.0
  */
 
 /**
  * Class representing a TDLCharacter.
  * @extends TDLib.Sprites.TDLSprite
  * @memberof TDLib.Sprites.Characters
+ * @since 1.0.0
  */
 class TDLCharacter extends TDLSprite {
     /**
@@ -18,21 +20,27 @@ class TDLCharacter extends TDLSprite {
      * @param {string} layer - The character's layer.
      */
     constructor(room, x, y, texture, layer) {
-        super(...arguments, true, SpriteBehaviourComponent.INTERACTIVE);
+        super(...arguments, true, SpriteBehaviour.INTERACTIVE, { alphaTolerance: 1 });
 
         /**
          * The ActionComponent for this character.
          * @type {Components.ActionComponent}
+         * @since 1.0.0
          */
         this.actions = new ActionComponent(this);
 
         /**
          * The facing of the character.
          * @type {TDLCharacter.FACING}
+         * @since 1.0.0
          */
         this.facing = TDLCharacter.FACING().RIGHT;
     }
 
+    /**
+     * The possible facing options of the character.
+     * @since 1.0.0
+     */
     static FACING() {
         return {
             RIGHT: 'facing_right',
@@ -42,12 +50,6 @@ class TDLCharacter extends TDLSprite {
 
     create() {
         super.create();
-
-        this.setCollideWorldBounds(true); 
         //this.setPipeline('Light2D');
-    }
-
-    update() {
-        super.update();
     }
 }

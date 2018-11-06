@@ -5,6 +5,13 @@ class ObservableBehaviour extends SpriteBehaviour {
         this._timer;
     }
 
+    /**
+    * E'il tempo minimo di mouse over necessario per far iniziare l'azione di osserva del player in secondi!
+    */
+    static get DEFAULT_MIN_TIME_TO_OBSERVE() {
+        return 1 * 1000;
+    }
+
     add() {
         super.add();
 
@@ -12,7 +19,7 @@ class ObservableBehaviour extends SpriteBehaviour {
             this.cursors.setCursor(this.gameObject);
 
             this._timer = this.gameObject.room.time.addEvent({
-                delay: this.gameObject.minTimeToObserve,
+                delay: ObservableBehaviour.DEFAULT_MIN_TIME_TO_OBSERVE,
                 callback: () => {
                     if (this.gameObject != this.room.player && !this.room.player.isBlocked) this.room.player.actions.add(AObserve, { target: this.gameObject });
                 },
@@ -34,9 +41,19 @@ class ObservableBehaviour extends SpriteBehaviour {
     }
 
     /**
-	* E'il tempo minimo di mouse over necessario per far iniziare l'azione di osserva del player in secondi!
-	*/
-    static get MIN_TIME_TO_OBSERVE() {
-        return 1.5;
+     * Generate a proper action according to the behaviour and the gameObject settings.
+     * @return {TDLib.Components.Actions.TDLAction}
+     * @since 1.0.0
+     */
+    getAction(invoker) {
+        return new TDLAction.BaseAction(
+            invoker,
+            () => {
+                //Fare i controlli su quanta luce c'è nella stanza!
+                if (this.checkLight(this.gameObject.minLightLevelToObserve)) console.log(this.gameObject.observeText);
+                else console.log(this.gameObject.noLightObserveText);
+                invoker.finish();
+            }
+        );
     }
 }

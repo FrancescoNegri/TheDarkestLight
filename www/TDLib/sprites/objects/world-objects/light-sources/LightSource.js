@@ -24,7 +24,7 @@ class LightSource extends WorldObject {
      * @param {boolean} [isOn=true] - Light created as switched on or off.
      */
     constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours, isOn = true) {
-        super(room, x, y, texture, layer, false);
+        super(room, x, y, texture, layer, false, SpriteBehaviour.EXAMINABLE);
         this.initialConfig = {
             graphicLight: graphicLightConfig,
             diffusedLight: diffusedLightConfig,
@@ -84,6 +84,14 @@ class LightSource extends WorldObject {
 
             this.isOn = false;
         }
+    }
+
+    /**
+     * If the light source is on, turn it off and vice versa.
+     */
+    switch() {
+        if (this.isOn) this.turnOff();
+        else this.turnOn();
     }
 
     /**

@@ -8,11 +8,11 @@ class Boot extends Phaser.Scene {
 
     create() {
         this.configPlugins();
-        this.room.add(TestRoom);
+        this.rooms.add(TestRoom);
     }
 
     configPlugins() {
         this.cursors.configure(GAME.scene);
-        this.room.configure(GAME.scene);
+        this.rooms.configure(GAME.scene);
     }
 }

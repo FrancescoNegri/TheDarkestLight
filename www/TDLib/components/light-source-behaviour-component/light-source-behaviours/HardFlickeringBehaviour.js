@@ -11,7 +11,7 @@ class HardFlickeringBehaviour extends LightSourceBehaviour {
      * @param {LightSourceBehaviour} [calledByBehaviour=null] - The behaviour which is invoking this as a subBehaviour, if exists.
      */
     constructor(component, calledByBehaviour = null) {
-        super(component, calledByBehaviour);
+        super(component, calledByBehaviour, 0.5);
     }
 
     /**
@@ -29,14 +29,6 @@ class HardFlickeringBehaviour extends LightSourceBehaviour {
             },
         }
 
-        // nel caso si voglia settare che l'hard flickering viene considerato come una luce spenta per la durata dell'effetto
-        /*if (this.component.gameObject.initialConfig.graphicLight !== null) {
-            this.component.gameObject.config.graphicLight.intensity = 0;
-        }
-        if (this.component.gameObject.initialConfig.diffusedLight !== null) {
-            this.component.gameObject.config.diffusedLight.intensity = 0;
-        }*/
-
         super.start(() => {
             var setTimer = (context) => {
                 context.component.gameObject.room.time.addEvent({
@@ -44,10 +36,10 @@ class HardFlickeringBehaviour extends LightSourceBehaviour {
                     callback: () => {
                         var isRunning = false;
                         if (this.calledByBehaviour === null) {
-                            if (this.component.runningBehaviour === this.name) isRunning = true;
+                            if (this.component.runningBehaviour === this) isRunning = true;
                         }
                         else {
-                            if (this.calledByBehaviour.runningSubBehaviours.indexOf(this.name) != -1) isRunning = true;
+                            if (this.calledByBehaviour.runningSubBehaviours.indexOf(this) != -1) isRunning = true;
                         }
 
 

@@ -7,8 +7,9 @@ class LightSourceBehaviour {
      * Create a LightSourceBehaviour.
      * @param {LightSourceBehaviourComponent} component - The component which called the behaviour.
      * @param {LightSourceBehaviour} [calledByBehaviour=null] - The behaviour which is invoking this as a subBehaviour, if exists.
+     * @param {number} [behaviourLightContributeFactor=1] - Behaviour can modify the light contribute of the light while running. Value beetween 0 and 1. (0 means light as it is turned off for the light contribute).
      */
-    constructor(component, calledByBehaviour = null) {
+    constructor(component, calledByBehaviour = null, behaviourLightContributeFactor = 1) {
         /**
          * The name of the lightSourceBehaviour
          */
@@ -23,6 +24,11 @@ class LightSourceBehaviour {
          * Specify the complex behaviour of which this lightSourceBehaviour is part
          */
         this.calledByBehaviour = calledByBehaviour;
+
+        /**
+         * Specify the factor modifier of the light contribute caused by the behaviour
+         */
+        this.behaviourLightContributeFactor = behaviourLightContributeFactor;
     }
 
     /**
@@ -33,10 +39,10 @@ class LightSourceBehaviour {
         if (this.calledByBehaviour === null) {
             if (this.component.allowedBehaviours.length > 0) {
                 if (this.component.allowedBehaviours.find(behaviour => this instanceof behaviour)) {
-                    if (this.component.runningBehaviour !== this.name) {
+                    if (this.component.runningBehaviour !== this) {
                         this.isStarting = true; //Necessaria per non stoppare il behaviour durante lo stop generale
-                        this.component.stopAllBehaviours(this.name);
-                        this.component.runningBehaviour = this.name;
+                        this.component.stopAllBehaviours();
+                        this.component.runningBehaviour = this;
                         this.isStarting = false;
                         callback();
                     }
@@ -49,10 +55,10 @@ class LightSourceBehaviour {
                 }
 
             }
-        } 
+        }
         else {
             this.isStarting = true;
-            this.calledByBehaviour.runningSubBehaviours.push(this.name);
+            this.calledByBehaviour.runningSubBehaviours.push(this);
             this.isStarting = false;
             callback();
         }
@@ -65,14 +71,14 @@ class LightSourceBehaviour {
     stop(callback) {
         if (!this.isStarting) {
             if (this.calledByBehaviour === null) {
-                if (this.component.runningBehaviour == this.name) {
+                if (this.component.runningBehaviour == this) {
                     this.component.runningBehaviour = null;
                     callback();
                 }
             }
             else {
-                if (this.calledByBehaviour.runningSubBehaviours.indexOf(this.name) != -1) {
-                    this.calledByBehaviour.runningSubBehaviours.splice(this.calledByBehaviour.runningSubBehaviours.indexOf(this.name), 1);
+                if (this.calledByBehaviour.runningSubBehaviours.indexOf(this) != -1) {
+                    this.calledByBehaviour.runningSubBehaviours.splice(this.calledByBehaviour.runningSubBehaviours.indexOf(this), 1);
                     callback();
                 }
             }

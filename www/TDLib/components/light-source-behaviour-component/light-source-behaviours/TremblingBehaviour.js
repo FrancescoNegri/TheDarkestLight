@@ -10,7 +10,7 @@ class TremblingBehaviour extends LightSourceBehaviour {
      * @param {LightSourceBehaviour} [calledByBehaviour=null] - The behaviour which is invoking this as a subBehaviour, if exists.
      */
     constructor(component, calledByBehaviour = null) {
-        super(component, calledByBehaviour);
+        super(component, calledByBehaviour, 1.0);
     }
 
     /**
@@ -45,10 +45,10 @@ class TremblingBehaviour extends LightSourceBehaviour {
 
                         var isRunning = false;
                         if (this.calledByBehaviour === null) {
-                            if (this.component.runningBehaviour === this.name) isRunning = true;
+                            if (this.component.runningBehaviour === this) isRunning = true;
                         }
                         else {
-                            if (this.calledByBehaviour.runningSubBehaviours.indexOf(this.name) != -1) isRunning = true;
+                            if (this.calledByBehaviour.runningSubBehaviours.indexOf(this) != -1) isRunning = true;
                         }
 
                         if (isRunning) {

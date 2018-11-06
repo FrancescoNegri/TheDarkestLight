@@ -16,15 +16,5 @@ class TestRoomFurn extends RoomFurniture {
 
     create() {
         super.create();
-        //NON FUNZIONA! VEDERE LA SEQUENZA
-        this.setInteractive(
-            {
-                //Per applicare la pixel perfect anche agli spazi interni, mettere qualcosa con un alpha del 0.01
-                //Look https://photonstorm.github.io/phaser3-docs/Phaser.Input.html#.InputConfiguration__anchor
-                pixelPerfect: true,
-                alphaTolerance: 1,
-                draggable: false
-            }
-        )
     }
 }

@@ -14,7 +14,8 @@ class TestRoom extends TDLRoom {
                     },
                     sprites: [
                         { path: 'assets/NaziBanner01.png', nPath: 'assets/NaziBanner01_n.png' },
-                        { path: 'assets/GardenCar01.png', nPath: 'assets/GardenCar01_n.png' }
+                        { path: 'assets/GardenCar01.png', nPath: 'assets/GardenCar01_n.png' },
+                        { path: 'assets/LibraryMap01.png', nPath: 'assets/LibraryMap01_n.png' }
                     ]
 
                 },

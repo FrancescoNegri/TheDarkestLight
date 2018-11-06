@@ -66,7 +66,7 @@ class TDLAction {
 
     /**
      * Add one or more new actions to the queue.
-     * @param {TDLib.Components.Actions.TDLAction|TDLib.Components.Actions.TDLAction[]} actions - The new actions to add.
+     * @param {TDLib.Components.Actions.TDLAction|TDLib.Components.Actions.TDLAction[]|TDLib.Components.Actions.TDLAction.BaseAction|TDLib.Components.Actions.TDLAction.BaseAction[]} actions - The new actions to add.
      * @since 1.0.0
      */
     addActions(actions) {
@@ -79,13 +79,20 @@ class TDLAction {
     }
 
     /**
-     * The blank action to create new actions extending TDLAction.
-     * @type {ActionComponent.BaseAction}
+     * The blank action to create new composed and complex actions.
+     * @typedef {TDLib.Components.Actions.TDLAction.BaseAction}
+     * 
+     * @property {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction} invoker - The invoker of the action.
+     * @property {Function} startCallback - The callback to execute at the beginning of the action.
+     * @property {Function} [finishCallback] - The callback to execute at the end of the action.
+     * @property {Function} [updateCallback]  - The callback to execute at every update loop.
+     * @property {Function} [resumeCallback=startCallback] - The callback to execute when the action is paused.
+     * @property {Function} [pauseCallback=finishCallback]  - The callback to execute when the action is resumed.
      * @since 1.0.0
      */
     static get BaseAction() {
         return class BaseAction {
-            constructor(invoker, startCallback = () => { }, finishCallback = () => { }, updateCallback = () => { }, resumeCallback = startCallback, pauseCallback = finishCallback) {
+            constructor(invoker, startCallback, finishCallback = () => { }, updateCallback = () => { }, resumeCallback = startCallback, pauseCallback = finishCallback) {
                 this.invoker = invoker;
 
                 this.startCallback = startCallback;

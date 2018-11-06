@@ -36,11 +36,11 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
 
     /**
      * It's a Phaser.Scene representing the scene containing the cursor which will be put on the rooms level.
-     * @type {Phaser.Scene}
-     * @private
+     * @typedef {TDLib.Plugins.GlobalPlugins.CursorManager.CursorScene}
+     * @extends {Phaser.Scenes.Scene}
      * @since 1.0.0
      */
-    static CURSOR_SCENE() {
+    static get CursorScene() {
         return class CursorScene extends Phaser.Scene {
             constructor() {
                 super(CursorManager.CURSOR_SCENE_KEY);
@@ -149,7 +149,7 @@ class CursorManager extends Phaser.Plugins.BasePlugin {
      */
     configure(sceneManager) {
         this.sceneManager = sceneManager;
-        this.cursorScene = this.sceneManager.add(CursorManager.CURSOR_SCENE_KEY, CursorManager.CURSOR_SCENE(), true);
+        this.cursorScene = this.sceneManager.add(CursorManager.CURSOR_SCENE_KEY, CursorManager.CursorScene, true);
     }
 
     /**

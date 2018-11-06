@@ -27,7 +27,7 @@ class LightSourceManager extends TDLRoomPlugin {
                 let singleLightContribute = light.config.diffusedLight.intensity / (Math.abs(light.x + light.config.offset.x - target.x) ^ 2);
 
                 if (light.lightBehaviour.runningBehaviour !== null) {
-                    singleLightContribute*=light.lightBehaviour.runningBehaviour.behaviourLightContributeFactor;
+                    singleLightContribute *= light.lightBehaviour.runningBehaviour.behaviourLightContributeFactor;
                 }
 
                 singleLightContributeAccumulator += singleLightContribute;

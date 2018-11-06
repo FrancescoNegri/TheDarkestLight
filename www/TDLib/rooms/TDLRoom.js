@@ -222,7 +222,7 @@ class TDLRoom extends Phaser.Scene {
      * @since 1.0.0
      */
     _updateMasksByLightDiffusion() {
-        this.averageLightsContribute = this.lightSource.calculateAverageLightsContribute();
+        this.averageLightsContribute = this.lightSources.calculateAverageLightsContribute();
         this.layers.wallsMaskLayer.setAlpha(1 - this.averageLightsContribute);
     }
 }

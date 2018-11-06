@@ -99,7 +99,7 @@ class LightSource extends WorldObject {
      * @param {number} [minTime=10] - Minimum time gap between two switch in milliseconds.
      * @param {number} [maxTime=400] - Maximum time gap between two switch in milliseconds.
      */
-    startFlickering(minTime, maxTime) {
+    startHardFlickering(minTime, maxTime) {
         this.lightBehaviour.hardFlickering.start(...arguments);
     }
 
@@ -107,7 +107,7 @@ class LightSource extends WorldObject {
      * Stop of the flickering effect.
      * @param {string} [finalState='on'] - (on/off) Set the light switched on or off at the end of the effect. 
      */
-    stopFlickering(finalState) {
+    stopHardFlickering(finalState) {
         this.lightBehaviour.hardFlickering.stop(...arguments);
     }
 

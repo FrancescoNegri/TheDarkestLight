@@ -61,11 +61,11 @@ class TestRoom extends TDLRoom {
             //this.player.actions.add(ARunTo, { target: { x: this.input.activePointer.worldX } });
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-            this.lamp2.turnOn();
+            console.log(this.lightSources.calculateLightsContribuitePoint(this.player));
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
             //this.lamp1.startHardFlickeringAndTrembling();
-            this.lamp2.startHardFlickeringAndTrembling();
+            this.lamp2.startHardFlickering();
 
             //this.lamp2.startSoftFlickeringAndTrembling();
         }

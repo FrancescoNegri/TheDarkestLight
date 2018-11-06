@@ -71,7 +71,7 @@ class SpriteBehaviour {
     }
 
     checkLight(value) {
-        if (this.room.lightSource.calculateLightsContribuitePoint(this.gameObject) >= value) return true;
+        if (this.room.lightSources.calculateLightsContribuitePoint(this.gameObject) >= value) return true;
         else return false
     }
 

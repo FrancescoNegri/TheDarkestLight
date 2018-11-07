@@ -36,7 +36,7 @@ class WallFurniture extends WorldObject {
             x, y,
             texture,
             'wallFurnitureLayer',
-            false,
+            true,
             behaviourType,
             pixelPerfect,
             observeText,
@@ -49,5 +49,7 @@ class WallFurniture extends WorldObject {
             minLightLevelToExamineOrInteract,
             minLightLevelToObserve
         );
+
+        this.setGravityY(0);
     }
 }

@@ -159,9 +159,11 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         this.minLightLevelToObserve = minLightLevelToObserve;
 
         this.room.add.existing(this);
+        this.room.updates.add(this);
         if (hasBody) {
             this.room.physics.add.existing(this);
             this.setCollideWorldBounds(true);
+            this.setGravityY(10000);
         }
 
         if (layer != null) {
@@ -172,7 +174,6 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
             else console.warn('ALERT: layer not found for object', this);
         }
 
-        this.room.updates.add(this);
         this.create();
     }
 
@@ -190,7 +191,7 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
      */
     update() {
 
-    }
+    }  
 
     /**
      * Set the name property of a sprite.

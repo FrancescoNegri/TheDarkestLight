@@ -124,18 +124,6 @@
                 {
                  "gid":55,
                  "height":56,
-                 "id":2,
-                 "name":"lamp1",
-                 "rotation":0,
-                 "type":"TestLamp",
-                 "visible":true,
-                 "width":44,
-                 "x":194,
-                 "y":128
-                }, 
-                {
-                 "gid":55,
-                 "height":56,
                  "id":3,
                  "name":"lamp2",
                  "rotation":0,

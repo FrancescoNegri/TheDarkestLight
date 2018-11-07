@@ -71,7 +71,7 @@ class TestRoom extends TDLRoom {
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
             this.lamp2.stopSoftFlickering(false);
-            this.lamp1.lightBehaviour.stopAllBehaviours();
+            //this.lamp1.lightBehaviour.stopAllBehaviours();
             this.lamp2.lightBehaviour.stopAllBehaviours();
         }
     }

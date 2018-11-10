@@ -28,7 +28,7 @@ class Debugger extends TDLib.Sprites.Characters.Players.Player {
             frameRate: 0,
             repeat: -1
         };
-        this.anims.animationManager.create(config);+;
+        this.anims.animationManager.create(config);
     }
 
     update() {

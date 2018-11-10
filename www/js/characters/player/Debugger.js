@@ -1,4 +1,4 @@
-class Debugger extends Player {
+class Debugger extends TDLib.Sprites.Characters.Players.Player {
     constructor(room, x, y) {
         super(room, x, y, 'player');
     }
@@ -28,8 +28,7 @@ class Debugger extends Player {
             frameRate: 0,
             repeat: -1
         };
-        this.anims.animationManager.create(config);
-
+        this.anims.animationManager.create(config);+;
     }
 
     update() {

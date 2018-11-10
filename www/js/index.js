@@ -36,6 +36,7 @@ document.addEventListener('deviceready', function () {
     };
 
     GAME = new Phaser.Game(config);
+    console.log(TDLib);
 });
 
 if (!window.cordova) {

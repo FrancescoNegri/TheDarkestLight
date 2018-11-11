@@ -1,4 +1,4 @@
-class Debugger extends TDLib.Sprites.Characters.Players.Player {
+class Debugger extends TDLib.Sprites.Characters.Player {
     constructor(room, x, y) {
         super(room, x, y, 'player');
     }

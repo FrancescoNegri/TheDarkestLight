@@ -6,16 +6,16 @@ class AFaceTo extends TDLAction {
                 this,
                 () => {
                     if (Math.abs(this.actor.x - this.target.x) > AFaceTo.MICRO_MOVEMENT_RADIUS) {
-                        if (this.actor.facing == TDLCharacter.FACING().RIGHT) {
+                        if (this.actor.facing == TDLib.RIGHT) {
                             if (this.actor.x > this.target.x) {
-                                this.actor.facing = TDLCharacter.FACING().LEFT;
+                                this.actor.facing = TDLib.LEFT;
                                 this.actor.setFlipX(true);
                                 //this.actor.anims.play('idleLeft');
                             }
                         }
-                        else if (this.actor.facing == TDLCharacter.FACING().LEFT) {
+                        else if (this.actor.facing == TDLib.LEFT) {
                             if (this.actor.x < this.target.x) {
-                                this.actor.facing = TDLCharacter.FACING().RIGHT;
+                                this.actor.facing = TDLib.RIGHT;
                                 this.actor.setFlipX(false);
                                 //this.actor.anims.play('idleRight');
                             }

@@ -145,9 +145,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @namespace TDLib
  */
 var TDLib = {
-  boot: __webpack_require__(/*! ./boot */ "./src/boot.js"),
   Actions: __webpack_require__(/*! ./actions */ "./src/actions/index.js"),
   Components: __webpack_require__(/*! ./components */ "./src/components/index.js"),
+  Game: __webpack_require__(/*! ./boot/Game */ "./src/boot/Game.js"),
   Rooms: __webpack_require__(/*! ./rooms */ "./src/rooms/index.js"),
   Sprites: __webpack_require__(/*! ./sprites */ "./src/sprites/index.js"),
   Utils: __webpack_require__(/*! ./utils */ "./src/utils/index.js")
@@ -545,10 +545,104 @@ module.exports = Actions;
 
 /***/ }),
 
-/***/ "./src/boot.js":
-/*!*********************!*\
-  !*** ./src/boot.js ***!
-  \*********************/
+/***/ "./src/boot/DebugHeader.js":
+/*!*********************************!*\
+  !*** ./src/boot/DebugHeader.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var CONST = __webpack_require__(/*! ../const */ "./src/const.js");
+
+var Settings = __webpack_require__(/*! ./Settings */ "./src/boot/Settings.js");
+/**
+ * Called automatically by Phaser.Game and responsible for creating the console.log debug header.
+ *
+ * You can customize or disable the header via the Game Config object.
+ *
+ * @function Phaser.Boot.DebugHeader
+ * @since 3.0.0
+ *
+ * @param {Phaser.Game} game - The Phaser.Game instance which will output this debug header.
+ */
+
+
+var DebugHeader = function DebugHeader(game) {
+  var config = game.config;
+  config.bannerBackgroundColor = '#0002e6';
+  config.bannerTextColor = '#ffffff';
+  config.hidePhaser = false;
+  var renderType = 'WebGL';
+
+  if (config.renderType !== 2) {
+    renderType = 'NULL';
+  }
+
+  var audioConfig = config.audio;
+  var deviceAudio = game.device.audio;
+  var audioType;
+
+  if (deviceAudio.webAudio && !(audioConfig && audioConfig.disableWebAudio)) {
+    audioType = 'Web Audio';
+  } else if (audioConfig && audioConfig.noAudio || !deviceAudio.webAudio && !deviceAudio.audioData) {
+    audioType = 'No Audio';
+  } else {
+    audioType = 'HTML5 Audio';
+  }
+
+  if (!game.device.browser.ie) {
+    var c = '';
+    var args = [c];
+
+    if (Array.isArray(config.bannerBackgroundColor)) {
+      var lastColor;
+      config.bannerBackgroundColor.forEach(function (color) {
+        c = c.concat('%c ');
+        args.push('background: ' + color);
+        lastColor = color;
+      }); //  inject the text color
+
+      args[args.length - 1] = 'color: ' + config.bannerTextColor + '; background: ' + lastColor;
+    } else {
+      c = c.concat('%c ');
+      args.push('color: ' + config.bannerTextColor + '; background: ' + config.bannerBackgroundColor);
+    } //  URL link background color (always white)
+
+
+    args.push('background: #fff');
+
+    if (config.gameTitle) {
+      c = c.concat(config.gameTitle);
+
+      if (config.gameVersion) {
+        c = c.concat(' v' + config.gameVersion);
+      }
+
+      if (!config.hidePhaser) {
+        c = c.concat(' / ');
+      }
+    }
+
+    if (!config.hidePhaser) {
+      c = c.concat('TDLib v' + CONST.VERSION + ' / Phaser v' + CONST.PHASER_VERSION);
+      c = c.concat(' (' + renderType + ' | ' + audioType + ' | ' + Settings.DEVICE + ')');
+    }
+
+    c = c.concat(' %c ' + config.gameURL); //  Inject the new string back into the args array
+
+    args[0] = c;
+    console.log.apply(console, args);
+  }
+};
+
+module.exports = DebugHeader;
+
+/***/ }),
+
+/***/ "./src/boot/Game.js":
+/*!**************************!*\
+  !*** ./src/boot/Game.js ***!
+  \**************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -558,13 +652,156 @@ module.exports = Actions;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.boot = void 0;
+exports.default = void 0;
 
-var boot = function boot(config) {
-  console.log(config);
+var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/boot/Settings.js"));
+
+var _DebugHeader = _interopRequireDefault(__webpack_require__(/*! ./DebugHeader */ "./src/boot/DebugHeader.js"));
+
+var _utils = _interopRequireDefault(__webpack_require__(/*! ../utils */ "./src/utils/index.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Game =
+/*#__PURE__*/
+function () {
+  function Game(config) {
+    _classCallCheck(this, Game);
+
+    this.config = config;
+
+    this._setScreenConfig();
+
+    this._setPhysicsConfig();
+
+    this._setPlugins();
+
+    this._setBoot();
+
+    this._setHeaderProps();
+
+    this._finalizeConfig(); // Aggiungere il device e la funzione per determinarlo
+
+
+    _Settings.default.GAME = new Phaser.Game(this.config);
+    (0, _DebugHeader.default)(_Settings.default.GAME);
+    return _Settings.default.GAME;
+  }
+
+  _createClass(Game, [{
+    key: "_setScreenConfig",
+    value: function _setScreenConfig() {
+      _Settings.default.SCREEN_PROPS = _utils.default.getScreenProps();
+      this.config.width = _Settings.default.SCREEN_PROPS.calculatedWidth;
+      this.config.height = _Settings.default.SCREEN_PROPS.calculatedHeight;
+      this.config.zoom = _Settings.default.SCREEN_PROPS.calculatedZoom;
+      this.config.autoResize = false;
+      this.config.backgroundColor = '#000000';
+      this.config.pixelArt = true;
+    }
+  }, {
+    key: "_setPhysicsConfig",
+    value: function _setPhysicsConfig() {
+      this.config.physics = {
+        default: 'arcade',
+        arcade: {
+          debug: false,
+          gravity: {
+            y: 0,
+            x: 0
+          }
+        }
+      };
+    }
+  }, {
+    key: "_setPlugins",
+    value: function _setPlugins() {
+      this.config.plugins = {
+        global: [{
+          key: 'RoomManager',
+          plugin: RoomManager,
+          start: false,
+          mapping: 'rooms'
+        }, {
+          key: 'CursorManager',
+          plugin: CursorManager,
+          start: false,
+          mapping: 'cursors'
+        }],
+        scene: [{
+          key: 'UpdatePlugin',
+          plugin: UpdatePlugin,
+          mapping: 'updates'
+        }, {
+          key: 'LightSourceManager',
+          plugin: LightSourceManager,
+          mapping: 'lightSources'
+        }, {
+          key: 'LayerManager',
+          plugin: LayerManager,
+          mapping: 'layers'
+        }, {
+          key: 'ActionManager',
+          plugin: ActionManager,
+          mapping: 'actions'
+        }]
+      };
+    }
+  }, {
+    key: "_setBoot",
+    value: function _setBoot() {
+      this.config.scene = [Boot];
+    }
+  }, {
+    key: "_setHeaderProps",
+    value: function _setHeaderProps() {
+      this.config.banner = false;
+    }
+  }, {
+    key: "_finalizeConfig",
+    value: function _finalizeConfig() {
+      this.config.type = Phaser.WEBGL;
+      this.config.maxLights = 20;
+      this.config.parent = 'game';
+      this.config.disableContextMenu = true;
+    }
+  }]);
+
+  return Game;
+}();
+
+exports.default = Game;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/boot/Settings.js":
+/*!******************************!*\
+  !*** ./src/boot/Settings.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var Settings = {
+  GAME: '',
+  TILE_SIZE: 48,
+  ROOM_HEIGHT_IN_TILE: 6,
+  INVENTORY_WIDTH_IN_TILES_MOBILE: 1.25,
+  INVENTORY_WIDTH_IN_TILES_DESKTOP: 0,
+  INVENTORY_HEIGHT_IN_TILES_MOBILE: 0,
+  INVENTORY_HEIGHT_IN_TILES_DESKTOP: 1,
+  ROOM_FRAME_IN_TILES_DESKTOP: 0.5,
+  ROOM_FRAME_IN_TILES_MOBILE: 0.25,
+  SCREEN_PROPS: {},
+  DEVICE: 'Desktop'
 };
-
-exports.boot = boot;
+module.exports = Settings;
 
 /***/ }),
 
@@ -857,6 +1094,8 @@ module.exports = Components;
 /***/ (function(module, exports) {
 
 var CONST = {
+  VERSION: '1.0.0',
+  PHASER_VERSION: '3.15.1',
   LEFT: '_left',
   RIGHT: '_right'
 };
@@ -879,7 +1118,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _ = __webpack_require__(/*! ./ */ "./src/rooms/index.js");
+var _Settings = _interopRequireDefault(__webpack_require__(/*! ../boot/Settings */ "./src/boot/Settings.js"));
+
+var _Utils = _interopRequireDefault(__webpack_require__(/*! ./Utils */ "./src/rooms/Utils.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -920,18 +1163,18 @@ function (_Phaser$Scene) {
    * @param {Object} rawAssets - The raw object of assets needed by the room. (Ripensarlo ?)
    */
   function Room(sceneKey, rawAssets) {
-    var _this;
+    var _this2;
 
     _classCallCheck(this, Room);
 
-    _this = _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this, sceneKey));
+    _this2 = _possibleConstructorReturn(this, (Room.__proto__ || Object.getPrototypeOf(Room)).call(this, sceneKey));
     /**
        * This object contains an array with all the assets needed by the room.
        * @type {Object}
        * @since 1.0.0
        */
 
-    _this.assets = {
+    _this2.assets = {
       raw: rawAssets,
       array: []
     };
@@ -941,50 +1184,50 @@ function (_Phaser$Scene) {
        * @since 1.0.0
        */
 
-    _this.averageLightsContribute;
+    _this2.averageLightsContribute;
     /**
        * The Settings cursor manager.
        * @type {TDLib.Plugins.SettingsPlugins.CursorManager}
        * @since 1.0.0
        */
 
-    _this.cursors;
+    _this2.cursors;
     /**
        * The layer manager of the room.
        * @type {TDLib.Plugins.RoomPlugins.LayerManager}
        * @since 1.0.0
        */
 
-    _this.layers;
+    _this2.layers;
     /**
        * The tilemap of the room.
        * @type {Phaser.Tilemaps.Tilemap}
        * @since 1.0.0
        */
 
-    _this.map;
+    _this2.map;
     /**
        * The name of the room.
        * @type {string}
        * @since 1.0.0
        */
 
-    _this.name = _this.constructor.name;
+    _this2.name = _this2.constructor.name;
     /**
        * The instance of the TDLCharacter designated as player for the room.
        * @type {TDLib.Sprites.Characters.TDLCharacter}
        * @since 1.0.0
        */
 
-    _this.player;
+    _this2.player;
     /**
        * The Settings room manager.
        * @type {TDLib.Plugins.SettingsPlugins.RoomManager}
        * @since 1.0.0
        */
 
-    _this.rooms;
-    return _this;
+    _this2.rooms;
+    return _this2;
   }
   /**
    * The preload function is executed once and load all the assets needed by the room.
@@ -995,19 +1238,19 @@ function (_Phaser$Scene) {
   _createClass(Room, [{
     key: "preload",
     value: function preload() {
-      var _this2 = this;
+      var _this3 = this;
 
       this._scrapeAssets();
 
       this.assets.array.forEach(function (obj) {
         if ('nPath' in obj) {
-          _this2.load[obj.type](obj.key, [obj.path, obj.nPath]);
+          _this3.load[obj.type](obj.key, [obj.path, obj.nPath]);
         } else if ('bPath' in obj) {
-          _this2.load[obj.type](obj.key, obj.path);
+          _this3.load[obj.type](obj.key, obj.path);
 
-          _this2.load[obj.type](obj.key + '_b', obj.bPath);
+          _this3.load[obj.type](obj.key + '_b', obj.bPath);
         } else {
-          _this2.load[obj.type](obj.key, obj.path);
+          _this3.load[obj.type](obj.key, obj.path);
         }
       }); // Loading Border Camera Masks
 
@@ -1025,16 +1268,16 @@ function (_Phaser$Scene) {
   }, {
     key: "_scrapeAssets",
     value: function _scrapeAssets() {
-      var _this3 = this;
+      var _this4 = this;
 
       for (var type in this.assets.raw) {
-        _.Utils.scrapeComplexObjKey(this.assets.raw[type], {
+        _Utils.default.scrapeComplexObjKey(this.assets.raw[type], {
           type: type
         }, 'path', function (obj, params) {
           obj['type'] = params.type;
-          obj['key'] = _.Utils.findFileNameFromPath(obj.path);
+          obj['key'] = _Utils.default.findFileNameFromPath(obj.path);
 
-          _this3.assets.array.push(obj);
+          _this4.assets.array.push(obj);
         });
       }
     }
@@ -1051,6 +1294,8 @@ function (_Phaser$Scene) {
       this.lights.enable(); // Boot Phaser's LightManager
       // this.scene.bringToTop(CursorManager.CURSOR_SCENE_KEY); // Add the cursor to the Room
 
+      this.scene.bringToTop('CursorScene');
+
       this._setCameraViewport();
 
       this._createRoom();
@@ -1065,7 +1310,7 @@ function (_Phaser$Scene) {
       this.cameras.main.startFollow(this.player);
       this.cameras.main.setRoundPixels(true); // Physics Bounds, sarà solo lo spazio di gioco (togliamo il wall layer tutto attorno!!)
 
-      this.physics.world.setBounds(_.Settings.TILE_SIZE, _.Settings.TILE_SIZE, this.layers.wallsLayer.width - 2 * _.Settings.TILE_SIZE, this.layers.wallsLayer.height - 2 * _.Settings.TILE_SIZE);
+      this.physics.world.setBounds(_Settings.default.TILE_SIZE, _Settings.default.TILE_SIZE, this.layers.wallsLayer.width - 2 * _Settings.default.TILE_SIZE, this.layers.wallsLayer.height - 2 * _Settings.default.TILE_SIZE);
     }
     /**
      * Set the correct camera viewport.
@@ -1076,12 +1321,12 @@ function (_Phaser$Scene) {
   }, {
     key: "_setCameraViewport",
     value: function _setCameraViewport() {
-      if (_.Settings.DEVICE === 'MOBILE') {
-        this.cameras.main.setPosition((_.Settings.ROOM_FRAME_IN_TILES_MOBILE + _.Settings.INVENTORY_WIDTH_IN_TILES_MOBILE) * _.Settings.TILE_SIZE, (_.Settings.ROOM_FRAME_IN_TILES_MOBILE + _.Settings.INVENTORY_HEIGHT_IN_TILES_MOBILE) * _.Settings.TILE_SIZE);
-        this.cameras.main.setSize(_.Settings.SCREEN_PROPS.calculatedWidth - 2 * (_.Settings.ROOM_FRAME_IN_TILES_MOBILE + _.Settings.INVENTORY_WIDTH_IN_TILES_MOBILE) * _.Settings.TILE_SIZE, _.Settings.ROOM_HEIGHT_IN_TILE * _.Settings.TILE_SIZE);
+      if (_Settings.default.DEVICE === 'MOBILE') {
+        this.cameras.main.setPosition((_Settings.default.ROOM_FRAME_IN_TILES_MOBILE + _Settings.default.INVENTORY_WIDTH_IN_TILES_MOBILE) * _Settings.default.TILE_SIZE, (_Settings.default.ROOM_FRAME_IN_TILES_MOBILE + _Settings.default.INVENTORY_HEIGHT_IN_TILES_MOBILE) * _Settings.default.TILE_SIZE);
+        this.cameras.main.setSize(_Settings.default.SCREEN_PROPS.calculatedWidth - 2 * (_Settings.default.ROOM_FRAME_IN_TILES_MOBILE + _Settings.default.INVENTORY_WIDTH_IN_TILES_MOBILE) * _Settings.default.TILE_SIZE, _Settings.default.ROOM_HEIGHT_IN_TILE * _Settings.default.TILE_SIZE);
       } else {
-        this.cameras.main.setPosition(_.Settings.ROOM_FRAME_IN_TILES_DESKTOP * _.Settings.TILE_SIZE, _.Settings.ROOM_FRAME_IN_TILES_DESKTOP * _.Settings.TILE_SIZE);
-        this.cameras.main.setSize(_.Settings.SCREEN_PROPS.calculatedWidth - 2 * _.Settings.ROOM_FRAME_IN_TILES_DESKTOP * _.Settings.TILE_SIZE, _.Settings.ROOM_HEIGHT_IN_TILE * _.Settings.TILE_SIZE);
+        this.cameras.main.setPosition(_Settings.default.ROOM_FRAME_IN_TILES_DESKTOP * _Settings.default.TILE_SIZE, _Settings.default.ROOM_FRAME_IN_TILES_DESKTOP * _Settings.default.TILE_SIZE);
+        this.cameras.main.setSize(_Settings.default.SCREEN_PROPS.calculatedWidth - 2 * _Settings.default.ROOM_FRAME_IN_TILES_DESKTOP * _Settings.default.TILE_SIZE, _Settings.default.ROOM_HEIGHT_IN_TILE * _Settings.default.TILE_SIZE);
       }
     }
     /**
@@ -1094,14 +1339,14 @@ function (_Phaser$Scene) {
     key: "_createRoom",
     value: function _createRoom() {
       this.map = this.make.tilemap({
-        key: _.Utils.findFileNameFromPath(this.assets.raw.tilemapTiledJSON.path),
-        tileWidth: _.Settings.TILE_SIZE,
-        tileHeight: _.Settings.TILE_SIZE
+        key: _Utils.default.findFileNameFromPath(this.assets.raw.tilemapTiledJSON.path),
+        tileWidth: _Settings.default.TILE_SIZE,
+        tileHeight: _Settings.default.TILE_SIZE
       });
-      this.layers.backgroundLayer = this.map.createDynamicLayer('backgroundLayer', this.map.addTilesetImage(_.Utils.findFileNameFromPath(this.assets.raw.image.tiles.background.path)), 0, 0); // .setPipeline('Light2D');
+      this.layers.backgroundLayer = this.map.createDynamicLayer('backgroundLayer', this.map.addTilesetImage(_Utils.default.findFileNameFromPath(this.assets.raw.image.tiles.background.path)), 0, 0); // .setPipeline('Light2D');
 
-      this.layers.wallsLayer = this.map.createDynamicLayer('wallsLayer', this.map.addTilesetImage(_.Utils.findFileNameFromPath(this.assets.raw.image.tiles.walls.path)), 0, 0);
-      this.layers.wallsMaskLayer = this.map.createDynamicLayer('wallsMaskLayer', this.map.addTilesetImage(_.Utils.findFileNameFromPath(this.assets.raw.image.tiles.walls.bPath)), 0, 0);
+      this.layers.wallsLayer = this.map.createDynamicLayer('wallsLayer', this.map.addTilesetImage(_Utils.default.findFileNameFromPath(this.assets.raw.image.tiles.walls.path)), 0, 0);
+      this.layers.wallsMaskLayer = this.map.createDynamicLayer('wallsMaskLayer', this.map.addTilesetImage(_Utils.default.findFileNameFromPath(this.assets.raw.image.tiles.walls.bPath)), 0, 0);
     }
     /**
      * Create all the objects present in Tiled JSON map.
@@ -1112,13 +1357,16 @@ function (_Phaser$Scene) {
   }, {
     key: "_createSprites",
     value: function _createSprites() {
-      var _this4 = this;
+      var _this5 = this;
+
+      var _this = this;
 
       this.map.objects.forEach(function (layer) {
         layer.objects.forEach(function (element) {
-          _this4[element.name] = eval('new ' + element.type + '(this,' + (element.x + element.width / 2) + ', ' + (element.y - element.height / 2) + ');');
+          _this;
+          _this5[element.name] = eval('new ' + element.type + '(_this,' + (element.x + element.width / 2) + ', ' + (element.y - element.height / 2) + ');');
 
-          _this4[element.name].setName(element.name);
+          _this5[element.name].setName(element.name);
         });
       });
     }
@@ -1133,8 +1381,8 @@ function (_Phaser$Scene) {
     value: function _applyBorderMasks() {
       this.layers.borderMasksLayer.create(0, 0, 'top-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);
       this.layers.borderMasksLayer.create(0, 0, 'left-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);
-      this.layers.borderMasksLayer.create(this.cameras.main.width - _.Settings.TILE_SIZE, 0, 'right-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);
-      this.layers.borderMasksLayer.create(0, this.cameras.main.height - _.Settings.TILE_SIZE, 'bottom-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);
+      this.layers.borderMasksLayer.create(this.cameras.main.width - _Settings.default.TILE_SIZE, 0, 'right-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);
+      this.layers.borderMasksLayer.create(0, this.cameras.main.height - _Settings.default.TILE_SIZE, 'bottom-border-mask-camera').setScrollFactor(0).setOrigin(0, 0);
     }
     /**
      * The update function is executed at every cycle of the game loop.
@@ -1172,6 +1420,44 @@ function (_Phaser$Scene) {
 
 exports.default = Room;
 module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/rooms/Utils.js":
+/*!****************************!*\
+  !*** ./src/rooms/Utils.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var Utils = {
+  scrapeComplexObjKey: function scrapeComplexObjKey(obj, params, searchKey, callback) {
+    if (Array.isArray(obj)) {
+      for (var i = 0; i < obj.length; i++) {
+        Utils.scrapeComplexObjKey(obj[i], params, searchKey, callback);
+      }
+    } else if (obj !== null && _typeof(obj) === 'object') {
+      if (searchKey in obj) {
+        callback(obj, params);
+      } else {
+        for (var prop in obj) {
+          Utils.scrapeComplexObjKey(obj[prop], params, searchKey, callback);
+        }
+      }
+    }
+  },
+  findFileNameFromPath: function findFileNameFromPath(path) {
+    var nameFirstCharachterPosition = path.lastIndexOf('/') + 1;
+    var nameLastCharachterPosition = path.lastIndexOf('.');
+    if (nameFirstCharachterPosition === -1) nameFirstCharachterPosition = 0;
+    if (nameLastCharachterPosition === -1) return -1;
+    var filename = path.slice(nameFirstCharachterPosition, nameLastCharachterPosition);
+    return filename;
+  }
+};
+module.exports = Utils;
 
 /***/ }),
 
@@ -1776,14 +2062,57 @@ module.exports = WorldObjects;
 
 /***/ }),
 
+/***/ "./src/utils/Utils.js":
+/*!****************************!*\
+  !*** ./src/utils/Utils.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Settings = _interopRequireDefault(__webpack_require__(/*! ../boot/Settings */ "./src/boot/Settings.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var getScreenProps = function getScreenProps() {
+  var returnValue = {}; // cz : ah = 1 : mh
+
+  if (_Settings.default.DEVICE === 'MOBILE') {
+    returnValue.availHeight = window.innerHeight;
+    returnValue.availWidth = window.innerWidth;
+    returnValue.calculatedZoom = Math.floor(returnValue.availHeight / ((_Settings.default.ROOM_HEIGHT_IN_TILE + _Settings.default.INVENTORY_HEIGHT_IN_TILES_MOBILE + _Settings.default.ROOM_FRAME_IN_TILES_MOBILE * 2) * _Settings.default.TILE_SIZE) * 100) / 100;
+  } else {
+    returnValue.availHeight = screen.height;
+    returnValue.availWidth = screen.width;
+    returnValue.calculatedZoom = Math.floor(returnValue.availHeight / ((_Settings.default.ROOM_HEIGHT_IN_TILE + _Settings.default.INVENTORY_HEIGHT_IN_TILES_DESKTOP + _Settings.default.ROOM_FRAME_IN_TILES_DESKTOP * 2) * _Settings.default.TILE_SIZE) * 100) / 100;
+  }
+
+  console.log('ZOOM: ' + returnValue.calculatedZoom); // Sono le dimensioni riaggiustate rispetto allo zoom scelto
+  // ch : ah = 1 : cz
+
+  returnValue.calculatedHeight = Math.ceil(returnValue.availHeight / returnValue.calculatedZoom);
+  returnValue.calculatedWidth = Math.ceil(returnValue.availWidth / returnValue.calculatedZoom);
+  console.log('AVAIL-H: ' + returnValue.availHeight + '\nCALC-H: ' + returnValue.calculatedHeight);
+  console.log('AVAIL-W: ' + returnValue.availWidth + '\nCALC-W: ' + returnValue.calculatedWidth);
+  return returnValue;
+};
+
+module.exports = getScreenProps;
+
+/***/ }),
+
 /***/ "./src/utils/index.js":
 /*!****************************!*\
   !*** ./src/utils/index.js ***!
   \****************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var Utils = {};
+var Utils = {
+  getScreenProps: __webpack_require__(/*! ./Utils */ "./src/utils/Utils.js")
+};
 module.exports = Utils;
 
 /***/ })

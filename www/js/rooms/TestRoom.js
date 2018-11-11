@@ -1,4 +1,4 @@
-class TestRoom extends TDLRoom {
+class TestRoom extends TDLib.Rooms.Room {
 
     constructor() {
         super(

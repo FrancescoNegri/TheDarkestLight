@@ -9,7 +9,7 @@ class InteractiveBehaviour extends SpriteBehaviour {
      * @since 1.0.0
      */
     getAction(invoker) {
-        return new TDLAction.BaseAction(
+        return new TDLib.Actions.Action.BaseAction(
             invoker,
             () => {
                 //Fare i controlli su quanta luce c'è nella stanza!

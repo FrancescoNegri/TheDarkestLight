@@ -1,7 +1,6 @@
 document.addEventListener('deviceready', function () {
     getDeviceType();
 
-    //se autoResize è attivo, allora zoom non funziona!
     var config = {
         title: 'The Darkest Light',
         version: '1.0.0',

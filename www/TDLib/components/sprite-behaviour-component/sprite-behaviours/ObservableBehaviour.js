@@ -21,7 +21,7 @@ class ObservableBehaviour extends SpriteBehaviour {
             this._timer = this.gameObject.room.time.addEvent({
                 delay: ObservableBehaviour.DEFAULT_MIN_TIME_TO_OBSERVE,
                 callback: () => {
-                    if (this.gameObject != this.room.player && !this.room.player.isBlocked) this.room.player.actions.add(AObserve, { target: this.gameObject });
+                    if (this.gameObject != this.room.player && !this.room.player.isBlocked) this.room.player.actions.add(TDLib.Actions.Observe, { target: this.gameObject });
                 },
                 callbackScope: this
             });
@@ -46,7 +46,7 @@ class ObservableBehaviour extends SpriteBehaviour {
      * @since 1.0.0
      */
     getAction(invoker) {
-        return new TDLAction.BaseAction(
+        return new TDLib.Actions.Action.BaseAction(
             invoker,
             () => {
                 //Fare i controlli su quanta luce c'è nella stanza!

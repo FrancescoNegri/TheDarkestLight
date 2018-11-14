@@ -4,7 +4,7 @@ class LibraryMap01 extends WallFurniture {
             room,
             x, y,
             'LibraryMap01',
-            SpriteBehaviour.EXAMINABLE,
+            TDLib.Sprites.Behaviours.Behaviour.EXAMINABLE,
             null,
             'Sono una libreria, osservami!',
             'Ora stai esaminando una semplice libraria',

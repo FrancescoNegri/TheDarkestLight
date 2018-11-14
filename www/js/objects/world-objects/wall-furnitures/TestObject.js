@@ -4,7 +4,7 @@ class TestObject extends WallFurniture {
             room,
             x, y,
             'NaziBanner01',
-            SpriteBehaviour.EXAMINABLE,
+            TDLib.Sprites.Behaviours.Behaviour.EXAMINABLE,
             null,
             'Sono una bandiera nazista, osservami!',
             'Ora stai esaminando una bandiera con la svastica',

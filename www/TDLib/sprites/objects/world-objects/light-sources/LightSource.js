@@ -24,7 +24,7 @@ class LightSource extends WorldObject {
      * @param {boolean} [isOn=true] - Light created as switched on or off.
      */
     constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours, isOn = true) {
-        super(room, x, y, texture, layer, true, SpriteBehaviour.EXAMINABLE);
+        super(room, x, y, texture, layer, true, TDLib.Sprites.Behaviours.Behaviour.EXAMINABLE);
         
         this.setGravityY(0);
 

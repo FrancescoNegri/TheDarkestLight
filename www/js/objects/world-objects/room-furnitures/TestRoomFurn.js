@@ -4,7 +4,7 @@ class TestRoomFurn extends RoomFurniture {
             room,
             x, y,
             'GardenCar01',
-            SpriteBehaviour.INTERACTIVE,
+            TDLib.Sprites.Behaviours.Behaviour.INTERACTIVE,
             { alphaTolerance : 0.001},
             'Che vuoi! Sono una macchina e tu mi stai osservando!',
             'Sì, sono sempre una macchina...anche se provi ad interagire con me',

@@ -53,10 +53,10 @@ class SpriteBehaviourComponent extends TDLComponent {
      */
     _addBehaviours() {
         //Se l'oggetto è osservabile (cioè esaminabile o interagibile) setto il cursore appropriato 
-        if (this.type === SpriteBehaviour.EXAMINABLE || this.type === SpriteBehaviour.INTERACTIVE) {
-            this.observe = new ObservableBehaviour(this);
-            if (this.type === SpriteBehaviour.EXAMINABLE) this.examine = new ExaminableBehaviour(this);
-            else if (this.type === SpriteBehaviour.INTERACTIVE) this.interact = new InteractiveBehaviour(this);
+        if (this.type === TDLib.Sprites.Behaviours.Behaviour.EXAMINABLE || this.type === TDLib.Sprites.Behaviours.Behaviour.INTERACTIVE) {
+            this.observe = new TDLib.Sprites.Behaviours.Observable(this);
+            if (this.type === TDLib.Sprites.Behaviours.Behaviour.EXAMINABLE) this.examine = new TDLib.Sprites.Behaviours.Examinable(this);
+            else if (this.type === TDLib.Sprites.Behaviours.Behaviour.INTERACTIVE) this.interact = new TDLib.Sprites.Behaviours.Interactive(this);
         }
     }
 }

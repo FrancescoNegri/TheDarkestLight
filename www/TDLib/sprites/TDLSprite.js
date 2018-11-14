@@ -45,17 +45,17 @@ class TDLSprite extends Phaser.Physics.Arcade.Sprite {
         texture,
         layer = null,
         hasBody = true,
-        behaviourType = SpriteBehaviour.INERT,
+        behaviourType = TDLib.Sprites.Behaviours.Behaviour.INERT,
         pixelPerfect = null,
-        observeText = SpriteBehaviour.DEFAULT_OBSERVE_TEXT,
-        examineOrInteractText = SpriteBehaviour.DEFAULT_EXAMINE_OR_INTERACT_TEXT,
+        observeText = TDLib.Sprites.Behaviours.Behaviour.DEFAULT_OBSERVE_TEXT,
+        examineOrInteractText = TDLib.Sprites.Behaviours.Behaviour.DEFAULT_EXAMINE_OR_INTERACT_TEXT,
         blockExamineText = null,
-        noLightObserveText = SpriteBehaviour.DEFAULT_NO_LIGHT_OBSERVE_TEXT,
-        noLightExamineOrInteractText = SpriteBehaviour.DEFAULT_NO_LIGHT_EXAMINE_OR_INTERACT_TEXT,
+        noLightObserveText = TDLib.Sprites.Behaviours.Behaviour.DEFAULT_NO_LIGHT_OBSERVE_TEXT,
+        noLightExamineOrInteractText = TDLib.Sprites.Behaviours.Behaviour.DEFAULT_NO_LIGHT_EXAMINE_OR_INTERACT_TEXT,
         examineOrInteractOffsetX = 0,
         examineOrInteractThresholdRadius = 0,
-        minLightLevelToExamineOrInteract = SpriteBehaviour.DEFAULT_MIN_LIGHT_LEVEL_TO_EXAMINE_OR_INTERACT,
-        minLightLevelToObserve = SpriteBehaviour.DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE
+        minLightLevelToExamineOrInteract = TDLib.Sprites.Behaviours.Behaviour.DEFAULT_MIN_LIGHT_LEVEL_TO_EXAMINE_OR_INTERACT,
+        minLightLevelToObserve = TDLib.Sprites.Behaviours.Behaviour.DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE
 
     ) {
         super(room, x, y, texture);

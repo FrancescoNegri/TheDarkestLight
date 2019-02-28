@@ -112,7 +112,7 @@ g = (function() {
 
 try {
 	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
+	g = g || new Function("return this")();
 } catch (e) {
 	// This works if the window reference is available
 	if (typeof window === "object") g = window;
@@ -1489,6 +1489,126 @@ module.exports = exports["default"];
 
 /***/ }),
 
+/***/ "./src/components/BehaviourComponent.js":
+/*!**********************************************!*\
+  !*** ./src/components/BehaviourComponent.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Component2 = _interopRequireDefault(__webpack_require__(/*! ./Component */ "./src/components/Component.js"));
+
+var _behaviours = _interopRequireDefault(__webpack_require__(/*! ../sprites/behaviours */ "./src/sprites/behaviours/index.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+/**
+ * The behaviours namespace.
+ * @namespace TDLib.Components.SpriteBehaviours
+ * @since 1.0.0
+ */
+
+/**
+ * Class representing a component which determines the behaviour of every sprite.
+ * @extends TDLib.Components.TDLComponent
+ * @memberof TDLib.Components
+ * @since 1.0.0
+ */
+var BehaviourComponent =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(BehaviourComponent, _Component);
+
+  /**
+   * Create a new SpriteBehaviourComponent
+   * @param {TDLib.Sprites.TDLSprite} gameObject - The sprite which implements the component.
+   * @param {string} type - The type of behaviour of the gameObject.
+   * @param {Object} [pixelPerfect=null] - If not null enable the pixel perfect pointer hit for the sprite.
+   * @param {boolean} [pixelPerfect.alphaTolerance] - The alpha tolerance threshold value.
+   */
+  function BehaviourComponent(gameObject, type, pixelPerfect) {
+    var _this;
+
+    _classCallCheck(this, BehaviourComponent);
+
+    _this = _possibleConstructorReturn(this, (BehaviourComponent.__proto__ || Object.getPrototypeOf(BehaviourComponent)).call(this, gameObject));
+    /**
+     * A reference to the player in the current room.
+     * @type {TDLib.Sprites.Characters.Players.Player}
+     * @since 1.0.0
+     */
+
+    _this.player;
+    typeof _this.gameObject.room.player === 'undefined' ? _this.player = _this.gameObject : _this.player = _this.gameObject.room.player;
+    /**
+     * The type of behaviour of the gameObject.
+     * @type {string}
+     * @since 1.0.0
+     */
+
+    _this.type = type;
+    /**
+     * If not null enable the pixel perfect pointer hit for the sprite.
+     * @type {string}
+     * @since 1.0.0
+     */
+
+    _this.pixelPerfect = pixelPerfect;
+
+    _this._addBehaviours();
+
+    return _this;
+  }
+  /**
+   * Select the appropriate behaviours for the gameObject.
+   * @private
+   * @since 1.0.0
+   */
+
+
+  _createClass(BehaviourComponent, [{
+    key: "_addBehaviours",
+    value: function _addBehaviours() {
+      // Se l'oggetto è osservabile (cioè esaminabile o interagibile) setto il cursore appropriato
+      if (this.type === _behaviours.default.EXAMINABLE || this.type === _behaviours.default.INTERACTIVE) {
+        this.observe = new _behaviours.default.Observable(this);
+        if (this.type === _behaviours.default.EXAMINABLE) this.examine = new _behaviours.default.Examinable(this);else if (this.type === _behaviours.default.INTERACTIVE) this.interact = new _behaviours.default.Interactive(this);
+      }
+    }
+  }]);
+
+  return BehaviourComponent;
+}(_Component2.default);
+
+exports.default = BehaviourComponent;
+module.exports = exports["default"];
+
+/***/ }),
+
 /***/ "./src/components/Component.js":
 /*!*************************************!*\
   !*** ./src/components/Component.js ***!
@@ -1550,7 +1670,8 @@ module.exports = exports["default"];
 
 var Components = {
   Component: __webpack_require__(/*! ./Component */ "./src/components/Component.js"),
-  ActionComponent: __webpack_require__(/*! ./ActionComponent */ "./src/components/ActionComponent.js")
+  ActionComponent: __webpack_require__(/*! ./ActionComponent */ "./src/components/ActionComponent.js"),
+  BehaviourComponent: __webpack_require__(/*! ./BehaviourComponent */ "./src/components/BehaviourComponent.js")
 };
 module.exports = Components;
 
@@ -1565,7 +1686,7 @@ module.exports = Components;
 
 var CONST = {
   VERSION: '1.0.0',
-  PHASER_VERSION: '3.15.1',
+  PHASER_VERSION: Phaser.VERSION,
   LEFT: '_left',
   RIGHT: '_right'
 };
@@ -1573,10 +1694,10 @@ module.exports = CONST;
 
 /***/ }),
 
-/***/ "./src/managers/TDLManager.js":
-/*!************************************!*\
-  !*** ./src/managers/TDLManager.js ***!
-  \************************************/
+/***/ "./src/managers/Manager.js":
+/*!*********************************!*\
+  !*** ./src/managers/Manager.js ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1624,22 +1745,22 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
  * @memberof TDLib.Plugins
  * @since 1.0.0
  */
-var TDLManager =
+var Manager =
 /*#__PURE__*/
 function (_Phaser$Plugins$Scene) {
-  _inherits(TDLManager, _Phaser$Plugins$Scene);
+  _inherits(Manager, _Phaser$Plugins$Scene);
 
   /**
    * Create a TDLRoomPlugin.
    * @param {TDLib.Rooms.Room|Phaser.Scene} room - The room which contains the plugin.
    * @param {Phaser.Plugins.PluginManager} pluginManager - A reference to the plugin manager.
    */
-  function TDLManager(room, pluginManager) {
+  function Manager(room, pluginManager) {
     var _this;
 
-    _classCallCheck(this, TDLManager);
+    _classCallCheck(this, Manager);
 
-    _this = _possibleConstructorReturn(this, (TDLManager.__proto__ || Object.getPrototypeOf(TDLManager)).call(this, room, pluginManager));
+    _this = _possibleConstructorReturn(this, (Manager.__proto__ || Object.getPrototypeOf(Manager)).call(this, room, pluginManager));
     /**
      * The room containing this plugin.
      * @type {TDLib.Rooms.Room}
@@ -1650,10 +1771,10 @@ function (_Phaser$Plugins$Scene) {
     return _this;
   }
 
-  return TDLManager;
+  return Manager;
 }(Phaser.Plugins.ScenePlugin);
 
-exports.default = TDLManager;
+exports.default = Manager;
 module.exports = exports["default"];
 
 /***/ }),
@@ -1668,7 +1789,7 @@ module.exports = exports["default"];
 var Managers = {
   LayerManager: __webpack_require__(/*! ./layers/LayerManager */ "./src/managers/layers/LayerManager.js"),
   LightSourceManager: __webpack_require__(/*! ./light-sources/LightSourceManager */ "./src/managers/light-sources/LightSourceManager.js"),
-  TDLManager: __webpack_require__(/*! ./TDLManager */ "./src/managers/TDLManager.js"),
+  Manager: __webpack_require__(/*! ./Manager */ "./src/managers/Manager.js"),
   UpdateManager: __webpack_require__(/*! ./updates/UpdateManager */ "./src/managers/updates/UpdateManager.js")
 };
 module.exports = Managers;
@@ -1690,7 +1811,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _TDLManager2 = _interopRequireDefault(__webpack_require__(/*! ../TDLManager */ "./src/managers/TDLManager.js"));
+var _Manager2 = _interopRequireDefault(__webpack_require__(/*! ../Manager */ "./src/managers/Manager.js"));
 
 var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/managers/layers/Settings.js"));
 
@@ -1720,8 +1841,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
  */
 var LayerManager =
 /*#__PURE__*/
-function (_TDLManager) {
-  _inherits(LayerManager, _TDLManager);
+function (_Manager) {
+  _inherits(LayerManager, _Manager);
 
   /**
    * Create a new RoomManager.
@@ -1889,7 +2010,7 @@ function (_TDLManager) {
   }]);
 
   return LayerManager;
-}(_TDLManager2.default);
+}(_Manager2.default);
 
 exports.default = LayerManager;
 module.exports = exports["default"];
@@ -1926,7 +2047,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _TDLManager2 = _interopRequireDefault(__webpack_require__(/*! ../TDLManager */ "./src/managers/TDLManager.js"));
+var _Manager2 = _interopRequireDefault(__webpack_require__(/*! ../Manager */ "./src/managers/Manager.js"));
 
 var _Settings = _interopRequireDefault(__webpack_require__(/*! ../../boot/Settings */ "./src/boot/Settings.js"));
 
@@ -1950,8 +2071,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var LightSourceManager =
 /*#__PURE__*/
-function (_TDLManager) {
-  _inherits(LightSourceManager, _TDLManager);
+function (_Manager) {
+  _inherits(LightSourceManager, _Manager);
 
   function LightSourceManager(room, pluginManager) {
     var _this;
@@ -2010,7 +2131,7 @@ function (_TDLManager) {
   }]);
 
   return LightSourceManager;
-}(_TDLManager2.default);
+}(_Manager2.default);
 
 exports.default = LightSourceManager;
 module.exports = exports["default"];
@@ -2032,7 +2153,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _TDLManager2 = _interopRequireDefault(__webpack_require__(/*! ../TDLManager */ "./src/managers/TDLManager.js"));
+var _Manager2 = _interopRequireDefault(__webpack_require__(/*! ../Manager */ "./src/managers/Manager.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2060,8 +2181,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
  */
 var UpdateManager =
 /*#__PURE__*/
-function (_TDLManager) {
-  _inherits(UpdateManager, _TDLManager);
+function (_Manager) {
+  _inherits(UpdateManager, _Manager);
 
   /**
    * Create a new UpdatePlugin.
@@ -2167,7 +2288,7 @@ function (_TDLManager) {
   }]);
 
   return UpdateManager;
-}(_TDLManager2.default);
+}(_Manager2.default);
 
 exports.default = UpdateManager;
 module.exports = exports["default"];
@@ -2563,6 +2684,8 @@ exports.default = void 0;
 
 var _behaviours = _interopRequireDefault(__webpack_require__(/*! ./behaviours */ "./src/sprites/behaviours/index.js"));
 
+var _components = _interopRequireDefault(__webpack_require__(/*! ../components */ "./src/components/index.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -2580,8 +2703,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-// import BehaviourComponent from '../components';
 
 /**
  * The Darkest Lib.
@@ -2681,8 +2802,8 @@ function (_Phaser$Physics$Arcad) {
      * @type {TDLib.Components.SpriteBehaviourComponent}
      * @since 1.0.0
      */
-    // this.behaviour = new BehaviourComponent(this, behaviourType, pixelPerfect);
 
+    _this.behaviour = new _components.default.BehaviourComponent(_this, behaviourType, pixelPerfect);
     /**
      * The text which appears when observing the sprite.
          * @type {string}
@@ -2780,7 +2901,7 @@ function (_Phaser$Physics$Arcad) {
   _createClass(Sprite, [{
     key: "create",
     value: function create() {
-      console.log('Created:', this.key, '- Type:', this.type, '- Behaviour:'); // , this.behaviour.type);
+      console.log('Created:', this.key, '- Type:', this.type, '- Behaviour:', this.behaviour.type);
     }
     /**
      * The update is executed at every cycle of the game loop.
@@ -2930,127 +3051,6 @@ function () {
       if (this.room.lightSources.calculateLightsContribuitePoint(this.gameObject) >= value) return true;
       return false;
     }
-    /**
-     * Inert behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-  }], [{
-    key: "INERT",
-    get: function get() {
-      return 'INERT';
-    }
-    /**
-     * Examinable behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "EXAMINABLE",
-    get: function get() {
-      return 'EXAMINABLE';
-    }
-    /**
-     * Interactive behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "INTERACTIVE",
-    get: function get() {
-      return 'INTERACTIVE';
-    }
-    /**
-     * Talkable behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "TALKABLE",
-    get: function get() {
-      return 'TALKABLE';
-    }
-    /**
-     * Inventory interactive behaviour.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "INVENTORY",
-    get: function get() {
-      return 'INVENTORY';
-    }
-    /**
-     * The default minimum value of diffused light to observe the sprite.
-     * @type {number}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE",
-    get: function get() {
-      return 0.05;
-    }
-    /**
-     * The default text which appears when observing the sprite.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "DEFAULT_OBSERVE_TEXT",
-    get: function get() {
-      return 'Observe default text';
-    }
-    /**
-     * The default text which appears when observing the sprite when the diffused light is not sufficient.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "DEFAULT_NO_LIGHT_OBSERVE_TEXT",
-    get: function get() {
-      return 'NoLightObserve default text';
-    }
-    /**
-     * The default minimum value of diffused light to examine or interact with the sprite.
-     * @type {number}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "DEFAULT_MIN_LIGHT_LEVEL_TO_EXAMINE_OR_INTERACT",
-    get: function get() {
-      return 0.04;
-    }
-    /**
-     * The default text which appears when examine or interact with the sprite.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "DEFAULT_EXAMINE_OR_INTERACT_TEXT",
-    get: function get() {
-      return 'ExamineOrInteract default text';
-    }
-    /**
-     * The default text which appears when examine or interact with the sprite when the diffused light is not sufficient.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "DEFAULT_NO_LIGHT_EXAMINE_OR_INTERACT_TEXT",
-    get: function get() {
-      return 'NoLightExamineOrInteract default text';
-    }
   }]);
 
   return Behaviour;
@@ -3058,6 +3058,30 @@ function () {
 
 exports.default = Behaviour;
 module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/behaviours/const.js":
+/*!*****************************************!*\
+  !*** ./src/sprites/behaviours/const.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var CONST = {
+  EXAMINABLE: 'EXAMINABLE',
+  INERT: 'INERT',
+  INTERACTIVE: 'INTERACTIVE',
+  TALKABLE: 'TALKABLE',
+  INVENTORY: 'INVENTORY',
+  DEFAULT_MIN_LIGHT_LEVEL_TO_OBSERVE: 0.05,
+  DEFAULT_OBSERVE_TEXT: 'Observe default text',
+  DEFAULT_NO_LIGHT_OBSERVE_TEXT: 'NoLightObserve default text',
+  DEFAULT_MIN_LIGHT_LEVEL_TO_EXAMINE_OR_INTERACT: 0.04,
+  DEFAULT_EXAMINE_OR_INTERACT_TEXT: 'ExamineOrInteract default text',
+  DEFAULT_NO_LIGHT_EXAMINE_OR_INTERACT_TEXT: 'NoLightExamineOrInteract default text'
+};
+module.exports = CONST;
 
 /***/ }),
 
@@ -3143,12 +3167,22 @@ module.exports = exports["default"];
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var _const = _interopRequireDefault(__webpack_require__(/*! ./const */ "./src/sprites/behaviours/const.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var Behaviours = {
   Behaviour: __webpack_require__(/*! ./Behaviour */ "./src/sprites/behaviours/Behaviour.js"),
   Examinable: __webpack_require__(/*! ./examinable/Examinable */ "./src/sprites/behaviours/examinable/Examinable.js"),
   Interactive: __webpack_require__(/*! ./interactive/Interactive */ "./src/sprites/behaviours/interactive/Interactive.js"),
-  Observable: __webpack_require__(/*! ./observable/Observable */ "./src/sprites/behaviours/observable/Observable.js")
+  Observable: __webpack_require__(/*! ./observable/Observable */ "./src/sprites/behaviours/observable/Observable.js"),
+  Talkable: __webpack_require__(/*! ./talkable/Talkable */ "./src/sprites/behaviours/talkable/Talkable.js"),
+  Inventory: __webpack_require__(/*! ./inventory/Inventory */ "./src/sprites/behaviours/inventory/Inventory.js")
 };
+Behaviours = Phaser.Utils.Objects.Extend(false, Behaviours, _const.default);
 module.exports = Behaviours;
 
 /***/ }),
@@ -3228,6 +3262,32 @@ module.exports = exports["default"];
 
 /***/ }),
 
+/***/ "./src/sprites/behaviours/inventory/Inventory.js":
+/*!*******************************************************!*\
+  !*** ./src/sprites/behaviours/inventory/Inventory.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Inventory = function Inventory() {
+  _classCallCheck(this, Inventory);
+};
+
+exports.default = Inventory;
+module.exports = exports["default"];
+
+/***/ }),
+
 /***/ "./src/sprites/behaviours/observable/Observable.js":
 /*!*********************************************************!*\
   !*** ./src/sprites/behaviours/observable/Observable.js ***!
@@ -3246,6 +3306,8 @@ exports.default = void 0;
 var _Behaviour2 = _interopRequireDefault(__webpack_require__(/*! ../Behaviour */ "./src/sprites/behaviours/Behaviour.js"));
 
 var _actions = _interopRequireDefault(__webpack_require__(/*! ../../../actions */ "./src/actions/index.js"));
+
+var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/sprites/behaviours/observable/Settings.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3285,10 +3347,6 @@ function (_Behaviour) {
     _this._timer;
     return _this;
   }
-  /**
-  * E'il tempo minimo di mouse over necessario per far iniziare l'azione di osserva del player in secondi!
-  */
-
 
   _createClass(Observable, [{
     key: "add",
@@ -3300,7 +3358,7 @@ function (_Behaviour) {
 
         this.cursors.setCursor(this.gameObject);
         this._timer = this.gameObject.room.time.addEvent({
-          delay: Observable.DEFAULT_MIN_TIME_TO_OBSERVE,
+          delay: _Settings.default.DEFAULT_MIN_TIME_TO_OBSERVE,
           callback: function callback() {
             if (_this2.gameObject !== _this2.room.player && !_this2.room.player.isBlocked) _this2.room.player.actions.add(_actions.default.Observe, {
               target: _this2.gameObject
@@ -3341,11 +3399,6 @@ function (_Behaviour) {
         invoker.finish();
       });
     }
-  }], [{
-    key: "DEFAULT_MIN_TIME_TO_OBSERVE",
-    get: function get() {
-      return 1 * 1000;
-    }
   }]);
 
   return Observable;
@@ -3353,6 +3406,31 @@ function (_Behaviour) {
 
 exports.default = Observable;
 module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/behaviours/observable/Settings.js":
+/*!*******************************************************!*\
+  !*** ./src/sprites/behaviours/observable/Settings.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var Settings = {
+  DEFAULT_MIN_TIME_TO_OBSERVE: 1200
+};
+module.exports = Settings;
+
+/***/ }),
+
+/***/ "./src/sprites/behaviours/talkable/Talkable.js":
+/*!*****************************************************!*\
+  !*** ./src/sprites/behaviours/talkable/Talkable.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 
@@ -3410,8 +3488,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
  */
 
 /**
- * Class representing a TDLCharacter.
- * @extends TDLib.Sprites.TDLSprite
+ * Class representing a Character.
+ * @extends TDLib.Sprites.Sprite
  * @memberof TDLib.Sprites.Characters
  * @since 1.0.0
  */
@@ -3421,7 +3499,7 @@ function (_Sprite) {
   _inherits(Character, _Sprite);
 
   /**
-   * Create a new TDLCharacter.
+   * Create a new Character.
    * @param {Room} room - The room where the character is created.
    * @param {number} x - The x coordinate of the character.
    * @param {number} y - The y coordinate of the character.
@@ -3621,35 +3699,454 @@ module.exports = exports["default"];
 var Sprites = {
   Behaviours: __webpack_require__(/*! ./behaviours */ "./src/sprites/behaviours/index.js"),
   Characters: __webpack_require__(/*! ./characters */ "./src/sprites/characters/index.js"),
-  InventoryObjects: __webpack_require__(/*! ./inventory-objects */ "./src/sprites/inventory-objects/index.js"),
-  WorldObjects: __webpack_require__(/*! ./world-objects */ "./src/sprites/world-objects/index.js"),
+  InventoryItems: __webpack_require__(/*! ./inventory-items */ "./src/sprites/inventory-items/index.js"),
+  WorldItems: __webpack_require__(/*! ./world-items */ "./src/sprites/world-items/index.js"),
   Sprite: __webpack_require__(/*! ./Sprite */ "./src/sprites/Sprite.js")
 };
 module.exports = Sprites;
 
 /***/ }),
 
-/***/ "./src/sprites/inventory-objects/index.js":
-/*!************************************************!*\
-  !*** ./src/sprites/inventory-objects/index.js ***!
-  \************************************************/
+/***/ "./src/sprites/inventory-items/InventoryItem.js":
+/*!******************************************************!*\
+  !*** ./src/sprites/inventory-items/InventoryItem.js ***!
+  \******************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var InventoryObjects = {};
-module.exports = InventoryObjects;
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Sprite2 = _interopRequireDefault(__webpack_require__(/*! ../Sprite */ "./src/sprites/Sprite.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+/**
+ * The inventory items namespace.
+ * @namespace TDLib.Sprites.InventoryItems
+ * @since 1.0.0
+ */
+
+/**
+ * Class representing an InentoryItem.
+ * @extends TDLib.Sprites.Sprite
+ * @memberof TDLib.Sprites.InventoryItems
+ * @since 1.0.0
+ */
+var InentoryItem =
+/*#__PURE__*/
+function (_Sprite) {
+  _inherits(InentoryItem, _Sprite);
+
+  /**
+   * Create a new InvetoryItem.
+   * @param {Room} room - The room where the item is created.
+   * @param {number} x - The x coordinate of the item.
+   * @param {number} y - The y coordinate of the item.
+   * @param {string} texture - The item's graphic.
+   * @param {string} layer - The item's layer.
+   */
+  function InentoryItem(room, x, y, texture, layer) {
+    var _ref;
+
+    _classCallCheck(this, InentoryItem);
+
+    return _possibleConstructorReturn(this, (_ref = InentoryItem.__proto__ || Object.getPrototypeOf(InentoryItem)).call.apply(_ref, [this].concat(Array.prototype.slice.call(arguments), [false])));
+  }
+
+  _createClass(InentoryItem, [{
+    key: "create",
+    value: function create() {
+      _get(InentoryItem.prototype.__proto__ || Object.getPrototypeOf(InentoryItem.prototype), "create", this).call(this);
+    }
+  }]);
+
+  return InentoryItem;
+}(_Sprite2.default);
+
+exports.default = InentoryItem;
+module.exports = exports["default"];
 
 /***/ }),
 
-/***/ "./src/sprites/world-objects/index.js":
-/*!********************************************!*\
-  !*** ./src/sprites/world-objects/index.js ***!
-  \********************************************/
+/***/ "./src/sprites/inventory-items/index.js":
+/*!**********************************************!*\
+  !*** ./src/sprites/inventory-items/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var InventoryItems = {
+  InventoryItem: __webpack_require__(/*! ./InventoryItem */ "./src/sprites/inventory-items/InventoryItem.js")
+};
+module.exports = InventoryItems;
+
+/***/ }),
+
+/***/ "./src/sprites/world-items/WorldItem.js":
+/*!**********************************************!*\
+  !*** ./src/sprites/world-items/WorldItem.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Sprite2 = _interopRequireDefault(__webpack_require__(/*! ../Sprite */ "./src/sprites/Sprite.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+/**
+ * The world items namespace.
+ * @namespace TDLib.Sprites.WorldItems
+ * @since 1.0.0
+ */
+
+/**
+ * Class representing a WorldItem.
+ * @extends TDLib.Sprites.Sprite
+ * @memberof TDLib.Sprites.WorldItems
+ * @since 1.0.0
+ */
+var WorldItem =
+/*#__PURE__*/
+function (_Sprite) {
+  _inherits(WorldItem, _Sprite);
+
+  /**
+   * Create a WorldObject.
+   * @param {TDLib.Rooms.TDLRoom} room - The room where the sprite is created.
+   * @param {number} x - The sprite x coordinate.
+   * @param {number} y - The sprite y coordinate.
+   * @param {string} texture - The graphic of the sprite.
+   * @param {string} [layer=null] - The key of the layer which will contain the sprite.
+   * @param {boolean} [hasBody=true] - Specify if the sprite has physics.
+   * @param {string} [behaviourType=SpriteBehaviour.INERT] - Specify the behaviour of the sprite.
+   * @param {Object} [pixelPerfect=null] - If not null enable the pixel perfect pointer hit for the sprite.
+   * @param {boolean} [pixelPerfect.alphaTolerance] - The alpha tolerance threshold value.
+   * @param {string|string[]} [observeText] - The text which appears when observing the sprite.
+   * @param {string|string[]} [examineOrInteractText] -  The text which appears when examine or interact with the sprite.
+   * @param {string} [blockExamineText=null] - If not null it's the blocking text which appears the first time the sprite is examined.
+   * @param {string|string[]} [noLightObserveText] -  The text which appears when observing the sprite when the diffused light is not sufficient.
+   * @param {string|string[]} [noLightExamineOrInteractText] - The text which appears when examine or interact with the sprite when the diffused light is not sufficient.
+   * @param {number} [examineOrInteractOffsetX=0] - The offset on x axis of the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+   * @param {number} [examineOrInteractThresholdRadius=0] - The radius of the tolerance in reaching the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+   * @param {number} [minLightLevelToExamineOrInteract=???] - The minimum value of diffused light to examine or interact with the sprite.
+   * @param {number} [minLightLevelToObserve=???] - The minimum value of diffused light to observe the sprite.
+   */
+  function WorldItem(room, x, y, texture, layer, hasBody, behaviourType, pixelPerfect, observeText, examineOrInteractText, blockExamineText, noLightObserveText, noLightExamineOrInteractText, examineOrInteractOffsetX, examineOrInteractThresholdRadius, minLightLevelToExamineOrInteract, minLightLevelToObserve) {
+    _classCallCheck(this, WorldItem);
+
+    return _possibleConstructorReturn(this, (WorldItem.__proto__ || Object.getPrototypeOf(WorldItem)).call(this, room, x, y, texture, layer, hasBody, behaviourType, pixelPerfect, observeText, examineOrInteractText, blockExamineText, noLightObserveText, noLightExamineOrInteractText, examineOrInteractOffsetX, examineOrInteractThresholdRadius, minLightLevelToExamineOrInteract, minLightLevelToObserve));
+  }
+
+  _createClass(WorldItem, [{
+    key: "create",
+    value: function create() {
+      _get(WorldItem.prototype.__proto__ || Object.getPrototypeOf(WorldItem.prototype), "create", this).call(this);
+
+      this.setPipeline('Light2D'); // Da spostare in TDLSprite non appena il player supporterà la Light2D
+    }
+  }]);
+
+  return WorldItem;
+}(_Sprite2.default);
+
+exports.default = WorldItem;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/world-items/index.js":
+/*!******************************************!*\
+  !*** ./src/sprites/world-items/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var WorldItems = {
+  WorldItem: __webpack_require__(/*! ./WorldItem */ "./src/sprites/world-items/WorldItem.js"),
+  LightSources: __webpack_require__(/*! ./light-sources */ "./src/sprites/world-items/light-sources/index.js"),
+  RoomFurnitures: __webpack_require__(/*! ./room-furnitures */ "./src/sprites/world-items/room-furnitures/index.js"),
+  WallFurnitures: __webpack_require__(/*! ./wall-furnitures */ "./src/sprites/world-items/wall-furnitures/index.js")
+};
+module.exports = WorldItems;
+
+/***/ }),
+
+/***/ "./src/sprites/world-items/light-sources/LightSource.js":
+/*!**************************************************************!*\
+  !*** ./src/sprites/world-items/light-sources/LightSource.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var WorldObjects = {};
-module.exports = WorldObjects;
+
+
+/***/ }),
+
+/***/ "./src/sprites/world-items/light-sources/index.js":
+/*!********************************************************!*\
+  !*** ./src/sprites/world-items/light-sources/index.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var LightSources = {
+  LightSource: __webpack_require__(/*! ./LightSource */ "./src/sprites/world-items/light-sources/LightSource.js")
+};
+module.exports = LightSources;
+
+/***/ }),
+
+/***/ "./src/sprites/world-items/room-furnitures/RoomFurniture.js":
+/*!******************************************************************!*\
+  !*** ./src/sprites/world-items/room-furnitures/RoomFurniture.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _WorldItem2 = _interopRequireDefault(__webpack_require__(/*! ../WorldItem */ "./src/sprites/world-items/WorldItem.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+/**
+ * The room furnitures namespace.
+ * @namespace TDLib.Sprites.Objects.WorldObjects.RoomFurnitures
+ * @since 1.0.0
+ */
+
+/**
+ * Class representing a RoomFurniture.
+ * @extends TDLib.Sprites.Objects.WorldObjects.WorldObject
+ * @memberof TDLib.Sprites.Objects.WorldObjects.RoomFurnitures
+ * @since 1.0.0
+ */
+var RoomFurniture =
+/*#__PURE__*/
+function (_WorldItem) {
+  _inherits(RoomFurniture, _WorldItem);
+
+  /**
+   * Create a RoomFurniture.
+   * @param {TDLib.Rooms.TDLRoom} room - The room where the sprite is created.
+   * @param {number} x - The sprite x coordinate.
+   * @param {number} y - The sprite y coordinate.
+   * @param {string} texture - The graphic of the sprite.
+   * @param {string} [behaviourType=SpriteBehaviour.INERT] - Specify the behaviour of the sprite.
+   * @param {Object} [pixelPerfect=null] - If not null enable the pixel perfect pointer hit for the sprite.
+   * @param {boolean} [pixelPerfect.alphaTolerance] - The alpha tolerance threshold value.
+   * @param {string|string[]} [observeText] - The text which appears when observing the sprite.
+   * @param {string|string[]} [examineOrInteractText] -  The text which appears when examine or interact with the sprite.
+   * @param {string} [blockExamineText=null] - If not null it's the blocking text which appears the first time the sprite is examined.
+   * @param {string|string[]} [noLightObserveText] -  The text which appears when observing the sprite when the diffused light is not sufficient.
+   * @param {string|string[]} [noLightExamineOrInteractText] - The text which appears when examine or interact with the sprite when the diffused light is not sufficient.
+   * @param {number} [examineOrInteractOffsetX=0] - The offset on x axis of the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+   * @param {number} [examineOrInteractThresholdRadius=0] - The radius of the tolerance in reaching the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+   * @param {number} [minLightLevelToExamineOrInteract=???] - The minimum value of diffused light to examine or interact with the sprite.
+   * @param {number} [minLightLevelToObserve=???] - The minimum value of diffused light to observe the sprite.
+   */
+  function RoomFurniture(room, x, y, texture, behaviourType, pixelPerfect, observeText, examineOrInteractText, blockExamineText, noLightObserveText, noLightExamineOrInteractText, examineOrInteractOffsetX, examineOrInteractThresholdRadius, minLightLevelToExamineOrInteract, minLightLevelToObserve) {
+    _classCallCheck(this, RoomFurniture);
+
+    return _possibleConstructorReturn(this, (RoomFurniture.__proto__ || Object.getPrototypeOf(RoomFurniture)).call(this, room, x, y, texture, 'roomFurnitureLayer', true, behaviourType, pixelPerfect, observeText, examineOrInteractText, blockExamineText, noLightObserveText, noLightExamineOrInteractText, examineOrInteractOffsetX, examineOrInteractThresholdRadius, minLightLevelToExamineOrInteract, minLightLevelToObserve));
+  }
+
+  return RoomFurniture;
+}(_WorldItem2.default);
+
+exports.default = RoomFurniture;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/world-items/room-furnitures/index.js":
+/*!**********************************************************!*\
+  !*** ./src/sprites/world-items/room-furnitures/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var RoomFurnitures = {
+  RoomFurniture: __webpack_require__(/*! ./RoomFurniture */ "./src/sprites/world-items/room-furnitures/RoomFurniture.js")
+};
+module.exports = RoomFurnitures;
+
+/***/ }),
+
+/***/ "./src/sprites/world-items/wall-furnitures/WallFurniture.js":
+/*!******************************************************************!*\
+  !*** ./src/sprites/world-items/wall-furnitures/WallFurniture.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _WorldItem2 = _interopRequireDefault(__webpack_require__(/*! ../WorldItem */ "./src/sprites/world-items/WorldItem.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+/**
+ * The wall furnitures namespace.
+ * @namespace TDLib.Sprites.Objects.WorldObjects.WallFurnitures
+ * @since 1.0.0
+ */
+
+/**
+ * Class representing a WallFurniture.
+ * @extends TDLib.Sprites.Objects.WorldObjects.WorldObject
+ * @memberof TDLib.Sprites.Objects.WorldObjects.WallFurnitures
+ * @since 1.0.0
+ */
+var WallFurniture =
+/*#__PURE__*/
+function (_WorldItem) {
+  _inherits(WallFurniture, _WorldItem);
+
+  /**
+   * Create a WallFurniture.
+   * @param {TDLib.Rooms.TDLRoom} room - The room where the sprite is created.
+   * @param {number} x - The sprite x coordinate.
+   * @param {number} y - The sprite y coordinate.
+   * @param {string} texture - The graphic of the sprite.
+   * @param {string} [behaviourType=SpriteBehaviour.INERT] - Specify the behaviour of the sprite.
+   * @param {Object} [pixelPerfect=null] - If not null enable the pixel perfect pointer hit for the sprite.
+   * @param {boolean} [pixelPerfect.alphaTolerance] - The alpha tolerance threshold value.
+   * @param {string|string[]} [observeText] - The text which appears when observing the sprite.
+   * @param {string|string[]} [examineOrInteractText] -  The text which appears when examine or interact with the sprite.
+   * @param {string} [blockExamineText=null] - If not null it's the blocking text which appears the first time the sprite is examined.
+   * @param {string|string[]} [noLightObserveText] -  The text which appears when observing the sprite when the diffused light is not sufficient.
+   * @param {string|string[]} [noLightExamineOrInteractText] - The text which appears when examine or interact with the sprite when the diffused light is not sufficient.
+   * @param {number} [examineOrInteractOffsetX=0] - The offset on x axis of the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+   * @param {number} [examineOrInteractThresholdRadius=0] - The radius of the tolerance in reaching the examineOrInteractPoint, where the player has to move to examine or interact with the sprite.
+   * @param {number} [minLightLevelToExamineOrInteract=???] - The minimum value of diffused light to examine or interact with the sprite.
+   * @param {number} [minLightLevelToObserve=???] - The minimum value of diffused light to observe the sprite.
+   */
+  function WallFurniture(room, x, y, texture, behaviourType, pixelPerfect, observeText, examineOrInteractText, blockExamineText, noLightObserveText, noLightExamineOrInteractText, examineOrInteractOffsetX, examineOrInteractThresholdRadius, minLightLevelToExamineOrInteract, minLightLevelToObserve) {
+    var _this;
+
+    _classCallCheck(this, WallFurniture);
+
+    _this = _possibleConstructorReturn(this, (WallFurniture.__proto__ || Object.getPrototypeOf(WallFurniture)).call(this, room, x, y, texture, 'wallFurnitureLayer', true, behaviourType, pixelPerfect, observeText, examineOrInteractText, blockExamineText, noLightObserveText, noLightExamineOrInteractText, examineOrInteractOffsetX, examineOrInteractThresholdRadius, minLightLevelToExamineOrInteract, minLightLevelToObserve));
+
+    _this.setGravityY(0);
+
+    return _this;
+  }
+
+  return WallFurniture;
+}(_WorldItem2.default);
+
+exports.default = WallFurniture;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/world-items/wall-furnitures/index.js":
+/*!**********************************************************!*\
+  !*** ./src/sprites/world-items/wall-furnitures/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var WallFurnitures = {
+  WallFurniture: __webpack_require__(/*! ./WallFurniture */ "./src/sprites/world-items/wall-furnitures/WallFurniture.js")
+};
+module.exports = WallFurnitures;
 
 /***/ }),
 
@@ -3670,6 +4167,8 @@ exports.default = void 0;
 
 var _actions = _interopRequireDefault(__webpack_require__(/*! ../../actions */ "./src/actions/index.js"));
 
+var _behaviours = _interopRequireDefault(__webpack_require__(/*! ../../sprites/behaviours */ "./src/sprites/behaviours/index.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -3689,7 +4188,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 /**
- * Class representing the cursor manager, able to select always the correct graphic for the cursor and to handle pointer events.
+ * Class representing the CursorSystem, able to select the correct graphic for the cursor and to handle pointer events.
  * @extends Phaser.Plugins.BasePlugin
  * @memberof TDLib.Plugins.GlobalPlugins
  * @since 1.0.0
@@ -3807,7 +4306,7 @@ function (_Phaser$Plugins$BaseP) {
      * Set the correct cursor for the target selected.
      * @param {Object} target - The target of the pointer.sceneManager
      * @param {TDLib.Components.ActionComponent} target.behaviour - The SpriteBehaviourComponent of the target.
-     * @param {string} [target.behaviour.type=TDLib.Sprites.Behaviours.Behaviour.INERT] - The type of the sprite behaviour for this target.
+     * @param {string} [target.behaviour.type=TDLib.Sprites.Behaviours.INERT] - The type of the sprite behaviour for this target.
      * @since 1.0.0
      */
 
@@ -3816,32 +4315,32 @@ function (_Phaser$Plugins$BaseP) {
     value: function setCursor() {
       var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         behaviour: {
-          type: TDLib.Sprites.Behaviours.Behaviour.INERT
+          type: _behaviours.default.INERT
         },
         room: {}
       };
 
       if ('room' in target && target !== target.room.player) {
         switch (target.behaviour.type) {
-          case TDLib.Sprites.Behaviours.Behaviour.INERT:
+          case _behaviours.default.INERT:
             {
               this.cursorScene.cursor.setTexture(CursorSystem.DEFAULT_CURSOR).setOrigin(0.4, 0.33);
             }
             break;
 
-          case TDLib.Sprites.Behaviours.Behaviour.EXAMINABLE:
+          case _behaviours.default.EXAMINABLE:
             {
               this.cursorScene.cursor.setTexture(CursorSystem.EXAMINABLE_CURSOR).setOrigin(0.33, 0.29);
             }
             break;
 
-          case TDLib.Sprites.Behaviours.Behaviour.INTERACTIVE:
+          case _behaviours.default.INTERACTIVE:
             {
               this.cursorScene.cursor.setTexture(CursorSystem.INTERACTIVE_CURSOR).setOrigin(0.4, 0.33);
             }
             break;
 
-          case TDLib.Sprites.Behaviours.Behaviour.TALKABLE:
+          case _behaviours.default.TALKABLE:
             {
               this.cursorScene.cursor.setTexture(CursorSystem.TALKABLE_CURSOR);
             }

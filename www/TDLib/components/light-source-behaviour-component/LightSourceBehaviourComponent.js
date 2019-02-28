@@ -8,7 +8,7 @@
   * @extends TDLib.Components.TDLComponent
   * @memberof TDLib.Components
   */
-class LightSourceBehaviourComponent extends TDLComponent {
+class LightSourceBehaviourComponent extends TDLib.Components.Component {
     /**
      * Creates a new LightSourceBehaviourComponent.
      * @param {TDLib.Sprites.TDLSprite} gameObject - The sprite which owns the component.

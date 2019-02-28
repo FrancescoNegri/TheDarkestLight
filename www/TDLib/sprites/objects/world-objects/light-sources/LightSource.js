@@ -3,7 +3,7 @@
  * @extends TDlib.Sprites.Objects.WorldObject
  * @memberof TDlib.Sprites.Objects.WorldObjects.LightSources
  */
-class LightSource extends WorldObject {
+class LightSource extends TDLib.Sprites.WorldItems.WorldItem {
     /**
      * constructor of the class
      * @param {Room} room - Room in which will be created the LightSource.
@@ -24,7 +24,7 @@ class LightSource extends WorldObject {
      * @param {boolean} [isOn=true] - Light created as switched on or off.
      */
     constructor(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset, allowedBehaviours, isOn = true) {
-        super(room, x, y, texture, layer, true, TDLib.Sprites.Behaviours.Behaviour.EXAMINABLE);
+        super(room, x, y, texture, layer, true, TDLib.Sprites.Behaviours.EXAMINABLE);
         
         this.setGravityY(0);
 

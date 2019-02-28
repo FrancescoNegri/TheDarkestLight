@@ -1,10 +1,10 @@
-class TestObject extends WallFurniture {
+class TestObject extends TDLib.Sprites.WorldItems.WallFurnitures.WallFurniture {
     constructor(room, x, y) {
         super(
             room,
             x, y,
             'NaziBanner01',
-            TDLib.Sprites.Behaviours.Behaviour.EXAMINABLE,
+            TDLib.Sprites.Behaviours.EXAMINABLE,
             null,
             'Sono una bandiera nazista, osservami!',
             'Ora stai esaminando una bandiera con la svastica',

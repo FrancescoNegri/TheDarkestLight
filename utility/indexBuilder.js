@@ -73,5 +73,5 @@ getDirectories('../www', function (err, res) {
 
 const str1 = '<!DOCTYPE html>\n<html>\n';
 const str2 = '<head>\n<meta name="format-detection" content="telephone=no">\n<meta name="msapplication-tap-highlight" content="no">\n<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">\n<link rel="stylesheet" type="text/css" href="css/index.css">\n<title>The Darkest Light</title>\n</head>\n';
-const str3 = '<body>\n<!-- EXTERNAL LIBS SCRIPTS-->\n<script type="text/javascript" src="cordova.js"></script>\n<script type="text/javascript" src="node_modules/phaser/dist/phaser.js"></script>\n<script src="node_modules/mobile-detect/mobile-detect.js"></script>\n';
+const str3 = '<body>\n<!-- EXTERNAL LIBS SCRIPTS-->\n<script type="text/javascript" src="cordova.js"></script>\n<script type="text/javascript" src="node_modules/phaser/dist/phaser.js"></script>\n<script src="node_modules/mobile-detect/mobile-detect.js"></script>\n<script type="text/javascript" src="lib/the-darkest-lib.js"></script>\n';
 const str4 = '</body>\n</html>';

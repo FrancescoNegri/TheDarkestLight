@@ -43,6 +43,7 @@ class TestRoom extends TDLib.Rooms.Room {
         this.keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         this.keyX = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
         this.keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+        this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
     }
 
     update() {
@@ -64,15 +65,13 @@ class TestRoom extends TDLib.Rooms.Room {
             console.log(this.lightSources.calculateLightsContribuitePoint(this.player));
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
-            //this.lamp1.startHardFlickeringAndTrembling();
-            this.lamp2.startHardFlickering();
-
-            //this.lamp2.startSoftFlickeringAndTrembling();
+            this.lamp2.effects.play('Trembling', 5000);
         }
         if (Phaser.Input.Keyboard.JustDown(this.keyZ)) {
-            this.lamp2.stopSoftFlickering(false);
-            //this.lamp1.lightBehaviour.stopAllBehaviours();
-            this.lamp2.lightBehaviour.stopAllBehaviours();
+            this.lamp2.effects.play('HardFlickering', 3000);
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.keyC)) {
+            this.lamp2.effects.play('RadiusFlickering');
         }
     }
 }

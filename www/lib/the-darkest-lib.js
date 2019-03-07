@@ -145,7 +145,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @namespace TDLib
  */
 var TDLib = {
-  Actions: __webpack_require__(/*! ./actions */ "./src/actions/index.js"),
   Components: __webpack_require__(/*! ./components */ "./src/components/index.js"),
   Game: __webpack_require__(/*! ./boot/Game */ "./src/boot/Game.js"),
   Managers: __webpack_require__(/*! ./managers */ "./src/managers/index.js"),
@@ -158,859 +157,6 @@ TDLib = Phaser.Utils.Objects.Extend(false, TDLib, _const.default);
 module.exports = TDLib;
 global.TDLib = TDLib;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./src/actions/Action.js":
-/*!*******************************!*\
-  !*** ./src/actions/Action.js ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-/**
- * Class representing a TDLAction.
- * @memberof TDLib.Components.Actions
- * @since 1.0.0
- */
-var Action =
-/*#__PURE__*/
-function () {
-  /**
-   * Start a new TDLAction.
-   * @param {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction} invoker - The invoker of the action.
-   * @param {TDLSprite} actor - The actor who performs the action.
-   * @param {Object} config - The config object for the action.
-   * @param {Object} config.target - The target of the action.
-   * @param {number} config.target.x - The x of the target of the action.
-   */
-  function Action(invoker, actor) {
-    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-    _classCallCheck(this, Action);
-
-    /**
-     * The invoker of the action.
-     * @type {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction}
-     * @since 1.0.0
-     */
-    this.invoker = invoker;
-    /**
-     * The name of the action.
-     * @type {string}
-     * @since 1.0.0
-     */
-
-    this.name = this.constructor.name;
-    /**
-     * The actor who performs the action.
-     * @type {TDLib.Sprites.TDLSprite}
-     * @since 1.0.0
-     */
-
-    this.actor = actor;
-    /**
-     * The target of the action.
-     * @type {Object|TDLib.Sprites.TDLSprite}
-     * @since 1.0.0
-     */
-
-    this.target = config.target;
-    /**
-     * The config object for the action.
-     * @type {Object}
-     * @since 1.0.0
-     */
-
-    this.config = config;
-    /**
-     * The queue of actions.
-     * @type {Array}
-     * @private
-     * @since 1.0.0
-     */
-
-    this._queue = [];
-    /**
-     * Tells if the action has been paused.
-     * @type {boolean}
-     * @since 1.0.0
-     */
-
-    this.isPaused = false;
-  }
-  /**
-   * Add one or more new actions to the queue.
-   * @param {TDLib.Components.Actions.TDLAction|TDLib.Components.Actions.TDLAction[]|TDLib.Components.Actions.TDLAction.BaseAction|TDLib.Components.Actions.TDLAction.BaseAction[]} actions - The new actions to add.
-   * @since 1.0.0
-   */
-
-
-  _createClass(Action, [{
-    key: "addActions",
-    value: function addActions(actions) {
-      var _this = this;
-
-      if (Array.isArray(actions)) {
-        actions.forEach(function (action) {
-          _this._queue.push(action);
-        });
-      } else this._queue.push(actions);
-    }
-    /**
-     * The blank action to create new composed and complex actions.
-     * @typedef {TDLib.Components.Actions.TDLAction.BaseAction}
-     *
-     * @property {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction} invoker - The invoker of the action.
-     * @property {Function} startCallback - The callback to execute at the beginning of the action.
-     * @property {Function} [finishCallback] - The callback to execute at the end of the action.
-     * @property {Function} [updateCallback]  - The callback to execute at every update loop.
-     * @property {Function} [resumeCallback=startCallback] - The callback to execute when the action is paused.
-     * @property {Function} [pauseCallback=finishCallback]  - The callback to execute when the action is resumed.
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "abort",
-
-    /**
-     * Abort an uncompleted action.
-     * @private
-     * @since 1.0.0
-     */
-    value: function abort() {
-      if (this._queue.length > 0) this._queue[0].abort();
-    }
-    /**
-     * Start an action.
-     * @private
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "start",
-    value: function start() {
-      if (this._queue.length > 0) this._queue[0].start();
-    }
-    /**
-     * Finish a completed action.
-     * @private
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "finish",
-    value: function finish() {
-      if (this._queue.length > 0) this._queue[0].finish();
-    }
-    /**
-     * Remove a completed action from the queue.
-     * @private
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "remove",
-    value: function remove() {
-      if (this._queue.length > 0) this._queue.shift();
-      if (this._queue.length <= 0) this.invoker.remove();else this._queue[0].start();
-    }
-    /**
-     * Pause an action.
-     * @private
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "pause",
-    value: function pause() {
-      if (this._queue.length > 0) {
-        this._queue[0].pause();
-
-        this.isPaused = true;
-      }
-    }
-    /**
-     * Resume a paused action.
-     * @private
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "resume",
-    value: function resume() {
-      if (this._queue.length > 0) {
-        this.isPaused = false;
-
-        this._queue[0].resume();
-      }
-    }
-    /**
-     * Update the currently performed action.
-     * @private
-     * @since 1.0.0
-     */
-
-  }, {
-    key: "update",
-    value: function update() {
-      if (this._queue.length > 0) this._queue[0].update();
-    }
-  }], [{
-    key: "BaseAction",
-    get: function get() {
-      return (
-        /*#__PURE__*/
-        function () {
-          function BaseAction(invoker, startCallback) {
-            var finishCallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
-            var updateCallback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {};
-            var resumeCallback = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : startCallback;
-            var pauseCallback = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : finishCallback;
-
-            _classCallCheck(this, BaseAction);
-
-            this.invoker = invoker;
-            this.startCallback = startCallback;
-            this.finishCallback = finishCallback;
-            this.updateCallback = updateCallback;
-            this.resumeCallback = resumeCallback;
-            this.pauseCallback = pauseCallback;
-            this.isPaused = false;
-          }
-
-          _createClass(BaseAction, [{
-            key: "start",
-            value: function start() {
-              this.startCallback();
-            }
-          }, {
-            key: "finish",
-            value: function finish() {
-              this.finishCallback();
-              this.invoker.remove();
-            }
-          }, {
-            key: "abort",
-            value: function abort() {
-              this.finishCallback();
-            }
-          }, {
-            key: "resume",
-            value: function resume() {
-              this.isPaused = false;
-              this.resumeCallback();
-            }
-          }, {
-            key: "pause",
-            value: function pause() {
-              this.pauseCallback();
-              this.isPaused = true;
-            }
-          }, {
-            key: "update",
-            value: function update() {
-              this.updateCallback();
-            }
-          }]);
-
-          return BaseAction;
-        }()
-      );
-    }
-  }]);
-
-  return Action;
-}();
-
-exports.default = Action;
-module.exports = exports["default"];
-
-/***/ }),
-
-/***/ "./src/actions/examine/Examine.js":
-/*!****************************************!*\
-  !*** ./src/actions/examine/Examine.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/actions/Action.js"));
-
-var _WalkTo = _interopRequireDefault(__webpack_require__(/*! ../walk-to/WalkTo */ "./src/actions/walk-to/WalkTo.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Examine =
-/*#__PURE__*/
-function (_Action) {
-  _inherits(Examine, _Action);
-
-  function Examine(invoker, actor, config) {
-    var _this;
-
-    _classCallCheck(this, Examine);
-
-    _this = _possibleConstructorReturn(this, (Examine.__proto__ || Object.getPrototypeOf(Examine)).apply(this, arguments));
-
-    _this.addActions([new _WalkTo.default(_this, _this.actor, _this.config), _this.target.behaviour.examine.getAction(_this)]);
-
-    return _this;
-  }
-
-  return Examine;
-}(_Action2.default);
-
-exports.default = Examine;
-module.exports = exports["default"];
-
-/***/ }),
-
-/***/ "./src/actions/face-to/FaceTo.js":
-/*!***************************************!*\
-  !*** ./src/actions/face-to/FaceTo.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/actions/Action.js"));
-
-var _const = _interopRequireDefault(__webpack_require__(/*! ../../const */ "./src/const.js"));
-
-var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/actions/face-to/Settings.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var FaceTo =
-/*#__PURE__*/
-function (_Action) {
-  _inherits(FaceTo, _Action);
-
-  function FaceTo(invoker, actor, config) {
-    var _this;
-
-    _classCallCheck(this, FaceTo);
-
-    _this = _possibleConstructorReturn(this, (FaceTo.__proto__ || Object.getPrototypeOf(FaceTo)).apply(this, arguments));
-
-    _this.addActions(new _Action2.default.BaseAction(_this, function () {
-      if (Math.abs(_this.actor.x - _this.target.x) > _Settings.default.MICRO_MOVEMENT_RADIUS) {
-        if (_this.actor.facing === _const.default.RIGHT) {
-          if (_this.actor.x > _this.target.x) {
-            _this.actor.facing = _const.default.LEFT;
-
-            _this.actor.setFlipX(true); // this.actor.anims.play('idleLeft');
-
-          }
-        } else if (_this.actor.facing === _const.default.LEFT) {
-          if (_this.actor.x < _this.target.x) {
-            _this.actor.facing = _const.default.RIGHT;
-
-            _this.actor.setFlipX(false); // this.actor.anims.play('idleRight');
-
-          }
-        }
-      }
-
-      _this.finish();
-    }));
-
-    return _this;
-  }
-
-  return FaceTo;
-}(_Action2.default);
-
-exports.default = FaceTo;
-module.exports = exports["default"];
-
-/***/ }),
-
-/***/ "./src/actions/face-to/Settings.js":
-/*!*****************************************!*\
-  !*** ./src/actions/face-to/Settings.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var Settings = {
-  MICRO_MOVEMENT_RADIUS: 6
-};
-module.exports = Settings;
-
-/***/ }),
-
-/***/ "./src/actions/idle/Idle.js":
-/*!**********************************!*\
-  !*** ./src/actions/idle/Idle.js ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/actions/Action.js"));
-
-var _const = _interopRequireDefault(__webpack_require__(/*! ../../const */ "./src/const.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-/**
- * Class representing the idle action.
- * @extends TDLib.Components.Actions.Action
- * @memberof TDLib.Components.Actions
- */
-var Idle =
-/*#__PURE__*/
-function (_Action) {
-  _inherits(Idle, _Action);
-
-  /**
-   * Start a new idle action.
-   * @param {Components.ActionComponent|Components.Actions.TDLAction} invoker - The invoker of the action.
-   * @param {TDLSprite} actor - The actor who performs the action.
-   * @param {Object} config - The config object for the action.
-   * @param {Object} config.target - The target of the action.
-   * @param {number} config.target.x - The x of the target of the action.
-   */
-  function Idle(invoker, actor, config) {
-    var _this;
-
-    _classCallCheck(this, Idle);
-
-    _this = _possibleConstructorReturn(this, (Idle.__proto__ || Object.getPrototypeOf(Idle)).apply(this, arguments));
-
-    _this.addActions(new _Action2.default.BaseAction(_this, function () {
-      _this.actor.body.setVelocity(0);
-
-      switch (_this.actor.facing) {
-        case _const.default.LEFT:
-          {
-            _this.actor.anims.play('idle'); // this.actor.anims.play('idleLeft');
-
-          }
-          break;
-
-        case _const.default.RIGHT:
-          {
-            _this.actor.anims.play('idle'); // this.actor.anims.play('idleRight');
-
-          }
-          break;
-        // possibili altri casi di facing (es girato di spalle o da davanti)
-      }
-    }));
-
-    return _this;
-  }
-
-  return Idle;
-}(_Action2.default);
-
-exports.default = Idle;
-module.exports = exports["default"];
-
-/***/ }),
-
-/***/ "./src/actions/index.js":
-/*!******************************!*\
-  !*** ./src/actions/index.js ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Actions = {
-  Action: __webpack_require__(/*! ./Action */ "./src/actions/Action.js"),
-  Examine: __webpack_require__(/*! ./examine/Examine */ "./src/actions/examine/Examine.js"),
-  FaceTo: __webpack_require__(/*! ./face-to/FaceTo */ "./src/actions/face-to/FaceTo.js"),
-  Idle: __webpack_require__(/*! ./idle/Idle */ "./src/actions/idle/Idle.js"),
-  Interact: __webpack_require__(/*! ./interact/Interact */ "./src/actions/interact/Interact.js"),
-  Observe: __webpack_require__(/*! ./observe/Observe */ "./src/actions/observe/Observe.js"),
-  RunTo: __webpack_require__(/*! ./run-to/RunTo */ "./src/actions/run-to/RunTo.js"),
-  WalkTo: __webpack_require__(/*! ./walk-to/WalkTo */ "./src/actions/walk-to/WalkTo.js")
-};
-module.exports = Actions;
-
-/***/ }),
-
-/***/ "./src/actions/interact/Interact.js":
-/*!******************************************!*\
-  !*** ./src/actions/interact/Interact.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/actions/Action.js"));
-
-var _WalkTo = _interopRequireDefault(__webpack_require__(/*! ../walk-to/WalkTo */ "./src/actions/walk-to/WalkTo.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Interact =
-/*#__PURE__*/
-function (_Action) {
-  _inherits(Interact, _Action);
-
-  function Interact(invoker, actor, config) {
-    var _this;
-
-    _classCallCheck(this, Interact);
-
-    _this = _possibleConstructorReturn(this, (Interact.__proto__ || Object.getPrototypeOf(Interact)).apply(this, arguments));
-
-    _this.addActions([new _WalkTo.default(_this, _this.actor, _this.config), _this.target.behaviour.interact.getAction(_this)]);
-
-    return _this;
-  }
-
-  return Interact;
-}(_Action2.default);
-
-exports.default = Interact;
-module.exports = exports["default"];
-
-/***/ }),
-
-/***/ "./src/actions/observe/Observe.js":
-/*!****************************************!*\
-  !*** ./src/actions/observe/Observe.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/actions/Action.js"));
-
-var _FaceTo = _interopRequireDefault(__webpack_require__(/*! ../face-to/FaceTo */ "./src/actions/face-to/FaceTo.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Observe =
-/*#__PURE__*/
-function (_Action) {
-  _inherits(Observe, _Action);
-
-  function Observe(invoker, actor, config) {
-    var _this;
-
-    _classCallCheck(this, Observe);
-
-    _this = _possibleConstructorReturn(this, (Observe.__proto__ || Object.getPrototypeOf(Observe)).apply(this, arguments));
-
-    _this.addActions([new _FaceTo.default(_this, _this.actor, _this.config), _this.target.behaviour.observe.getAction(_this)]);
-
-    return _this;
-  }
-
-  return Observe;
-}(_Action2.default);
-
-exports.default = Observe;
-module.exports = exports["default"];
-
-/***/ }),
-
-/***/ "./src/actions/run-to/RunTo.js":
-/*!*************************************!*\
-  !*** ./src/actions/run-to/RunTo.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/actions/Action.js"));
-
-var _FaceTo = _interopRequireDefault(__webpack_require__(/*! ../face-to/FaceTo */ "./src/actions/face-to/FaceTo.js"));
-
-var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/actions/run-to/Settings.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-// da cambiare e mettere tutta dentro l'AWalkTo e fare un Move to che distingua che azioni chiamare?
-var RunTo =
-/*#__PURE__*/
-function (_Action) {
-  _inherits(RunTo, _Action);
-
-  function RunTo(invoker, actor, config) {
-    var _this;
-
-    _classCallCheck(this, RunTo);
-
-    _this = _possibleConstructorReturn(this, (RunTo.__proto__ || Object.getPrototypeOf(RunTo)).apply(this, arguments));
-
-    _this.addActions([new _FaceTo.default(_this, _this.actor, _this.config), new _Action2.default.BaseAction(_this, function () {
-      if (Math.abs(_this.actor.x - _this.target.x) > _Settings.default.MICRO_MOVEMENT_RADIUS) {
-        if (_this.actor.x < _this.target.x) {
-          _this.actor.anims.play('run'); // this.actor.anims.play('runRight');
-
-
-          _this.actor.body.setVelocity(_Settings.default.RUN_VELOCITY);
-        } else if (_this.actor.x > _this.target.x) {
-          _this.actor.anims.play('run'); // this.actor.anims.play('runLeft');
-
-
-          _this.actor.body.setVelocity(-_Settings.default.RUN_VELOCITY);
-        }
-
-        console.log('start to run to ', config.target.x);
-      } else {
-        _this.finish();
-      }
-    }, function () {
-      _this.actor.body.setVelocity(0);
-    }, function () {
-      if ((_this.actor.x - _this.target.x) * _this.actor.body.velocity.x > 0) _this.finish();
-    })]);
-
-    return _this;
-  }
-
-  return RunTo;
-}(_Action2.default);
-
-exports.default = RunTo;
-module.exports = exports["default"];
-
-/***/ }),
-
-/***/ "./src/actions/run-to/Settings.js":
-/*!****************************************!*\
-  !*** ./src/actions/run-to/Settings.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var Settings = {
-  RUN_VELOCITY: 240,
-  MICRO_MOVEMENT_RADIUS: 20
-};
-module.exports = Settings;
-
-/***/ }),
-
-/***/ "./src/actions/walk-to/Settings.js":
-/*!*****************************************!*\
-  !*** ./src/actions/walk-to/Settings.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var Settings = {
-  WALK_VELOCITY: 100,
-  MICRO_MOVEMENT_RADIUS: 20
-};
-module.exports = Settings;
-
-/***/ }),
-
-/***/ "./src/actions/walk-to/WalkTo.js":
-/*!***************************************!*\
-  !*** ./src/actions/walk-to/WalkTo.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/actions/Action.js"));
-
-var _FaceTo = _interopRequireDefault(__webpack_require__(/*! ../face-to/FaceTo */ "./src/actions/face-to/FaceTo.js"));
-
-var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/actions/walk-to/Settings.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var WalkTo =
-/*#__PURE__*/
-function (_Action) {
-  _inherits(WalkTo, _Action);
-
-  function WalkTo(invoker, actor, config) {
-    var _this;
-
-    _classCallCheck(this, WalkTo);
-
-    _this = _possibleConstructorReturn(this, (WalkTo.__proto__ || Object.getPrototypeOf(WalkTo)).apply(this, arguments));
-
-    _this.addActions([new _FaceTo.default(_this, _this.actor, _this.config), new _Action2.default.BaseAction(_this, function () {
-      if (Math.abs(_this.actor.x - _this.target.x) > _Settings.default.MICRO_MOVEMENT_RADIUS) {
-        if (_this.actor.x < _this.target.x) {
-          _this.actor.anims.play('walk'); // this.actor.anims.play('walkRight');
-
-
-          _this.actor.body.setVelocity(_Settings.default.WALK_VELOCITY);
-        } else if (_this.actor.x > _this.target.x) {
-          _this.actor.anims.play('walk'); // this.actor.anims.play('walkLeft');
-
-
-          _this.actor.body.setVelocity(-_Settings.default.WALK_VELOCITY);
-        }
-      } else {
-        _this.finish();
-      }
-    }, function () {
-      _this.actor.body.setVelocity(0);
-    }, function () {
-      if ((_this.actor.x - _this.target.x) * _this.actor.body.velocity.x > 0) _this.finish();
-    })]);
-
-    return _this;
-  }
-
-  return WalkTo;
-}(_Action2.default);
-
-exports.default = WalkTo;
-module.exports = exports["default"];
 
 /***/ }),
 
@@ -1292,7 +438,7 @@ exports.default = void 0;
 
 var _Component2 = _interopRequireDefault(__webpack_require__(/*! ./Component */ "./src/components/Component.js"));
 
-var _actions = _interopRequireDefault(__webpack_require__(/*! ../actions */ "./src/actions/index.js"));
+var _actions = _interopRequireDefault(__webpack_require__(/*! ../sprites/actions */ "./src/sprites/actions/index.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1661,6 +807,118 @@ module.exports = exports["default"];
 
 /***/ }),
 
+/***/ "./src/components/EffectComponent.js":
+/*!*******************************************!*\
+  !*** ./src/components/EffectComponent.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Component2 = _interopRequireDefault(__webpack_require__(/*! ./Component */ "./src/components/Component.js"));
+
+var _effects = _interopRequireDefault(__webpack_require__(/*! ../sprites/effects */ "./src/sprites/effects/index.js"));
+
+var _LightSource = _interopRequireDefault(__webpack_require__(/*! ../sprites/world-items/light-sources/LightSource */ "./src/sprites/world-items/light-sources/LightSource.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var EffectComponent =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(EffectComponent, _Component);
+
+  function EffectComponent(gameObject) {
+    var _this;
+
+    _classCallCheck(this, EffectComponent);
+
+    _this = _possibleConstructorReturn(this, (EffectComponent.__proto__ || Object.getPrototypeOf(EffectComponent)).call(this, gameObject));
+    _this.previousEffects = [];
+    _this.currentEffect = null;
+    return _this;
+  }
+
+  _createClass(EffectComponent, [{
+    key: "play",
+    value: function play(key) {
+      var _this2 = this;
+
+      var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
+      var config = arguments[2];
+      if (this.currentEffect) this.stop();
+      if (key in _effects.default) this.currentEffect = new _effects.default[key](this, config);else if (key in _effects.default.LightEffects) {
+        if (this.gameObject instanceof _LightSource.default) this.currentEffect = new _effects.default.LightEffects[key](this, config);else console.log(key + ' can only be run by a LightSource');
+      } else {
+        console.log('No effect with key: ', key);
+      }
+      if (this.currentEffect) this.currentEffect.play();
+
+      if (duration > 0) {
+        this.timer = this.gameObject.room.time.addEvent({
+          delay: duration,
+          callback: function callback() {
+            _this2.stop();
+          },
+          callbackScope: this,
+          repeat: 0
+        });
+        console.log(this.currentEffect.name + 'Effect started for', duration, 'ms');
+      } else if (duration === -1) {
+        console.log(this.currentEffect.name + 'Effect started');
+      } else {
+        console.log('You must use a positive value!');
+      }
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      if (this.currentEffect) {
+        if (this.timer) {
+          this.timer.remove();
+          this.timer = null;
+        }
+
+        this.previousEffects.push(this.currentEffect);
+        this.currentEffect.stop();
+        console.log(this.currentEffect.name + 'Effect stopped');
+        this.currentEffect = null;
+        console.log(this.previousEffects);
+      }
+    }
+  }]);
+
+  return EffectComponent;
+}(_Component2.default);
+
+exports.default = EffectComponent;
+module.exports = exports["default"];
+
+/***/ }),
+
 /***/ "./src/components/index.js":
 /*!*********************************!*\
   !*** ./src/components/index.js ***!
@@ -1671,7 +929,8 @@ module.exports = exports["default"];
 var Components = {
   Component: __webpack_require__(/*! ./Component */ "./src/components/Component.js"),
   ActionComponent: __webpack_require__(/*! ./ActionComponent */ "./src/components/ActionComponent.js"),
-  BehaviourComponent: __webpack_require__(/*! ./BehaviourComponent */ "./src/components/BehaviourComponent.js")
+  BehaviourComponent: __webpack_require__(/*! ./BehaviourComponent */ "./src/components/BehaviourComponent.js"),
+  EffectComponent: __webpack_require__(/*! ./EffectComponent */ "./src/components/EffectComponent.js")
 };
 module.exports = Components;
 
@@ -2106,10 +1365,10 @@ function (_Manager) {
       var singleLightContributeAccumulator = 0;
       this.lightSources.getChildren().forEach(function (light) {
         if (light.isOn) {
-          var singleLightContribute = light.config.diffusedLight.intensity / (Math.abs(light.x + light.config.offset.x - target.x) ^ 2);
+          var singleLightContribute = light.config.diffusedLight.intensity / (Math.abs(light.x + light.config.offset.x - target.x) ^ 2); // COSE
 
-          if (light.lightBehaviour.runningBehaviour !== null) {
-            singleLightContribute *= light.lightBehaviour.runningBehaviour.behaviourLightContributeFactor;
+          if (light.effects.currentEffect) {
+            singleLightContribute *= light.effects.currentEffect.contributeFactor;
           }
 
           singleLightContributeAccumulator += singleLightContribute;
@@ -2682,9 +1941,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _behaviours = _interopRequireDefault(__webpack_require__(/*! ./behaviours */ "./src/sprites/behaviours/index.js"));
+var _behaviours = _interopRequireDefault(__webpack_require__(/*! ../sprites/behaviours */ "./src/sprites/behaviours/index.js"));
 
-var _components = _interopRequireDefault(__webpack_require__(/*! ../components */ "./src/components/index.js"));
+var _BehaviourComponent = _interopRequireDefault(__webpack_require__(/*! ../components/BehaviourComponent */ "./src/components/BehaviourComponent.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2803,7 +2062,7 @@ function (_Phaser$Physics$Arcad) {
      * @since 1.0.0
      */
 
-    _this.behaviour = new _components.default.BehaviourComponent(_this, behaviourType, pixelPerfect);
+    _this.behaviour = new _BehaviourComponent.default(_this, behaviourType, pixelPerfect);
     /**
      * The text which appears when observing the sprite.
          * @type {string}
@@ -2945,6 +2204,859 @@ module.exports = exports["default"];
 
 /***/ }),
 
+/***/ "./src/sprites/actions/Action.js":
+/*!***************************************!*\
+  !*** ./src/sprites/actions/Action.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * Class representing a TDLAction.
+ * @memberof TDLib.Components.Actions
+ * @since 1.0.0
+ */
+var Action =
+/*#__PURE__*/
+function () {
+  /**
+   * Start a new TDLAction.
+   * @param {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction} invoker - The invoker of the action.
+   * @param {TDLSprite} actor - The actor who performs the action.
+   * @param {Object} config - The config object for the action.
+   * @param {Object} config.target - The target of the action.
+   * @param {number} config.target.x - The x of the target of the action.
+   */
+  function Action(invoker, actor) {
+    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    _classCallCheck(this, Action);
+
+    /**
+     * The invoker of the action.
+     * @type {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction}
+     * @since 1.0.0
+     */
+    this.invoker = invoker;
+    /**
+     * The name of the action.
+     * @type {string}
+     * @since 1.0.0
+     */
+
+    this.name = this.constructor.name;
+    /**
+     * The actor who performs the action.
+     * @type {TDLib.Sprites.TDLSprite}
+     * @since 1.0.0
+     */
+
+    this.actor = actor;
+    /**
+     * The target of the action.
+     * @type {Object|TDLib.Sprites.TDLSprite}
+     * @since 1.0.0
+     */
+
+    this.target = config.target;
+    /**
+     * The config object for the action.
+     * @type {Object}
+     * @since 1.0.0
+     */
+
+    this.config = config;
+    /**
+     * The queue of actions.
+     * @type {Array}
+     * @private
+     * @since 1.0.0
+     */
+
+    this._queue = [];
+    /**
+     * Tells if the action has been paused.
+     * @type {boolean}
+     * @since 1.0.0
+     */
+
+    this.isPaused = false;
+  }
+  /**
+   * Add one or more new actions to the queue.
+   * @param {TDLib.Components.Actions.TDLAction|TDLib.Components.Actions.TDLAction[]|TDLib.Components.Actions.TDLAction.BaseAction|TDLib.Components.Actions.TDLAction.BaseAction[]} actions - The new actions to add.
+   * @since 1.0.0
+   */
+
+
+  _createClass(Action, [{
+    key: "addActions",
+    value: function addActions(actions) {
+      var _this = this;
+
+      if (Array.isArray(actions)) {
+        actions.forEach(function (action) {
+          _this._queue.push(action);
+        });
+      } else this._queue.push(actions);
+    }
+    /**
+     * The blank action to create new composed and complex actions.
+     * @typedef {TDLib.Components.Actions.TDLAction.BaseAction}
+     *
+     * @property {TDLib.Components.ActionComponent|TDLib.Components.Actions.TDLAction} invoker - The invoker of the action.
+     * @property {Function} startCallback - The callback to execute at the beginning of the action.
+     * @property {Function} [finishCallback] - The callback to execute at the end of the action.
+     * @property {Function} [updateCallback]  - The callback to execute at every update loop.
+     * @property {Function} [resumeCallback=startCallback] - The callback to execute when the action is paused.
+     * @property {Function} [pauseCallback=finishCallback]  - The callback to execute when the action is resumed.
+     * @since 1.0.0
+     */
+
+  }, {
+    key: "abort",
+
+    /**
+     * Abort an uncompleted action.
+     * @private
+     * @since 1.0.0
+     */
+    value: function abort() {
+      if (this._queue.length > 0) this._queue[0].abort();
+    }
+    /**
+     * Start an action.
+     * @private
+     * @since 1.0.0
+     */
+
+  }, {
+    key: "start",
+    value: function start() {
+      if (this._queue.length > 0) this._queue[0].start();
+    }
+    /**
+     * Finish a completed action.
+     * @private
+     * @since 1.0.0
+     */
+
+  }, {
+    key: "finish",
+    value: function finish() {
+      if (this._queue.length > 0) this._queue[0].finish();
+    }
+    /**
+     * Remove a completed action from the queue.
+     * @private
+     * @since 1.0.0
+     */
+
+  }, {
+    key: "remove",
+    value: function remove() {
+      if (this._queue.length > 0) this._queue.shift();
+      if (this._queue.length <= 0) this.invoker.remove();else this._queue[0].start();
+    }
+    /**
+     * Pause an action.
+     * @private
+     * @since 1.0.0
+     */
+
+  }, {
+    key: "pause",
+    value: function pause() {
+      if (this._queue.length > 0) {
+        this._queue[0].pause();
+
+        this.isPaused = true;
+      }
+    }
+    /**
+     * Resume a paused action.
+     * @private
+     * @since 1.0.0
+     */
+
+  }, {
+    key: "resume",
+    value: function resume() {
+      if (this._queue.length > 0) {
+        this.isPaused = false;
+
+        this._queue[0].resume();
+      }
+    }
+    /**
+     * Update the currently performed action.
+     * @private
+     * @since 1.0.0
+     */
+
+  }, {
+    key: "update",
+    value: function update() {
+      if (this._queue.length > 0) this._queue[0].update();
+    }
+  }], [{
+    key: "BaseAction",
+    get: function get() {
+      return (
+        /*#__PURE__*/
+        function () {
+          function BaseAction(invoker, startCallback) {
+            var finishCallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
+            var updateCallback = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {};
+            var resumeCallback = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : startCallback;
+            var pauseCallback = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : finishCallback;
+
+            _classCallCheck(this, BaseAction);
+
+            this.invoker = invoker;
+            this.startCallback = startCallback;
+            this.finishCallback = finishCallback;
+            this.updateCallback = updateCallback;
+            this.resumeCallback = resumeCallback;
+            this.pauseCallback = pauseCallback;
+            this.isPaused = false;
+          }
+
+          _createClass(BaseAction, [{
+            key: "start",
+            value: function start() {
+              this.startCallback();
+            }
+          }, {
+            key: "finish",
+            value: function finish() {
+              this.finishCallback();
+              this.invoker.remove();
+            }
+          }, {
+            key: "abort",
+            value: function abort() {
+              this.finishCallback();
+            }
+          }, {
+            key: "resume",
+            value: function resume() {
+              this.isPaused = false;
+              this.resumeCallback();
+            }
+          }, {
+            key: "pause",
+            value: function pause() {
+              this.pauseCallback();
+              this.isPaused = true;
+            }
+          }, {
+            key: "update",
+            value: function update() {
+              this.updateCallback();
+            }
+          }]);
+
+          return BaseAction;
+        }()
+      );
+    }
+  }]);
+
+  return Action;
+}();
+
+exports.default = Action;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/actions/examine/Examine.js":
+/*!************************************************!*\
+  !*** ./src/sprites/actions/examine/Examine.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/sprites/actions/Action.js"));
+
+var _WalkTo = _interopRequireDefault(__webpack_require__(/*! ../walk-to/WalkTo */ "./src/sprites/actions/walk-to/WalkTo.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Examine =
+/*#__PURE__*/
+function (_Action) {
+  _inherits(Examine, _Action);
+
+  function Examine(invoker, actor, config) {
+    var _this;
+
+    _classCallCheck(this, Examine);
+
+    _this = _possibleConstructorReturn(this, (Examine.__proto__ || Object.getPrototypeOf(Examine)).apply(this, arguments));
+
+    _this.addActions([new _WalkTo.default(_this, _this.actor, _this.config), _this.target.behaviour.examine.getAction(_this)]);
+
+    return _this;
+  }
+
+  return Examine;
+}(_Action2.default);
+
+exports.default = Examine;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/actions/face-to/FaceTo.js":
+/*!***********************************************!*\
+  !*** ./src/sprites/actions/face-to/FaceTo.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/sprites/actions/Action.js"));
+
+var _const = _interopRequireDefault(__webpack_require__(/*! ../../../const */ "./src/const.js"));
+
+var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/sprites/actions/face-to/Settings.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var FaceTo =
+/*#__PURE__*/
+function (_Action) {
+  _inherits(FaceTo, _Action);
+
+  function FaceTo(invoker, actor, config) {
+    var _this;
+
+    _classCallCheck(this, FaceTo);
+
+    _this = _possibleConstructorReturn(this, (FaceTo.__proto__ || Object.getPrototypeOf(FaceTo)).apply(this, arguments));
+
+    _this.addActions(new _Action2.default.BaseAction(_this, function () {
+      if (Math.abs(_this.actor.x - _this.target.x) > _Settings.default.MICRO_MOVEMENT_RADIUS) {
+        if (_this.actor.facing === _const.default.RIGHT) {
+          if (_this.actor.x > _this.target.x) {
+            _this.actor.facing = _const.default.LEFT;
+
+            _this.actor.setFlipX(true); // this.actor.anims.play('idleLeft');
+
+          }
+        } else if (_this.actor.facing === _const.default.LEFT) {
+          if (_this.actor.x < _this.target.x) {
+            _this.actor.facing = _const.default.RIGHT;
+
+            _this.actor.setFlipX(false); // this.actor.anims.play('idleRight');
+
+          }
+        }
+      }
+
+      _this.finish();
+    }));
+
+    return _this;
+  }
+
+  return FaceTo;
+}(_Action2.default);
+
+exports.default = FaceTo;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/actions/face-to/Settings.js":
+/*!*************************************************!*\
+  !*** ./src/sprites/actions/face-to/Settings.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var Settings = {
+  MICRO_MOVEMENT_RADIUS: 6
+};
+module.exports = Settings;
+
+/***/ }),
+
+/***/ "./src/sprites/actions/idle/Idle.js":
+/*!******************************************!*\
+  !*** ./src/sprites/actions/idle/Idle.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/sprites/actions/Action.js"));
+
+var _const = _interopRequireDefault(__webpack_require__(/*! ../../../const */ "./src/const.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+/**
+ * Class representing the idle action.
+ * @extends TDLib.Components.Actions.Action
+ * @memberof TDLib.Components.Actions
+ */
+var Idle =
+/*#__PURE__*/
+function (_Action) {
+  _inherits(Idle, _Action);
+
+  /**
+   * Start a new idle action.
+   * @param {Components.ActionComponent|Components.Actions.TDLAction} invoker - The invoker of the action.
+   * @param {TDLSprite} actor - The actor who performs the action.
+   * @param {Object} config - The config object for the action.
+   * @param {Object} config.target - The target of the action.
+   * @param {number} config.target.x - The x of the target of the action.
+   */
+  function Idle(invoker, actor, config) {
+    var _this;
+
+    _classCallCheck(this, Idle);
+
+    _this = _possibleConstructorReturn(this, (Idle.__proto__ || Object.getPrototypeOf(Idle)).apply(this, arguments));
+
+    _this.addActions(new _Action2.default.BaseAction(_this, function () {
+      _this.actor.body.setVelocity(0);
+
+      switch (_this.actor.facing) {
+        case _const.default.LEFT:
+          {
+            _this.actor.anims.play('idle'); // this.actor.anims.play('idleLeft');
+
+          }
+          break;
+
+        case _const.default.RIGHT:
+          {
+            _this.actor.anims.play('idle'); // this.actor.anims.play('idleRight');
+
+          }
+          break;
+        // possibili altri casi di facing (es girato di spalle o da davanti)
+      }
+    }));
+
+    return _this;
+  }
+
+  return Idle;
+}(_Action2.default);
+
+exports.default = Idle;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/actions/index.js":
+/*!**************************************!*\
+  !*** ./src/sprites/actions/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Actions = {
+  Action: __webpack_require__(/*! ./Action */ "./src/sprites/actions/Action.js"),
+  Examine: __webpack_require__(/*! ./examine/Examine */ "./src/sprites/actions/examine/Examine.js"),
+  FaceTo: __webpack_require__(/*! ./face-to/FaceTo */ "./src/sprites/actions/face-to/FaceTo.js"),
+  Idle: __webpack_require__(/*! ./idle/Idle */ "./src/sprites/actions/idle/Idle.js"),
+  Interact: __webpack_require__(/*! ./interact/Interact */ "./src/sprites/actions/interact/Interact.js"),
+  Observe: __webpack_require__(/*! ./observe/Observe */ "./src/sprites/actions/observe/Observe.js"),
+  RunTo: __webpack_require__(/*! ./run-to/RunTo */ "./src/sprites/actions/run-to/RunTo.js"),
+  WalkTo: __webpack_require__(/*! ./walk-to/WalkTo */ "./src/sprites/actions/walk-to/WalkTo.js")
+};
+module.exports = Actions;
+
+/***/ }),
+
+/***/ "./src/sprites/actions/interact/Interact.js":
+/*!**************************************************!*\
+  !*** ./src/sprites/actions/interact/Interact.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/sprites/actions/Action.js"));
+
+var _WalkTo = _interopRequireDefault(__webpack_require__(/*! ../walk-to/WalkTo */ "./src/sprites/actions/walk-to/WalkTo.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Interact =
+/*#__PURE__*/
+function (_Action) {
+  _inherits(Interact, _Action);
+
+  function Interact(invoker, actor, config) {
+    var _this;
+
+    _classCallCheck(this, Interact);
+
+    _this = _possibleConstructorReturn(this, (Interact.__proto__ || Object.getPrototypeOf(Interact)).apply(this, arguments));
+
+    _this.addActions([new _WalkTo.default(_this, _this.actor, _this.config), _this.target.behaviour.interact.getAction(_this)]);
+
+    return _this;
+  }
+
+  return Interact;
+}(_Action2.default);
+
+exports.default = Interact;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/actions/observe/Observe.js":
+/*!************************************************!*\
+  !*** ./src/sprites/actions/observe/Observe.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/sprites/actions/Action.js"));
+
+var _FaceTo = _interopRequireDefault(__webpack_require__(/*! ../face-to/FaceTo */ "./src/sprites/actions/face-to/FaceTo.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Observe =
+/*#__PURE__*/
+function (_Action) {
+  _inherits(Observe, _Action);
+
+  function Observe(invoker, actor, config) {
+    var _this;
+
+    _classCallCheck(this, Observe);
+
+    _this = _possibleConstructorReturn(this, (Observe.__proto__ || Object.getPrototypeOf(Observe)).apply(this, arguments));
+
+    _this.addActions([new _FaceTo.default(_this, _this.actor, _this.config), _this.target.behaviour.observe.getAction(_this)]);
+
+    return _this;
+  }
+
+  return Observe;
+}(_Action2.default);
+
+exports.default = Observe;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/actions/run-to/RunTo.js":
+/*!*********************************************!*\
+  !*** ./src/sprites/actions/run-to/RunTo.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/sprites/actions/Action.js"));
+
+var _FaceTo = _interopRequireDefault(__webpack_require__(/*! ../face-to/FaceTo */ "./src/sprites/actions/face-to/FaceTo.js"));
+
+var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/sprites/actions/run-to/Settings.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+// da cambiare e mettere tutta dentro l'AWalkTo e fare un Move to che distingua che azioni chiamare?
+var RunTo =
+/*#__PURE__*/
+function (_Action) {
+  _inherits(RunTo, _Action);
+
+  function RunTo(invoker, actor, config) {
+    var _this;
+
+    _classCallCheck(this, RunTo);
+
+    _this = _possibleConstructorReturn(this, (RunTo.__proto__ || Object.getPrototypeOf(RunTo)).apply(this, arguments));
+
+    _this.addActions([new _FaceTo.default(_this, _this.actor, _this.config), new _Action2.default.BaseAction(_this, function () {
+      if (Math.abs(_this.actor.x - _this.target.x) > _Settings.default.MICRO_MOVEMENT_RADIUS) {
+        if (_this.actor.x < _this.target.x) {
+          _this.actor.anims.play('run'); // this.actor.anims.play('runRight');
+
+
+          _this.actor.body.setVelocity(_Settings.default.RUN_VELOCITY);
+        } else if (_this.actor.x > _this.target.x) {
+          _this.actor.anims.play('run'); // this.actor.anims.play('runLeft');
+
+
+          _this.actor.body.setVelocity(-_Settings.default.RUN_VELOCITY);
+        }
+
+        console.log('start to run to ', config.target.x);
+      } else {
+        _this.finish();
+      }
+    }, function () {
+      _this.actor.body.setVelocity(0);
+    }, function () {
+      if ((_this.actor.x - _this.target.x) * _this.actor.body.velocity.x > 0) _this.finish();
+    })]);
+
+    return _this;
+  }
+
+  return RunTo;
+}(_Action2.default);
+
+exports.default = RunTo;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/actions/run-to/Settings.js":
+/*!************************************************!*\
+  !*** ./src/sprites/actions/run-to/Settings.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var Settings = {
+  RUN_VELOCITY: 240,
+  MICRO_MOVEMENT_RADIUS: 20
+};
+module.exports = Settings;
+
+/***/ }),
+
+/***/ "./src/sprites/actions/walk-to/Settings.js":
+/*!*************************************************!*\
+  !*** ./src/sprites/actions/walk-to/Settings.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var Settings = {
+  WALK_VELOCITY: 100,
+  MICRO_MOVEMENT_RADIUS: 20
+};
+module.exports = Settings;
+
+/***/ }),
+
+/***/ "./src/sprites/actions/walk-to/WalkTo.js":
+/*!***********************************************!*\
+  !*** ./src/sprites/actions/walk-to/WalkTo.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Action2 = _interopRequireDefault(__webpack_require__(/*! ../Action */ "./src/sprites/actions/Action.js"));
+
+var _FaceTo = _interopRequireDefault(__webpack_require__(/*! ../face-to/FaceTo */ "./src/sprites/actions/face-to/FaceTo.js"));
+
+var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/sprites/actions/walk-to/Settings.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var WalkTo =
+/*#__PURE__*/
+function (_Action) {
+  _inherits(WalkTo, _Action);
+
+  function WalkTo(invoker, actor, config) {
+    var _this;
+
+    _classCallCheck(this, WalkTo);
+
+    _this = _possibleConstructorReturn(this, (WalkTo.__proto__ || Object.getPrototypeOf(WalkTo)).apply(this, arguments));
+
+    _this.addActions([new _FaceTo.default(_this, _this.actor, _this.config), new _Action2.default.BaseAction(_this, function () {
+      if (Math.abs(_this.actor.x - _this.target.x) > _Settings.default.MICRO_MOVEMENT_RADIUS) {
+        if (_this.actor.x < _this.target.x) {
+          _this.actor.anims.play('walk'); // this.actor.anims.play('walkRight');
+
+
+          _this.actor.body.setVelocity(_Settings.default.WALK_VELOCITY);
+        } else if (_this.actor.x > _this.target.x) {
+          _this.actor.anims.play('walk'); // this.actor.anims.play('walkLeft');
+
+
+          _this.actor.body.setVelocity(-_Settings.default.WALK_VELOCITY);
+        }
+      } else {
+        _this.finish();
+      }
+    }, function () {
+      _this.actor.body.setVelocity(0);
+    }, function () {
+      if ((_this.actor.x - _this.target.x) * _this.actor.body.velocity.x > 0) _this.finish();
+    })]);
+
+    return _this;
+  }
+
+  return WalkTo;
+}(_Action2.default);
+
+exports.default = WalkTo;
+module.exports = exports["default"];
+
+/***/ }),
+
 /***/ "./src/sprites/behaviours/Behaviour.js":
 /*!*********************************************!*\
   !*** ./src/sprites/behaviours/Behaviour.js ***!
@@ -2960,7 +3072,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _Action = _interopRequireDefault(__webpack_require__(/*! ../../actions/Action */ "./src/actions/Action.js"));
+var _Action = _interopRequireDefault(__webpack_require__(/*! ../actions/Action */ "./src/sprites/actions/Action.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3102,7 +3214,7 @@ exports.default = void 0;
 
 var _Behaviour2 = _interopRequireDefault(__webpack_require__(/*! ../Behaviour */ "./src/sprites/behaviours/Behaviour.js"));
 
-var _Action = _interopRequireDefault(__webpack_require__(/*! ../../../actions/Action */ "./src/actions/Action.js"));
+var _Action = _interopRequireDefault(__webpack_require__(/*! ../../actions/Action */ "./src/sprites/actions/Action.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3204,7 +3316,7 @@ exports.default = void 0;
 
 var _Behaviour2 = _interopRequireDefault(__webpack_require__(/*! ../Behaviour */ "./src/sprites/behaviours/Behaviour.js"));
 
-var _Action = _interopRequireDefault(__webpack_require__(/*! ../../../actions/Action */ "./src/actions/Action.js"));
+var _Action = _interopRequireDefault(__webpack_require__(/*! ../../actions/Action */ "./src/sprites/actions/Action.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3305,7 +3417,7 @@ exports.default = void 0;
 
 var _Behaviour2 = _interopRequireDefault(__webpack_require__(/*! ../Behaviour */ "./src/sprites/behaviours/Behaviour.js"));
 
-var _actions = _interopRequireDefault(__webpack_require__(/*! ../../../actions */ "./src/actions/index.js"));
+var _actions = _interopRequireDefault(__webpack_require__(/*! ../../actions */ "./src/sprites/actions/index.js"));
 
 var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/sprites/behaviours/observable/Settings.js"));
 
@@ -3689,6 +3801,867 @@ module.exports = exports["default"];
 
 /***/ }),
 
+/***/ "./src/sprites/effects/Effect.js":
+/*!***************************************!*\
+  !*** ./src/sprites/effects/Effect.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _EffectComponent = _interopRequireDefault(__webpack_require__(/*! ../../components/EffectComponent */ "./src/components/EffectComponent.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Effect =
+/*#__PURE__*/
+function () {
+  function Effect(invoker) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    _classCallCheck(this, Effect);
+
+    this.invoker = invoker;
+    this.config = config;
+    this.gameObject = invoker.gameObject;
+    this.name = this.constructor.name;
+  }
+
+  _createClass(Effect, [{
+    key: "play",
+    value: function play() {
+      var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+
+      if (this.invoker instanceof _EffectComponent.default) {
+        callback();
+      } else console.log('Effects can only be played by the EffectComponent');
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+
+      if (this.invoker instanceof _EffectComponent.default) {
+        callback();
+      } else console.log('Effects can only be stopped by the EffectComponent');
+    }
+  }]);
+
+  return Effect;
+}();
+
+exports.default = Effect;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/effects/index.js":
+/*!**************************************!*\
+  !*** ./src/sprites/effects/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Effects = {
+  Effect: __webpack_require__(/*! ./Effect */ "./src/sprites/effects/Effect.js"),
+  LightEffects: __webpack_require__(/*! ./light-effects */ "./src/sprites/effects/light-effects/index.js")
+};
+module.exports = Effects;
+
+/***/ }),
+
+/***/ "./src/sprites/effects/light-effects/HardFlickering.js":
+/*!*************************************************************!*\
+  !*** ./src/sprites/effects/light-effects/HardFlickering.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _LightEffect2 = _interopRequireDefault(__webpack_require__(/*! ./LightEffect */ "./src/sprites/effects/light-effects/LightEffect.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var HardFlickering =
+/*#__PURE__*/
+function (_LightEffect) {
+  _inherits(HardFlickering, _LightEffect);
+
+  function HardFlickering(invoker, config) {
+    var _this;
+
+    _classCallCheck(this, HardFlickering);
+
+    _this = _possibleConstructorReturn(this, (HardFlickering.__proto__ || Object.getPrototypeOf(HardFlickering)).call(this, invoker, config, 0.5));
+    if (!_this.config.minTime) _this.config.minTime = 10;
+    if (!_this.config.maxTime) _this.config.maxTime = 400;
+    if (!_this.config.finalState) _this.config.finalState = 'on';
+    return _this;
+  }
+
+  _createClass(HardFlickering, [{
+    key: "play",
+    value: function play() {
+      var _this2 = this;
+
+      _get(HardFlickering.prototype.__proto__ || Object.getPrototypeOf(HardFlickering.prototype), "play", this).call(this, function () {
+        var setTimer = function setTimer() {
+          _this2.gameObject.room.time.addEvent({
+            delay: Math.floor(Math.random() * (_this2.config.maxTime - _this2.config.minTime)) + _this2.config.minTime,
+            callback: function callback() {
+              if (!_this2.stopped) {
+                if (_this2.gameObject.initialConfig.graphicLight !== null) {
+                  if (_this2.gameObject.graphicLight.intensity === 0) _this2.gameObject.graphicLight.setIntensity(_this2.gameObject.initialConfig.graphicLight.intensity);else _this2.gameObject.graphicLight.setIntensity(0);
+                }
+
+                if (_this2.gameObject.initialConfig.diffusedLight !== null) {
+                  if (_this2.gameObject.diffusedLight.intensity === 0) _this2.gameObject.diffusedLight.setIntensity(_this2.gameObject.initialConfig.diffusedLight.intensity);else _this2.gameObject.diffusedLight.setIntensity(0);
+                }
+
+                setTimer();
+              }
+            },
+            callbackScope: _this2,
+            repeat: 0
+          });
+        };
+
+        setTimer();
+      });
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      var _this3 = this;
+
+      _get(HardFlickering.prototype.__proto__ || Object.getPrototypeOf(HardFlickering.prototype), "stop", this).call(this, function () {
+        if (_this3.config.finalState === 'on') {
+          if (_this3.gameObject.initialConfig.graphicLight !== null) {
+            _this3.gameObject.graphicLight.setIntensity(_this3.gameObject.initialConfig.graphicLight.intensity);
+          }
+
+          if (_this3.gameObject.initialConfig.diffusedLight !== null) {
+            _this3.gameObject.diffusedLight.setIntensity(_this3.gameObject.initialConfig.diffusedLight.intensity);
+          }
+        } else if (_this3.config.finalState === 'off') {
+          _this3.gameObject.turnOff();
+        }
+      });
+    }
+  }]);
+
+  return HardFlickering;
+}(_LightEffect2.default);
+
+exports.default = HardFlickering;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/effects/light-effects/HardFlickeringAndTrembling.js":
+/*!*************************************************************************!*\
+  !*** ./src/sprites/effects/light-effects/HardFlickeringAndTrembling.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _LightEffect2 = _interopRequireDefault(__webpack_require__(/*! ./LightEffect */ "./src/sprites/effects/light-effects/LightEffect.js"));
+
+var _HardFlickering = _interopRequireDefault(__webpack_require__(/*! ./HardFlickering */ "./src/sprites/effects/light-effects/HardFlickering.js"));
+
+var _Trembling = _interopRequireDefault(__webpack_require__(/*! ./Trembling */ "./src/sprites/effects/light-effects/Trembling.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var HardFlickeringAndTrembling =
+/*#__PURE__*/
+function (_LightEffect) {
+  _inherits(HardFlickeringAndTrembling, _LightEffect);
+
+  function HardFlickeringAndTrembling(invoker, config) {
+    var _this;
+
+    _classCallCheck(this, HardFlickeringAndTrembling);
+
+    _this = _possibleConstructorReturn(this, (HardFlickeringAndTrembling.__proto__ || Object.getPrototypeOf(HardFlickeringAndTrembling)).call(this, invoker, config, 0.5));
+    _this.hardFlickering = new _HardFlickering.default(_this.invoker, _this.config);
+    _this.trembling = new _Trembling.default(_this.invoker, _this.config);
+    return _this;
+  }
+
+  _createClass(HardFlickeringAndTrembling, [{
+    key: "play",
+    value: function play() {
+      var _this2 = this;
+
+      _get(HardFlickeringAndTrembling.prototype.__proto__ || Object.getPrototypeOf(HardFlickeringAndTrembling.prototype), "play", this).call(this, function () {
+        _this2.hardFlickering.play();
+
+        _this2.trembling.play();
+      });
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      var _this3 = this;
+
+      _get(HardFlickeringAndTrembling.prototype.__proto__ || Object.getPrototypeOf(HardFlickeringAndTrembling.prototype), "stop", this).call(this, function () {
+        _this3.hardFlickering.stop();
+
+        _this3.trembling.stop();
+      });
+    }
+  }]);
+
+  return HardFlickeringAndTrembling;
+}(_LightEffect2.default);
+
+exports.default = HardFlickeringAndTrembling;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/effects/light-effects/LightEffect.js":
+/*!**********************************************************!*\
+  !*** ./src/sprites/effects/light-effects/LightEffect.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Effect2 = _interopRequireDefault(__webpack_require__(/*! ../Effect */ "./src/sprites/effects/Effect.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var LightEffect =
+/*#__PURE__*/
+function (_Effect) {
+  _inherits(LightEffect, _Effect);
+
+  function LightEffect(invoker, config) {
+    var _this;
+
+    var contributeFactor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+
+    _classCallCheck(this, LightEffect);
+
+    _this = _possibleConstructorReturn(this, (LightEffect.__proto__ || Object.getPrototypeOf(LightEffect)).call(this, invoker, config));
+    _this.contributeFactor = contributeFactor;
+    return _this;
+  }
+
+  _createClass(LightEffect, [{
+    key: "play",
+    value: function play(callback) {
+      var _this2 = this;
+
+      _get(LightEffect.prototype.__proto__ || Object.getPrototypeOf(LightEffect.prototype), "play", this).call(this, function () {
+        _this2.stopped = false;
+        callback();
+      });
+    }
+  }, {
+    key: "stop",
+    value: function stop(callback) {
+      var _this3 = this;
+
+      _get(LightEffect.prototype.__proto__ || Object.getPrototypeOf(LightEffect.prototype), "stop", this).call(this, function () {
+        _this3.stopped = true;
+        callback();
+      });
+    }
+  }]);
+
+  return LightEffect;
+}(_Effect2.default);
+
+exports.default = LightEffect;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/effects/light-effects/RadiusFlickering.js":
+/*!***************************************************************!*\
+  !*** ./src/sprites/effects/light-effects/RadiusFlickering.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _LightEffect2 = _interopRequireDefault(__webpack_require__(/*! ./LightEffect */ "./src/sprites/effects/light-effects/LightEffect.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var RadiusFlickering =
+/*#__PURE__*/
+function (_LightEffect) {
+  _inherits(RadiusFlickering, _LightEffect);
+
+  function RadiusFlickering(invoker, config) {
+    var _this;
+
+    _classCallCheck(this, RadiusFlickering);
+
+    _this = _possibleConstructorReturn(this, (RadiusFlickering.__proto__ || Object.getPrototypeOf(RadiusFlickering)).call(this, invoker, config, 0.9));
+    if (!_this.config.minTime) _this.config.minTime = 10;
+    if (!_this.config.maxTime) _this.config.maxTime = 100;
+    if (!_this.config.minPercentageIntensity) _this.config.minPercentageIntensity = 0.8;
+    if (!_this.config.maxPercentageIntensity) _this.config.maxPercentageIntensity = 1;
+    if (!_this.config.minPercentageRadius) _this.config.minPercentageRadius = 0.8;
+    if (!_this.config.maxPercentageRadius) _this.config.maxPercentageRadius = 1;
+    if (!_this.config.backToInitialIntensity) _this.config.backToInitialIntensity = true;
+    if (!_this.config.backToInitialRadius) _this.config.backToInitialRadius = true;
+    return _this;
+  }
+
+  _createClass(RadiusFlickering, [{
+    key: "play",
+    value: function play() {
+      var _this2 = this;
+
+      _get(RadiusFlickering.prototype.__proto__ || Object.getPrototypeOf(RadiusFlickering.prototype), "play", this).call(this, function () {
+        var setTimer = function setTimer() {
+          _this2.gameObject.room.time.addEvent({
+            delay: Math.floor(Math.random() * (_this2.config.maxTime - _this2.config.minTime)) + _this2.config.minTime,
+            callback: function callback() {
+              if (!_this2.stopped) {
+                var newIntensityPercentage = Math.floor((_this2.config.minPercentageIntensity + Math.random() * (_this2.config.maxPercentageIntensity - _this2.config.minPercentageIntensity)) * 100 + 1) / 100;
+
+                _this2.gameObject.graphicLight.setIntensity(_this2.gameObject.config.graphicLight.intensity * newIntensityPercentage);
+
+                _this2.gameObject.diffusedLight.setIntensity(_this2.gameObject.config.diffusedLight.intensity * newIntensityPercentage);
+
+                var newRadiusPercentage = Math.floor((_this2.config.minPercentageRadius + Math.random() * (_this2.config.maxPercentageRadius - _this2.config.minPercentageRadius)) * 100 + 1) / 100;
+
+                _this2.gameObject.graphicLight.setRadius(_this2.gameObject.config.graphicLight.radius * newRadiusPercentage);
+
+                setTimer();
+              }
+            },
+            callbackScope: _this2,
+            repeat: 0
+          });
+        };
+
+        setTimer();
+      });
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      var _this3 = this;
+
+      _get(RadiusFlickering.prototype.__proto__ || Object.getPrototypeOf(RadiusFlickering.prototype), "stop", this).call(this, function () {
+        if (_this3.config.backToInitialIntensity) {
+          _this3.gameObject.graphicLight.setIntensity(_this3.gameObject.config.graphicLight.intensity);
+
+          _this3.gameObject.diffusedLight.setIntensity(_this3.gameObject.config.diffusedLight.intensity);
+        } else {
+          _this3.gameObject.config.graphicLight.intensity = _this3.gameObject.graphicLight.intensity;
+          _this3.gameObject.config.diffusedLight.intensity = _this3.gameObject.diffusedLight.intensity;
+        }
+
+        if (_this3.config.backToInitialRadius) {
+          _this3.gameObject.graphicLight.setRadius(_this3.gameObject.config.graphicLight.radius);
+        } else {
+          _this3.gameObject.config.graphicLight.radius = _this3.gameObject.graphicLight.radius;
+        }
+      });
+    }
+  }]);
+
+  return RadiusFlickering;
+}(_LightEffect2.default);
+
+exports.default = RadiusFlickering;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/effects/light-effects/SoftFlickering.js":
+/*!*************************************************************!*\
+  !*** ./src/sprites/effects/light-effects/SoftFlickering.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _LightEffect2 = _interopRequireDefault(__webpack_require__(/*! ./LightEffect */ "./src/sprites/effects/light-effects/LightEffect.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var SoftFlickering =
+/*#__PURE__*/
+function (_LightEffect) {
+  _inherits(SoftFlickering, _LightEffect);
+
+  function SoftFlickering(invoker, config) {
+    var _this;
+
+    _classCallCheck(this, SoftFlickering);
+
+    _this = _possibleConstructorReturn(this, (SoftFlickering.__proto__ || Object.getPrototypeOf(SoftFlickering)).call(this, invoker, config, 0.8));
+    if (!_this.config.minTime) _this.config.minTime = 10;
+    if (!_this.config.maxTime) _this.config.maxTime = 100;
+    if (!_this.config.minPercentageIntensity) _this.config.minPercentageIntensity = 0.8;
+    if (!_this.config.maxPercentageIntensity) _this.config.maxPercentageIntensity = 1;
+    if (!_this.config.backToInitialIntensity) _this.config.backToInitialIntensity = true;
+    return _this;
+  }
+
+  _createClass(SoftFlickering, [{
+    key: "play",
+    value: function play() {
+      var _this2 = this;
+
+      _get(SoftFlickering.prototype.__proto__ || Object.getPrototypeOf(SoftFlickering.prototype), "play", this).call(this, function () {
+        var setTimer = function setTimer() {
+          _this2.gameObject.room.time.addEvent({
+            delay: Math.floor(Math.random() * (_this2.config.maxTime - _this2.config.minTime)) + _this2.config.minTime,
+            callback: function callback() {
+              if (!_this2.stopped) {
+                var newIntensityPercentage = Math.floor((_this2.config.minPercentageIntensity + Math.random() * (_this2.config.maxPercentageIntensity - _this2.config.minPercentageIntensity)) * 100 + 1) / 100;
+
+                _this2.gameObject.graphicLight.setIntensity(_this2.gameObject.config.graphicLight.intensity * newIntensityPercentage);
+
+                _this2.gameObject.diffusedLight.setIntensity(_this2.gameObject.config.diffusedLight.intensity * newIntensityPercentage);
+
+                setTimer();
+              }
+            },
+            callbackScope: _this2,
+            repeat: 0
+          });
+        };
+
+        setTimer();
+      });
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      var _this3 = this;
+
+      _get(SoftFlickering.prototype.__proto__ || Object.getPrototypeOf(SoftFlickering.prototype), "stop", this).call(this, function () {
+        if (_this3.config.backToInitialIntensity) {
+          _this3.gameObject.graphicLight.setIntensity(_this3.gameObject.config.graphicLight.intensity);
+
+          _this3.gameObject.diffusedLight.setIntensity(_this3.gameObject.config.diffusedLight.intensity);
+        } else {
+          _this3.gameObject.config.graphicLight.intensity = _this3.gameObject.graphicLight.intensity;
+          _this3.gameObject.config.diffusedLight.intensity = _this3.gameObject.diffusedLight.intensity;
+        }
+      });
+    }
+  }]);
+
+  return SoftFlickering;
+}(_LightEffect2.default);
+
+exports.default = SoftFlickering;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/effects/light-effects/SoftFlickeringAndTrembling.js":
+/*!*************************************************************************!*\
+  !*** ./src/sprites/effects/light-effects/SoftFlickeringAndTrembling.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _LightEffect2 = _interopRequireDefault(__webpack_require__(/*! ./LightEffect */ "./src/sprites/effects/light-effects/LightEffect.js"));
+
+var _SoftFlickering = _interopRequireDefault(__webpack_require__(/*! ./SoftFlickering */ "./src/sprites/effects/light-effects/SoftFlickering.js"));
+
+var _Trembling = _interopRequireDefault(__webpack_require__(/*! ./Trembling */ "./src/sprites/effects/light-effects/Trembling.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var SoftDefaultFlickeringAndtrembling =
+/*#__PURE__*/
+function (_LightEffect) {
+  _inherits(SoftDefaultFlickeringAndtrembling, _LightEffect);
+
+  function SoftDefaultFlickeringAndtrembling(invoker, config) {
+    var _this;
+
+    _classCallCheck(this, SoftDefaultFlickeringAndtrembling);
+
+    _this = _possibleConstructorReturn(this, (SoftDefaultFlickeringAndtrembling.__proto__ || Object.getPrototypeOf(SoftDefaultFlickeringAndtrembling)).call(this, invoker, config, 0.5));
+    _this.softFlickering = new _SoftFlickering.default(_this.invoker, _this.config);
+    _this.trembling = new _Trembling.default(_this.invoker, _this.config);
+    return _this;
+  }
+
+  _createClass(SoftDefaultFlickeringAndtrembling, [{
+    key: "play",
+    value: function play() {
+      var _this2 = this;
+
+      _get(SoftDefaultFlickeringAndtrembling.prototype.__proto__ || Object.getPrototypeOf(SoftDefaultFlickeringAndtrembling.prototype), "play", this).call(this, function () {
+        _this2.softFlickering.play();
+
+        _this2.trembling.play();
+      });
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      var _this3 = this;
+
+      _get(SoftDefaultFlickeringAndtrembling.prototype.__proto__ || Object.getPrototypeOf(SoftDefaultFlickeringAndtrembling.prototype), "stop", this).call(this, function () {
+        _this3.softFlickering.stop();
+
+        _this3.trembling.stop();
+      });
+    }
+  }]);
+
+  return SoftDefaultFlickeringAndtrembling;
+}(_LightEffect2.default);
+
+exports.default = SoftDefaultFlickeringAndtrembling;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/effects/light-effects/Trembling.js":
+/*!********************************************************!*\
+  !*** ./src/sprites/effects/light-effects/Trembling.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _LightEffect2 = _interopRequireDefault(__webpack_require__(/*! ./LightEffect */ "./src/sprites/effects/light-effects/LightEffect.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Trembling =
+/*#__PURE__*/
+function (_LightEffect) {
+  _inherits(Trembling, _LightEffect);
+
+  function Trembling(invoker, config) {
+    var _this;
+
+    _classCallCheck(this, Trembling);
+
+    _this = _possibleConstructorReturn(this, (Trembling.__proto__ || Object.getPrototypeOf(Trembling)).call(this, invoker, config, 0.8));
+    if (!_this.config.minTime) _this.config.minTime = 10;
+    if (!_this.config.maxTime) _this.config.maxTime = 100;
+    if (!_this.config.minPercentageIntensity) _this.config.minPercentageIntensity = 0.8;
+    if (!_this.config.maxPercentageIntensity) _this.config.maxPercentageIntensity = 1;
+    if (!_this.config.minPercentageRadius) _this.config.minPercentageRadius = 0.8;
+    if (!_this.config.maxPercentageRadius) _this.config.maxPercentageRadius = 1;
+    if (!_this.config.backToInitialIntensity) _this.config.backToInitialIntensity = true;
+    if (!_this.config.backToInitialRadius) _this.config.backToInitialRadius = true;
+    return _this;
+  }
+
+  _createClass(Trembling, [{
+    key: "play",
+    value: function play() {
+      var _this2 = this;
+
+      _get(Trembling.prototype.__proto__ || Object.getPrototypeOf(Trembling.prototype), "play", this).call(this, function () {
+        var setTimer = function setTimer() {
+          _this2.gameObject.room.time.addEvent({
+            delay: Math.floor(Math.random() * (_this2.config.maxTime - _this2.config.minTime)) + _this2.config.minTime,
+            callback: function callback() {
+              if (!_this2.stopped) {
+                var newIntensityPercentage = Math.floor((_this2.config.minPercentageIntensity + Math.random() * (_this2.config.maxPercentageIntensity - _this2.config.minPercentageIntensity)) * 100 + 1) / 100;
+
+                _this2.gameObject.graphicLight.setIntensity(_this2.gameObject.config.graphicLight.intensity * newIntensityPercentage);
+
+                _this2.gameObject.diffusedLight.setIntensity(_this2.gameObject.config.diffusedLight.intensity * newIntensityPercentage);
+
+                var newRadiusPercentage = Math.floor((_this2.config.minPercentageRadius + Math.random() * (_this2.config.maxPercentageRadius - _this2.config.minPercentageRadius)) * 100 + 1) / 100;
+
+                _this2.gameObject.graphicLight.setRadius(_this2.gameObject.config.graphicLight.radius * newRadiusPercentage);
+
+                setTimer();
+              }
+            },
+            callbackScope: _this2,
+            repeat: 0
+          });
+        };
+
+        setTimer();
+      });
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      var _this3 = this;
+
+      _get(Trembling.prototype.__proto__ || Object.getPrototypeOf(Trembling.prototype), "stop", this).call(this, function () {
+        if (_this3.config.backToInitialIntensity) {
+          _this3.gameObject.graphicLight.setIntensity(_this3.gameObject.config.graphicLight.intensity);
+
+          _this3.gameObject.diffusedLight.setIntensity(_this3.gameObject.config.diffusedLight.intensity);
+        } else {
+          _this3.gameObject.config.graphicLight.intensity = _this3.gameObject.graphicLight.intensity;
+          _this3.gameObject.config.diffusedLight.intensity = _this3.gameObject.diffusedLight.intensity;
+        }
+
+        if (_this3.config.backToInitialRadius) {
+          _this3.gameObject.graphicLight.setRadius(_this3.gameObject.config.graphicLight.radius);
+        } else {
+          _this3.gameObject.config.graphicLight.radius = _this3.gameObject.graphicLight.radius;
+        }
+      });
+    }
+  }]);
+
+  return Trembling;
+}(_LightEffect2.default);
+
+exports.default = Trembling;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./src/sprites/effects/light-effects/index.js":
+/*!****************************************************!*\
+  !*** ./src/sprites/effects/light-effects/index.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var LightEffects = {
+  HardFlickering: __webpack_require__(/*! ./HardFlickering */ "./src/sprites/effects/light-effects/HardFlickering.js"),
+  HardFlickeringAndTrembling: __webpack_require__(/*! ./HardFlickeringAndTrembling */ "./src/sprites/effects/light-effects/HardFlickeringAndTrembling.js"),
+  LightEffect: __webpack_require__(/*! ./LightEffect */ "./src/sprites/effects/light-effects/LightEffect.js"),
+  RadiusFlickering: __webpack_require__(/*! ./RadiusFlickering */ "./src/sprites/effects/light-effects/RadiusFlickering.js"),
+  SoftFlickering: __webpack_require__(/*! ./SoftFlickering */ "./src/sprites/effects/light-effects/SoftFlickering.js"),
+  SoftFlickeringAndTrembling: __webpack_require__(/*! ./SoftFlickeringAndTrembling */ "./src/sprites/effects/light-effects/SoftFlickeringAndTrembling.js"),
+  Trembling: __webpack_require__(/*! ./Trembling */ "./src/sprites/effects/light-effects/Trembling.js")
+};
+module.exports = LightEffects;
+
+/***/ }),
+
 /***/ "./src/sprites/index.js":
 /*!******************************!*\
   !*** ./src/sprites/index.js ***!
@@ -3697,8 +4670,10 @@ module.exports = exports["default"];
 /***/ (function(module, exports, __webpack_require__) {
 
 var Sprites = {
+  Actions: __webpack_require__(/*! ./actions */ "./src/sprites/actions/index.js"),
   Behaviours: __webpack_require__(/*! ./behaviours */ "./src/sprites/behaviours/index.js"),
   Characters: __webpack_require__(/*! ./characters */ "./src/sprites/characters/index.js"),
+  Effects: __webpack_require__(/*! ./effects */ "./src/sprites/effects/index.js"),
   InventoryItems: __webpack_require__(/*! ./inventory-items */ "./src/sprites/inventory-items/index.js"),
   WorldItems: __webpack_require__(/*! ./world-items */ "./src/sprites/world-items/index.js"),
   Sprite: __webpack_require__(/*! ./Sprite */ "./src/sprites/Sprite.js")
@@ -3934,9 +4909,159 @@ module.exports = WorldItems;
   !*** ./src/sprites/world-items/light-sources/LightSource.js ***!
   \**************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _WorldItem2 = _interopRequireDefault(__webpack_require__(/*! ../WorldItem */ "./src/sprites/world-items/WorldItem.js"));
+
+var _behaviours = _interopRequireDefault(__webpack_require__(/*! ../../behaviours */ "./src/sprites/behaviours/index.js"));
+
+var _EffectComponent = _interopRequireDefault(__webpack_require__(/*! ../../../components/EffectComponent */ "./src/components/EffectComponent.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var LightSource =
+/*#__PURE__*/
+function (_WorldItem) {
+  _inherits(LightSource, _WorldItem);
+
+  /**
+   * constructor of the class
+   * @param {Room} room - Room in which will be created the LightSource.
+   * @param {number} x - X position of the sprite.
+   * @param {number} y - Y position of the sprite.
+   * @param {string} texture - Name of the sprite for the LightSource.
+   * @param {string} layer - Name of the Layer in which will be put the LightSource.
+   * @param {Object} graphicLightConfig - Configuration of the graphic light of the LightSource.
+   * @param {number} graphicLightConfig.intensity - Intensity of the graphic light.
+   * @param {number} graphicLightConfig.radius - Radius of the graphic light.
+   * @param {Object} diffusedLightConfig - Configuration of the diffused light of the LightSource.
+   * @param {number} diffusedLightConfig.intensity - Intensity of the diffused light.
+   * @param {number} diffusedLightConfig.radius - Radius of the diffused light.
+   * @param {Object} offset - Offset of the graphic light respect the center of the sprite.
+   * @param {number} offset.x - X offset.
+   * @param {number} offset.y - Y offset.
+   * @param {boolean} [isOn=true] - Light created as switched on or off.
+   */
+  function LightSource(room, x, y, texture, layer, graphicLightConfig, diffusedLightConfig, offset) {
+    var _this;
+
+    var isOn = arguments.length > 8 && arguments[8] !== undefined ? arguments[8] : true;
+
+    _classCallCheck(this, LightSource);
+
+    _this = _possibleConstructorReturn(this, (LightSource.__proto__ || Object.getPrototypeOf(LightSource)).call(this, room, x, y, texture, layer, true, _behaviours.default.EXAMINABLE));
+
+    _this.setGravityY(0);
+
+    _this.initialConfig = {
+      graphicLight: graphicLightConfig,
+      diffusedLight: diffusedLightConfig,
+      offset: offset
+    };
+    _this.config = _this.initialConfig;
+    _this.isOn = false;
+
+    if (isOn) {
+      _this.turnOn();
+    } // Register this LightSource instance to the Room's LightManager
+
+
+    _this.room.lightSources.add(_this);
+
+    _this.effects = new _EffectComponent.default(_this);
+    return _this;
+  }
+  /**
+   * Turn on the lights of the LightSource by creating new ones.
+   */
+
+
+  _createClass(LightSource, [{
+    key: "turnOn",
+    value: function turnOn() {
+      if (!this.isOn) {
+        if (this.initialConfig.diffusedLight !== null) {
+          this.diffusedLight = this.room.lights.addLight(this.x + this.initialConfig.offset.x, this.y + this.initialConfig.offset.y, this.initialConfig.diffusedLight.radius).setIntensity(this.initialConfig.diffusedLight.intensity);
+          this.room.lightSources.diffusedLights.push(this.diffusedLight);
+        }
+
+        if (this.initialConfig.graphicLight !== null) {
+          this.graphicLight = this.room.lights.addLight(this.x + this.initialConfig.offset.x, this.y + this.initialConfig.offset.y, this.initialConfig.graphicLight.radius).setIntensity(this.initialConfig.graphicLight.intensity);
+          this.room.lightSources.graphicLights.push(this.graphicLight);
+        }
+
+        this.isOn = true;
+      }
+    }
+    /**
+       * Turn off the lights of the LightSource by deleting the existing ones.
+       * @param {boolean} [stopBehaviours=true] - If true, turning off the light stops all the behaviours.
+       */
+
+  }, {
+    key: "turnOff",
+    value: function turnOff() {
+      var stopBehaviours = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      // if (stopBehaviours) this.lightBehaviour.stopAllBehaviours();
+      if (this.isOn) {
+        var diffusedLightindex = this.room.lightSources.diffusedLights.indexOf(this.diffusedLight);
+
+        if (diffusedLightindex > -1) {
+          this.room.lightSources.diffusedLights.splice(diffusedLightindex, 1);
+          this.room.lights.removeLight(this.diffusedLight);
+        }
+
+        var graphicLightindex = this.room.lightSources.graphicLights.indexOf(this.graphicLight);
+
+        if (graphicLightindex > -1) {
+          this.room.lightSources.graphicLights.splice(graphicLightindex, 1);
+          this.room.lights.removeLight(this.graphicLight);
+        }
+
+        this.isOn = false;
+      }
+    }
+    /**
+     * If the light source is on, turn it off and vice versa.
+     */
+
+  }, {
+    key: "switch",
+    value: function _switch() {
+      if (this.isOn) this.turnOff();else this.turnOn();
+    }
+  }]);
+
+  return LightSource;
+}(_WorldItem2.default);
+
+exports.default = LightSource;
+module.exports = exports["default"];
 
 /***/ }),
 
@@ -4165,7 +5290,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _actions = _interopRequireDefault(__webpack_require__(/*! ../../actions */ "./src/actions/index.js"));
+var _actions = _interopRequireDefault(__webpack_require__(/*! ../../sprites/actions */ "./src/sprites/actions/index.js"));
 
 var _behaviours = _interopRequireDefault(__webpack_require__(/*! ../../sprites/behaviours */ "./src/sprites/behaviours/index.js"));
 

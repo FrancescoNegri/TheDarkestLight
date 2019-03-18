@@ -3,10 +3,13 @@ const path = require('path');
 
 ncp.limit = 16;
 
-ncp(path.resolve(__dirname, '../platforms/browser/www'), path.resolve(__dirname, '../../TheDarkestLightElectron/src/www'), function (err) {
-    if (err) {
-        return console.error(err);
-    } else {
-        return console.log('TheDarkestLightElectron packaged with the latest version of TheDarkestLight!');
-    }
+let source = path.resolve(__dirname, '../platforms/browser/www');
+
+let destination = path.resolve(__dirname, '../../TheDarkestLightElectron/src/www');
+
+ncp(source, destination, function (err) {
+  if (err) {
+    return console.error(err);
+  }
+  return console.log('TheDarkestLightElectron packaged with the latest version of TheDarkestLight!');
 });

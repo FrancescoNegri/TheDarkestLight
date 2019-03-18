@@ -1852,8 +1852,7 @@ function (_Manager) {
     value: function boot() {
       _get(UpdateManager.prototype.__proto__ || Object.getPrototypeOf(UpdateManager.prototype), "boot", this).call(this);
 
-      var events = this.systems.events; // eslint-disable-next-line no-undef
-
+      var events = this.systems.events;
       this.gameObjects = new Phaser.Structs.Set();
       events.on('update', this._sceneUpdate, this);
       events.on('shutdown', this._sceneShutdown, this);

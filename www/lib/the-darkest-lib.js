@@ -142,6 +142,12 @@ var _const = _interopRequireDefault(__webpack_require__(/*! ./const */ "./src/co
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
+ * @author       Francesco Negri <francesco.negri@outlook.com>
+ * @copyright    2019 The Darkest Light
+ * @license      {@link https://github.com/FrancescoNegri/TheDarkestLib/blob/master/LICENSE|MIT License}
+ */
+
+/**
  * @namespace TDLib
  */
 var TDLib = {
@@ -149,11 +155,15 @@ var TDLib = {
   Game: __webpack_require__(/*! ./boot/Game */ "./src/boot/Game.js"),
   Managers: __webpack_require__(/*! ./managers */ "./src/managers/index.js"),
   Rooms: __webpack_require__(/*! ./rooms */ "./src/rooms/index.js"),
+  Settings: __webpack_require__(/*! ./boot/Settings */ "./src/boot/Settings.js"),
   Sprites: __webpack_require__(/*! ./sprites */ "./src/sprites/index.js"),
   Systems: __webpack_require__(/*! ./systems */ "./src/systems/index.js"),
   Utils: __webpack_require__(/*! ./utils */ "./src/utils/index.js")
-};
-TDLib = Phaser.Utils.Objects.Extend(false, TDLib, _const.default);
+}; // Merge the consts
+// eslint-disable-next-line no-undef
+
+TDLib = Phaser.Utils.Objects.Extend(false, TDLib, _const.default); // Export the module
+
 module.exports = TDLib;
 global.TDLib = TDLib;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
@@ -167,6 +177,11 @@ global.TDLib = TDLib;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * @author       Francesco Negri <francesco.negri@outlook.com>
+ * @copyright    2019 The Darkest Light
+ * @license      {@link https://github.com/FrancescoNegri/TheDarkestLib/blob/master/LICENSE|MIT License}
+ */
 var CONST = __webpack_require__(/*! ../const */ "./src/const.js");
 
 var Settings = __webpack_require__(/*! ./Settings */ "./src/boot/Settings.js");
@@ -175,10 +190,10 @@ var Settings = __webpack_require__(/*! ./Settings */ "./src/boot/Settings.js");
  *
  * You can customize or disable the header via the Game Config object.
  *
- * @function Phaser.Boot.DebugHeader
- * @since 3.0.0
+ * @function TDLib.Boot.DebugHeader
+ * @since 1.0.0
  *
- * @param {Phaser.Game} game - The Phaser.Game instance which will output this debug header.
+ * @param {TDLib.Game} game - The TDLib.Game instance which will output this debug header.
  */
 
 
@@ -287,12 +302,37 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+/**
+ * @classdesc
+ * The TDLib.Game instance is the main controller for the entire game. It create an instace
+ * of Phaser.Game with a default configuration of various parameters.
+ *
+ * @class Game
+ * @memberof TDLib
+ * @constructor
+ * @since 1.0.0
+ *
+ * @param {Object} [config] - The configuration object for your TDLib Game instance.
+ * @param {Object} [config.title] - The title of your game.
+ * @param {Object} [config.url] - The url of your online game or website.
+ * @param {Object} [config.version] - The version of your game.
+ */
 var Game =
 /*#__PURE__*/
 function () {
   function Game(config) {
     _classCallCheck(this, Game);
 
+    /**
+     * The parsed Game Configuration object.
+     *
+     * The values stored within this object are read-only and should not be changed at run-time.
+     *
+     * @name TDLib.Game#config
+     * @type {Object}
+     * @readonly
+     * @since 1.0.0
+     */
     this.config = config;
 
     this._setScreenConfig();
@@ -305,13 +345,23 @@ function () {
 
     this._setHeaderProps();
 
-    this._finalizeConfig(); // Aggiungere il device e la funzione per determinarlo
+    this._finalizeConfig();
+    /** ************ TODO: Aggiungere il device e la funzione per determinarlo **************/
+    // eslint-disable-next-line no-undef
 
 
     _Settings.default.GAME = new Phaser.Game(this.config);
     (0, _DebugHeader.default)(_Settings.default.GAME);
     return _Settings.default.GAME;
   }
+  /**
+   * This method is called automatically and configure the screen proportions and settings for the Game.
+   *
+   * @method TDLib.Game#_setScreenConfig
+   * @protected
+   * @since 1.0.0
+   */
+
 
   _createClass(Game, [{
     key: "_setScreenConfig",
@@ -324,6 +374,14 @@ function () {
       this.config.backgroundColor = '#000000';
       this.config.pixelArt = true;
     }
+    /**
+     * This method is called automatically and configure physics for the Game using the Arcade engine of Phaser.
+     *
+     * @method TDLib.Game#_setPhysicsConfig
+     * @protected
+     * @since 1.0.0
+     */
+
   }, {
     key: "_setPhysicsConfig",
     value: function _setPhysicsConfig() {
@@ -338,10 +396,21 @@ function () {
         }
       };
     }
+    /**
+     * This method is called automatically and configure the plugins for the Game.
+     * Global plugins are called Systems.
+     * Scene plugins are called Managers.
+     *
+     * @method TDLib.Game#_setPlugins
+     * @protected
+     * @since 1.0.0
+     */
+
   }, {
     key: "_setPlugins",
     value: function _setPlugins() {
       this.config.plugins = {
+        // Systems
         global: [{
           key: 'RoomSystem',
           plugin: _systems.default.RoomSystem,
@@ -353,6 +422,7 @@ function () {
           start: false,
           mapping: 'cursors'
         }],
+        // Managers
         scene: [{
           key: 'UpdateManager',
           plugin: _managers.default.UpdateManager,
@@ -364,24 +434,50 @@ function () {
         }, {
           key: 'LayerManager',
           plugin: _managers.default.LayerManager,
-          mapping: 'layers' // { key: 'ActionManager', plugin: ActionManager, mapping: 'actions' }
-
+          mapping: 'layers'
         }]
       };
     }
+    /**
+     * This method is called automatically and configure the Phaser.Scene Boot to start the Systems.
+     *
+     * @method TDLib.Game#_setBoot
+     * @protected
+     * @since 1.0.0
+     */
+
   }, {
     key: "_setBoot",
     value: function _setBoot() {
+      // eslint-disable-next-line no-undef
       this.config.scene = [Boot];
+      /** ****** TODO: Valutare come spostare il Boot dentro alla libreria*******/
     }
+    /**
+     * This method is called automatically and turn off the default Phaser header/banner.
+     *
+     * @method TDLib.Game#_setHeaderProps
+     * @protected
+     * @since 1.0.0
+     */
+
   }, {
     key: "_setHeaderProps",
     value: function _setHeaderProps() {
       this.config.banner = false;
     }
+    /**
+     * This method is called automatically and finalize the config passed to Phaser.Game.
+     *
+     * @method TDLib.Game#_finalizeConfig
+     * @protected
+     * @since 1.0.0
+     */
+
   }, {
     key: "_finalizeConfig",
     value: function _finalizeConfig() {
+      // eslint-disable-next-line no-undef
       this.config.type = Phaser.WEBGL;
       this.config.maxLights = 20;
       this.config.parent = 'game';
@@ -393,7 +489,7 @@ function () {
 }();
 
 exports.default = Game;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -404,17 +500,123 @@ module.exports = exports["default"];
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+/**
+ * @author       Francesco Negri <francesco.negri@outlook.com>
+ * @copyright    2019 The Darkest Light
+ * @license      {@link https://github.com/FrancescoNegri/TheDarkestLib/blob/master/LICENSE|MIT License}
+ */
+
+/**
+ * The default Game settings.
+ * @namespace TDLib.Settings
+ */
 var Settings = {
+  /**
+   * The instance of the Game.
+   *
+   * @name TDLib.Settings.GAME
+   * @const
+   * @type {TDLib.Game}
+   * @since 1.0.0
+   */
   GAME: '',
+
+  /**
+   * The size of the tiles.
+   *
+   * @name TDLib.Settings.TILE_SIZE
+   * @const
+   * @type {Number}
+   * @since 1.0.0
+   */
   TILE_SIZE: 48,
+
+  /**
+   * The height of a standard room in tiles.
+   *
+   * @name TDLib.Settings.ROOM_HEIGHT_IN_TILE
+   * @const
+   * @type {Number}
+   * @since 1.0.0
+   */
   ROOM_HEIGHT_IN_TILE: 6,
+
+  /**
+   * The inventory width in tiles in mobile devices.
+   *
+   * @name TDLib.Settings.INVENTORY_WIDTH_IN_TILES_MOBILE
+   * @const
+   * @type {Number}
+   * @since 1.0.0
+   */
   INVENTORY_WIDTH_IN_TILES_MOBILE: 1.25,
+
+  /**
+   * The inventory width in tiles in desktop devices.
+   *
+   * @name TDLib.Settings.INVENTORY_WIDTH_IN_TILES_DESKTOP
+   * @const
+   * @type {Number}
+   * @since 1.0.0
+   */
   INVENTORY_WIDTH_IN_TILES_DESKTOP: 0,
+
+  /**
+   * The inventory height in tiles in mobile devices.
+   *
+   * @name TDLib.Settings.INVENTORY_HEIGHT_IN_TILES_MOBILE
+   * @const
+   * @type {Number}
+   * @since 1.0.0
+   */
   INVENTORY_HEIGHT_IN_TILES_MOBILE: 0,
+
+  /**
+   * The inventory height in tiles in desktop devices.
+   *
+   * @name TDLib.Settings.INVENTORY_HEIGHT_IN_TILES_DESKTOP
+   * @const
+   * @type {Number}
+   * @since 1.0.0
+   */
   INVENTORY_HEIGHT_IN_TILES_DESKTOP: 1,
+
+  /**
+   * The room frame in tiles in desktop devices.
+   *
+   * @name TDLib.Settings.ROOM_FRAME_IN_TILES_DESKTOP
+   * @const
+   * @type {Number}
+   * @since 1.0.0
+   */
   ROOM_FRAME_IN_TILES_DESKTOP: 0.5,
+
+  /**
+   * The room frame in tiles in mobile devices.
+   *
+   * @name TDLib.Settings.ROOM_FRAME_IN_TILES_MOBILE
+   * @const
+   * @type {Number}
+   * @since 1.0.0
+   */
   ROOM_FRAME_IN_TILES_MOBILE: 0.25,
+
+  /**
+   * The proportions of the used screen.
+   *
+   * @name TDLib.Settings.SCREEN_PROPS
+   * @type {Object}
+   * @since 1.0.0
+   */
   SCREEN_PROPS: {},
+
+  /**
+   * The used device.
+   *
+   * @name TDLib.Settings.INVENTORY_HEIGHT_IN_TILES_MOBILE
+   * @type {String}
+   * @since 1.0.0
+   */
   DEVICE: 'Desktop'
 };
 module.exports = Settings;
@@ -459,61 +661,61 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 /**
- * The actions namespace.
- * @namespace TDLib.Components.Actions
- * @since 1.0.0
- */
-
-/**
- * Class representing a component responsible of every TDLAction preformed.
- * @extends TDLib.Components.TDLComponent
+ * @classdesc
+ * Class representing the ActionComponent.
+ * ActionComponent is responsible to handle all the actions for a Sprite.
+ *
+ * @class ActionComponent
  * @memberof TDLib.Components
+ * @constructor
  * @since 1.0.0
+ *
+ * @param {TDLib.Sprites.Sprite} gameObject - The performer of the action.
  */
 var ActionComponent =
 /*#__PURE__*/
 function (_Component) {
   _inherits(ActionComponent, _Component);
 
-  /**
-   * Create an ActionComponent.
-   * @param {TDLib.Sprites.TDLSprite} actor - The performer of the action.
-   */
-  function ActionComponent(actor) {
+  function ActionComponent(gameObject) {
     var _this;
 
     _classCallCheck(this, ActionComponent);
 
-    _this = _possibleConstructorReturn(this, (ActionComponent.__proto__ || Object.getPrototypeOf(ActionComponent)).call(this, actor));
+    _this = _possibleConstructorReturn(this, (ActionComponent.__proto__ || Object.getPrototypeOf(ActionComponent)).call(this, gameObject));
     /**
      * The performer of the action.
-     * @type {TDLib.Sprites.TDLSprite}
+     * @type {TDLib.Sprites.Sprite}
+     * @name TDLib.Components.ActionComponent#gameObject
      * @since 1.0.0
      */
 
-    _this.actor = actor;
+    _this.gameObject = gameObject;
     /**
-     * The default action to be played.
-     * @type {TDLib.Components.Actions.TDLAction}
+     * The default action to be played, AIdle by default.
+     * @type {TDLib.Components.Actions.Action}
+     * @name TDLib.Components.ActionComponent#defaultAction
      * @since 1.0.0
      */
 
-    _this.defaultAction = new _actions.default.Idle(_this, _this.actor);
+    _this.defaultAction = new _actions.default.Idle(_this, _this.gameObject);
     /**
      * The queue of actions.
      * @type {Array}
-     * @private
+     * @name TDLib.Components.ActionComponent#_queue
+     * @protected
      * @since 1.0.0
      */
 
     _this._queue = [_this.defaultAction];
 
-    _this._queue[0].start();
+    _this._queue[0]._start();
 
     return _this;
   }
   /**
-   * The queue is emptied and the new action is immediately performed.
+   * Using this mode the queue is emptied and the new action is immediately performed.
+   * @name TDLib.Components.ActionComponent#DEFAULT_MODE
    * @since 1.0.0
    */
 
@@ -522,28 +724,30 @@ function (_Component) {
     key: "add",
 
     /**
-     * Start a new action or add that to the queue.
-     * @param {TDLib.Components.Actions.TDLAction} action - The action to add or execute.
+     * Starts a new action or add that to the queue.
+     *
+     * @method TDLib.Components.ActionComponent#add
+     * @param {TDLib.Components.Sprites.Actions.Action} action - The action to add or execute.
      * @param {Object} config - The config object for the action.
      * @param {Object} config.target - The target of the action.
      * @param {number} config.target.x - The x of the target of the action.
-     * @param {number} [mode=ActionComponent.DEFAULT_MODE] - The mode to execute the action: ActionComponent.DEFAULT_MODE, ActionComponent.QUEUE_MODE or ActionComponent.PAUSE_MODE.
+     * @param {number} [mode=ActionComponent.DEFAULT_MODE] - The operating mode of the component.
      * @since 1.0.0
      */
     value: function add(Action, config) {
       var mode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ActionComponent.DEFAULT_MODE;
-      var newAction = new Action(this, this.actor, config);
+      var newAction = new Action(this, this.gameObject, config);
 
       switch (mode) {
         case ActionComponent.DEFAULT_MODE:
           {
-            this._queue[0].abort();
+            this._queue[0]._abort();
 
             this._queue = [];
 
             this._queue.push(newAction);
 
-            this._queue[0].start();
+            this._queue[0]._start();
           }
           ;
           break;
@@ -557,11 +761,11 @@ function (_Component) {
 
         case ActionComponent.PAUSE_MODE:
           {
-            this._queue[0].pause();
+            this._queue[0]._pause();
 
             this._queue.unshift(newAction);
 
-            this._queue[0].start();
+            this._queue[0]._start();
           }
           ;
           break;
@@ -571,34 +775,38 @@ function (_Component) {
     }
     /**
      * Remove a completed action from the queue.
-     * @private
+     *
+     * @method TDLib.Components.ActionComponent#_remove
+     * @protected
      * @since 1.0.0
      */
 
   }, {
-    key: "remove",
-    value: function remove() {
+    key: "_remove",
+    value: function _remove() {
       this._queue.shift();
 
       if (this._queue.length <= 0) this._queue.push(this.defaultAction);
-      if (this._queue[0].isPaused) this._queue[0].resume();else this._queue[0].start();
+      if (this._queue[0].isPaused) this._queue[0]._resume();else this._queue[0]._start();
     }
     /**
      * Update the currently performed action.
-     * @private
+     *
+     * @method TDLib.Components.ActionComponent#_update
+     * @protected
      * @since 1.0.0
      */
 
   }, {
-    key: "update",
-    value: function update() {
+    key: "_update",
+    value: function _update() {
       if (this._queue.length <= 0) this._queue.push(this.defaultAction);else if (this._queue.length > 1 && this._queue[0].name === 'Idle') {
         this._queue.shift();
 
-        if (this._queue[0].isPaused) this._queue[0].resume();else this._queue[0].start();
+        if (this._queue[0].isPaused) this._queue[0]._resume();else this._queue[0]._start();
       }
 
-      this._queue[0].update();
+      this._queue[0]._update();
     }
   }], [{
     key: "DEFAULT_MODE",
@@ -606,7 +814,8 @@ function (_Component) {
       return 0;
     }
     /**
-     * The new action is added to the queue.
+     * Using this mode the new action is added to the queue.
+     * @name TDLib.Components.ActionComponent#QUEUE_MODE
      * @since 1.0.0
      */
 
@@ -616,7 +825,9 @@ function (_Component) {
       return 1;
     }
     /**
-     * The currently performed action is paused and the new action is immediately performed. Then the paused action is resumed.
+     * Using this mode the currently performed action is paused and the new action is immediately performed.
+     * Then the paused action is resumed.
+     * @name TDLib.Components.ActionComponent#PAUSE_MODE
      * @since 1.0.0
      */
 
@@ -631,7 +842,7 @@ function (_Component) {
 }(_Component2.default);
 
 exports.default = ActionComponent;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -673,29 +884,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 /**
- * The behaviours namespace.
- * @namespace TDLib.Components.SpriteBehaviours
- * @since 1.0.0
- */
-
-/**
- * Class representing a component which determines the behaviour of every sprite.
- * @extends TDLib.Components.TDLComponent
+ * @classdesc
+ * Class representing the BehaviourComponent.
+ * BehaviourComponent is responsible to handle all the behaviours of a Sprite.
+ * A Sprite can be INERT, OBSERVABLE, EXAMINABLE, INTERACTIVE, INVENTORY, TALKABLE.
+ *
+ * @class BehaviourComponent
  * @memberof TDLib.Components
+ * @constructor
  * @since 1.0.0
+ *
+ * @param {TDLib.Sprites.Sprite} gameObject - The Sprite that owns the component.
+ * @param {string} type - The type of behaviour of the gameObject.
+ * @param {Object} [pixelPerfect=null] - If not null enable the pixel perfect pointer hit for the sprite.
+ * @param {boolean} [pixelPerfect.alphaTolerance] - The alpha tolerance threshold value.
  */
 var BehaviourComponent =
 /*#__PURE__*/
 function (_Component) {
   _inherits(BehaviourComponent, _Component);
 
-  /**
-   * Create a new SpriteBehaviourComponent
-   * @param {TDLib.Sprites.TDLSprite} gameObject - The sprite which implements the component.
-   * @param {string} type - The type of behaviour of the gameObject.
-   * @param {Object} [pixelPerfect=null] - If not null enable the pixel perfect pointer hit for the sprite.
-   * @param {boolean} [pixelPerfect.alphaTolerance] - The alpha tolerance threshold value.
-   */
   function BehaviourComponent(gameObject, type, pixelPerfect) {
     var _this;
 
@@ -704,22 +912,25 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (BehaviourComponent.__proto__ || Object.getPrototypeOf(BehaviourComponent)).call(this, gameObject));
     /**
      * A reference to the player in the current room.
-     * @type {TDLib.Sprites.Characters.Players.Player}
+     * @type {TDLib.Sprites.Characters.Player}
+     * @name TDLib.Components.BehaviourComponent#player
      * @since 1.0.0
      */
 
     _this.player;
-    typeof _this.gameObject.room.player === 'undefined' ? _this.player = _this.gameObject : _this.player = _this.gameObject.room.player;
+    if (typeof _this.gameObject.room.player === 'undefined') _this.player = _this.gameObject;else _this.player = _this.gameObject.room.player;
     /**
      * The type of behaviour of the gameObject.
      * @type {string}
+     * @name TDLib.Components.BehaviourComponent#type
      * @since 1.0.0
      */
 
     _this.type = type;
     /**
-     * If not null enable the pixel perfect pointer hit for the sprite.
+     * If not null enable the pixel perfect pointer hit for the Sprite.
      * @type {string}
+     * @name TDLib.Components.BehaviourComponent#pixelPerfect
      * @since 1.0.0
      */
 
@@ -730,8 +941,10 @@ function (_Component) {
     return _this;
   }
   /**
-   * Select the appropriate behaviours for the gameObject.
-   * @private
+   * Select the appropriate behaviour for the gameObject.
+   *
+   * @method TDLib.Components.BehaviourComponent#_addBehaviours
+   * @protected
    * @since 1.0.0
    */
 
@@ -751,7 +964,7 @@ function (_Component) {
 }(_Component2.default);
 
 exports.default = BehaviourComponent;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -773,37 +986,46 @@ exports.default = void 0;
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * The namespace of components.
- * @namespace TDLib.Components
+ * @author       Francesco Negri <francesco.negri@outlook.com>
+ * @copyright    2019 The Darkest Light
+ * @license      {@link https://github.com/FrancescoNegri/TheDarkestLib/blob/master/LICENSE|MIT License}
  */
 
 /**
- * Class representing a generic TDLComponent. A TDLComponent extends the members and methods of a TDLSprite which uses it.
+ * @classdesc
+ * Class representing a generic Component.
+ * A Component is bound to a Sprite and extends the members and methods of it.
+ * To access the component you have to use a specific key.
+ *
+ * @class Component
  * @memberof TDLib.Components
+ * @constructor
+ * @since 1.0.0
+ *
+ * @param {TDLib.Sprites.Sprite} gameObject - The Sprite using the Component.
  */
-var Component =
-/**
- * Creates a new TDLComponent.
- * @param {TDLib.Sprites.TDLSprite} gameObject - The TDLSprite which owns the component.
- */
-function Component(gameObject) {
+var Component = function Component(gameObject) {
   _classCallCheck(this, Component);
 
   /**
-   * The name of the component.
+   * The name of the Component.
    * @type {string}
+   * @name TDLib.Components.Component#name
+   * @since 1.0.0
    */
   this.name = this.constructor.name;
   /**
-   * The TDLSprite which owns the component.
-   * @type {TDLib.Sprites.TDLSprite}
+   * The Sprite using the Component.
+   * @type {TDLib.Sprites.Sprite}
+   * @name TDLib.Components.Component#gameObject
+   * @since 1.0.0
    */
 
   this.gameObject = gameObject;
 };
 
 exports.default = Component;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -846,6 +1068,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+/**
+ * @classdesc
+ * Class representing the EffectComponent.
+ * EffectComponent is responsible to handle all the effects of a Sprite.
+ *
+ * @class EffectComponent
+ * @memberof TDLib.Components
+ * @constructor
+ * @since 1.0.0
+ *
+ * @param {TDLib.Sprites.Sprite} gameObject - The Sprite that owns the component.
+ */
 var EffectComponent =
 /*#__PURE__*/
 function (_Component) {
@@ -857,10 +1091,34 @@ function (_Component) {
     _classCallCheck(this, EffectComponent);
 
     _this = _possibleConstructorReturn(this, (EffectComponent.__proto__ || Object.getPrototypeOf(EffectComponent)).call(this, gameObject));
+    /**
+     * An array containing all the already played Effects.
+     * @type {Array}
+     * @name TDLib.Components.EffectComponent#previousEffects
+     * @since 1.0.0
+     */
+
     _this.previousEffects = [];
+    /**
+     * The currently played Effect.
+     * @type {TDLib.Sprites.Effects.Effect}
+     * @name TDLib.Components.EffectComponent#currentEffect
+     * @since 1.0.0
+     */
+
     _this.currentEffect = null;
     return _this;
   }
+  /**
+   * Starts a new Effect. If there's an already running Effect it is stopped.
+   *
+   * @method TDLib.Components.EffectComponent#play
+   * @param {string} key - A key identifying an Effect.
+   * @param {Object} [duration=-1] - If specified it represents the duration of the Effect.
+   * @param {Object} [config] - The configuration object for the Effect.
+   * @since 1.0.0
+   */
+
 
   _createClass(EffectComponent, [{
     key: "play",
@@ -893,6 +1151,13 @@ function (_Component) {
         console.log('You must use a positive value!');
       }
     }
+    /**
+     * Stops the currently played Effect.
+     *
+     * @method TDLib.Components.EffectComponent#stop
+     * @since 1.0.0
+     */
+
   }, {
     key: "stop",
     value: function stop() {
@@ -915,7 +1180,7 @@ function (_Component) {
 }(_Component2.default);
 
 exports.default = EffectComponent;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -926,6 +1191,16 @@ module.exports = exports["default"];
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * @author       Francesco Negri <francesco.negri@outlook.com>
+ * @copyright    2019 The Darkest Light
+ * @license      {@link https://github.com/FrancescoNegri/TheDarkestLib/blob/master/LICENSE|MIT License}
+ */
+
+/**
+ * Components are attachable to Sprites in order to extend their capabilities.
+ * @namespace TDLib.Components
+ */
 var Components = {
   Component: __webpack_require__(/*! ./Component */ "./src/components/Component.js"),
   ActionComponent: __webpack_require__(/*! ./ActionComponent */ "./src/components/ActionComponent.js"),
@@ -943,10 +1218,57 @@ module.exports = Components;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+/**
+ * @author       Francesco Negri <francesco.negri@outlook.com>
+ * @copyright    2019 The Darkest Light
+ * @license      {@link https://github.com/FrancescoNegri/TheDarkestLib/blob/master/LICENSE|MIT License}
+ */
+
+/**
+ * Global consts.
+ *
+ * @ignore
+ */
 var CONST = {
+  /**
+   * TheDarkestLib Release Version.
+   *
+   * @name TDLib.VERSION
+   * @const
+   * @type {string}
+   * @since 1.0.0
+   */
   VERSION: '1.0.0',
+
+  /**
+   * Phaser Release Version.
+   *
+   * @name TDLib.PHASER_VERSION
+   * @const
+   * @type {string}
+   * @since 1.0.0
+   */
+  // eslint-disable-next-line no-undef
   PHASER_VERSION: Phaser.VERSION,
+
+  /**
+   * Left direction constant.
+   *
+   * @name TDLib.LEFT
+   * @const
+   * @type {string}
+   * @since 1.0.0
+   */
   LEFT: '_left',
+
+  /**
+   * Right direction constant.
+   *
+   * @name TDLib.RIGHT
+   * @const
+   * @type {string}
+   * @since 1.0.0
+   */
   RIGHT: '_right'
 };
 module.exports = CONST;
@@ -972,6 +1294,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -981,39 +1307,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 /**
- * The plugins namespace.
- * @namespace TDLib.Plugins
- * @since 1.0.0
+ * @author       Francesco Negri <francesco.negri@outlook.com>
+ * @copyright    2019 The Darkest Light
+ * @license      {@link https://github.com/FrancescoNegri/TheDarkestLib/blob/master/LICENSE|MIT License}
  */
 
 /**
- * The global plugins namespace.
- * @namespace TDLib.Plugins.GlobalPlugins
- * @since 1.0.0
- */
-
-/**
- * The room plugins namespace.
- * @namespace TDLib.Plugins.RoomPlugins
- * @since 1.0.0
- */
-
-/**
- * Class representing a plugin which manages a room.
+ * @classdesc
+ * Class representing a generic Manager.
+ * A Manager is a controller working at a Room level.
+ * It is unique in its own Room, but it isn't in the whole game.
+ * From Phaser library a Manager is handled as a Phaser.Plugins.ScenePlugin.
+ * It has to be added to the game into Game.js through the specified method..
+ *
+ * @class Manager
  * @extends Phaser.Plugins.ScenePlugin
- * @memberof TDLib.Plugins
+ * @memberof TDLib.Managers
+ * @constructor
  * @since 1.0.0
+ *
+ * @param {TDLib.Rooms.Room|Phaser.Scene} room - The room running the Manager.
+ * @param {Phaser.Plugins.PluginManager} - A reference to Phaser PluginManager.
  */
+// eslint-disable-next-line no-undef
 var Manager =
 /*#__PURE__*/
 function (_Phaser$Plugins$Scene) {
   _inherits(Manager, _Phaser$Plugins$Scene);
 
-  /**
-   * Create a TDLRoomPlugin.
-   * @param {TDLib.Rooms.Room|Phaser.Scene} room - The room which contains the plugin.
-   * @param {Phaser.Plugins.PluginManager} pluginManager - A reference to the plugin manager.
-   */
   function Manager(room, pluginManager) {
     var _this;
 
@@ -1021,20 +1342,32 @@ function (_Phaser$Plugins$Scene) {
 
     _this = _possibleConstructorReturn(this, (Manager.__proto__ || Object.getPrototypeOf(Manager)).call(this, room, pluginManager));
     /**
-     * The room containing this plugin.
-     * @type {TDLib.Rooms.Room}
+     * The room running the Manager.
+     * @type {TDLib.Rooms.Room|Phaser.Scene}
      * @since 1.0.0
      */
 
     _this.room = room;
     return _this;
   }
+  /**
+   * Default function called by Phaser when booting the plugins.
+   * @method TDLib.Managers.Manager#boot
+   * @protected
+   * @since 1.0.0
+   */
+
+
+  _createClass(Manager, [{
+    key: "boot",
+    value: function boot() {}
+  }]);
 
   return Manager;
 }(Phaser.Plugins.ScenePlugin);
 
 exports.default = Manager;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -1045,6 +1378,20 @@ module.exports = exports["default"];
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * @author       Francesco Negri <francesco.negri@outlook.com>
+ * @copyright    2019 The Darkest Light
+ * @license      {@link https://github.com/FrancescoNegri/TheDarkestLib/blob/master/LICENSE|MIT License}
+ */
+
+/**
+ * A Manager is a controller working at a Room level.
+ * It is unique in its own Room, but it isn't in the whole game.
+ * From Phaser library a Manager is handled as a Phaser.Plugins.ScenePlugin.
+ * It has to be added to the game into Game.js through the specified method.
+ * @see TDLib.Game#_setPlugins
+ * @namespace TDLib.Managers
+ */
 var Managers = {
   LayerManager: __webpack_require__(/*! ./layers/LayerManager */ "./src/managers/layers/LayerManager.js"),
   LightSourceManager: __webpack_require__(/*! ./light-sources/LightSourceManager */ "./src/managers/light-sources/LightSourceManager.js"),
@@ -1088,26 +1435,36 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 /**
- * Class representing the manager of the layers in every room.
- * @extends TDLib.Plugins.TDLRoomPlugin
- * @memberof TDLib.Plugins.RoomPlugins
+ * @classdesc
+ * Class representing a LayerManager, responsible to manage
+ * the layers order, in order to have all the elements rendered correctly.
+ * Layers are Phaser.GameObjects.Group.
+ *
+ * @class LayerManager
+ * @extends TDLib.Managers.Manager
+ * @memberof TDLib.Managers
+ * @constructor
  * @since 1.0.0
+ *
+ * @param {TDLib.Rooms.Room|Phaser.Scene} room - The room running the Manager.
+ * @param {Phaser.Plugins.PluginManager} - A reference to Phaser PluginManager.
  */
 var LayerManager =
 /*#__PURE__*/
 function (_Manager) {
   _inherits(LayerManager, _Manager);
 
-  /**
-   * Create a new RoomManager.
-   * @param {TDLib.Rooms.Room} room - The room in which the layer manager operates.
-   * @param {Phaser.Plugins.PluginManager} pluginManager - A reference to the plugin manager.
-   */
   function LayerManager(room, pluginManager) {
     var _this;
 
@@ -1115,15 +1472,17 @@ function (_Manager) {
 
     _this = _possibleConstructorReturn(this, (LayerManager.__proto__ || Object.getPrototypeOf(LayerManager)).call(this, room, pluginManager));
     /**
-     * The size in cells of each layer.
+     * The size in cells of each Layer.
      * @type {number}
+     * @name TDLib.Managers.LayerManager#layerSize
      * @since 1.0.0
      */
 
     _this.layerSize = _Settings.default.layerSize;
     /**
-     * The starting depth of layers.
+     * The starting depth of Layers.
      * @type {number}
+     * @name TDLib.Managers.LayerManager#startingDepth
      * @since 1.0.0
      */
 
@@ -1131,107 +1490,122 @@ function (_Manager) {
     return _this;
   }
   /**
-   * Boot all the layers in the correct order.
-   * @since 1.0.0
+   * @lends TDLib.Managers.Manager.boot
    */
 
 
   _createClass(LayerManager, [{
     key: "boot",
     value: function boot() {
+      _get(LayerManager.prototype.__proto__ || Object.getPrototypeOf(LayerManager.prototype), "boot", this).call(this);
       /**
-       * The layer containing the background wall.
+       * The Layer containing the background wall.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#backgroundLayer
        * @since 1.0.0
        */
+
+
       this.backgroundLayer = this.room.add.group();
       /**
-       * The layer containing the rear doors.
+       * The Layer containing the rear doors.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#rearDoorsLayer
        * @since 1.0.0
        */
 
       this.rearDoorsLayer = this.room.add.group();
       /**
-       * The layer containing the objects fixed to the background wall.
+       * The Layer containing the objects fixed to the background wall.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#wallFurnitureLayer
        * @since 1.0.0
        */
 
       this.wallFurnitureLayer = this.room.add.group();
       /**
-       * The layer containing the objects in the room.
+       * The Layer containing the objects in the room.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#roomFurnitureLayer
        * @since 1.0.0
        */
 
       this.roomFurnitureLayer = this.room.add.group();
       /**
-       * The layer containing the side doors.
+       * The Layer containing the side doors.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#sideDoorsLayer
        * @since 1.0.0
        */
 
       this.sideDoorsLayer = this.room.add.group();
       /**
-       * The layer containing the NPCs.
+       * The Layer containing the NPCs.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#playerLayer
        * @since 1.0.0
        */
 
       this.npcLayer = this.room.add.group();
       /**
-       * The layer containing the player.
+       * The Layer containing the Player.
        * @type {Phaser.GameObjects.Group}
        * @since 1.0.0
        */
 
       this.playerLayer = this.room.add.group();
       /**
-       * The layer containing the cieling objects from the roof.
+       * The Layer containing the cieling objects from the roof.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#cielingObjectsLayer
        * @since 1.0.0
        */
 
       this.cielingObjectsLayer = this.room.add.group();
       /**
-       * The layer containing the front doors.
+       * The Layer containing the front doors.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#frontDoorsLayer
        * @since 1.0.0
        */
 
       this.frontDoorsLayer = this.room.add.group();
       /**
-       * The layer containing the lateral walls.
+       * The Layer containing the lateral walls.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#wallsLayer
        * @since 1.0.0
        */
 
       this.wallsLayer = this.room.add.group();
       /**
-       * The layer containing the lateral walls black mask.
+       * The Layer containing the lateral walls black mask.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#wallsMaskLayer
        * @since 1.0.0
        */
 
       this.wallsMaskLayer = this.room.add.group();
       /**
-       * The layer containing the overall darkness mask.
+       * The Layer containing the overall darkness mask.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#overallDarknessLayer
        * @since 1.0.0
        */
 
       this.overallDarknessLayer = this.room.add.group();
       /**
-       * The layer containing the border black masks.
+       * The Layer containing the border black masks.
        * @type {Phaser.GameObjects.Group}
+       * @name TDLib.Managers.LayerManager#borderMasksLayer
        * @since 1.0.0
        */
 
       this.borderMasksLayer = this.room.add.group();
     }
     /**
-     * Set the correct depth for each layer in the right order.
+     * Set the correct depth for each Layer in the right order.
+     * @method TDLib.Managers.LayerManager#setLayersDepth
      * @since 1.0.0
      */
 
@@ -1272,7 +1646,7 @@ function (_Manager) {
 }(_Manager2.default);
 
 exports.default = LayerManager;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -1324,6 +1698,12 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
@@ -1347,6 +1727,8 @@ function (_Manager) {
   _createClass(LightSourceManager, [{
     key: "boot",
     value: function boot() {
+      _get(LightSourceManager.prototype.__proto__ || Object.getPrototypeOf(LightSourceManager.prototype), "boot", this).call(this);
+
       this.lightSources = this.room.add.group();
     }
   }, {
@@ -1393,7 +1775,7 @@ function (_Manager) {
 }(_Manager2.default);
 
 exports.default = LightSourceManager;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -1427,6 +1809,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1462,7 +1850,10 @@ function (_Manager) {
   _createClass(UpdateManager, [{
     key: "boot",
     value: function boot() {
-      var events = this.systems.events;
+      _get(UpdateManager.prototype.__proto__ || Object.getPrototypeOf(UpdateManager.prototype), "boot", this).call(this);
+
+      var events = this.systems.events; // eslint-disable-next-line no-undef
+
       this.gameObjects = new Phaser.Structs.Set();
       events.on('update', this._sceneUpdate, this);
       events.on('shutdown', this._sceneShutdown, this);
@@ -1550,7 +1941,7 @@ function (_Manager) {
 }(_Manager2.default);
 
 exports.default = UpdateManager;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -1603,6 +1994,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
  * @memberof TDLib.Rooms
  * @since 1.0.0
  */
+// eslint-disable-next-line no-undef
 var Room =
 /*#__PURE__*/
 function (_Phaser$Scene) {
@@ -1814,7 +2206,8 @@ function (_Phaser$Scene) {
 
       this.map.objects.forEach(function (layer) {
         layer.objects.forEach(function (element) {
-          _this;
+          _this; // eslint-disable-next-line no-eval
+
           _this5[element.name] = eval('new ' + element.type + '(_this,' + (element.x + element.width / 2) + ', ' + (element.y - element.height / 2) + ');');
 
           _this5[element.name].setName(element.name);
@@ -1848,7 +2241,7 @@ function (_Phaser$Scene) {
 
       this.children.list.forEach(function (element) {
         if ('actions' in element) {
-          element.actions.update();
+          element.actions._update();
         }
       });
     }
@@ -1870,7 +2263,7 @@ function (_Phaser$Scene) {
 }(Phaser.Scene);
 
 exports.default = Room;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -2062,7 +2455,7 @@ function (_Phaser$Physics$Arcad) {
      * @since 1.0.0
      */
 
-    _this.behaviour = new _BehaviourComponent.default(_this, behaviourType, pixelPerfect);
+    _this.behaviours = new _BehaviourComponent.default(_this, behaviourType, pixelPerfect);
     /**
      * The text which appears when observing the sprite.
          * @type {string}
@@ -2160,7 +2553,7 @@ function (_Phaser$Physics$Arcad) {
   _createClass(Sprite, [{
     key: "create",
     value: function create() {
-      console.log('Created:', this.key, '- Type:', this.type, '- Behaviour:', this.behaviour.type);
+      console.log('Created:', this.key, '- Type:', this.type, '- Behaviour:', this.behaviours.type);
     }
     /**
      * The update is executed at every cycle of the game loop.
@@ -2200,7 +2593,7 @@ function (_Phaser$Physics$Arcad) {
 }(Phaser.Physics.Arcade.Sprite);
 
 exports.default = Sprite;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -2328,15 +2721,15 @@ function () {
      */
 
   }, {
-    key: "abort",
+    key: "_abort",
 
     /**
      * Abort an uncompleted action.
      * @private
      * @since 1.0.0
      */
-    value: function abort() {
-      if (this._queue.length > 0) this._queue[0].abort();
+    value: function _abort() {
+      if (this._queue.length > 0) this._queue[0]._abort();
     }
     /**
      * Start an action.
@@ -2345,9 +2738,9 @@ function () {
      */
 
   }, {
-    key: "start",
-    value: function start() {
-      if (this._queue.length > 0) this._queue[0].start();
+    key: "_start",
+    value: function _start() {
+      if (this._queue.length > 0) this._queue[0]._start();
     }
     /**
      * Finish a completed action.
@@ -2367,10 +2760,10 @@ function () {
      */
 
   }, {
-    key: "remove",
-    value: function remove() {
+    key: "_remove",
+    value: function _remove() {
       if (this._queue.length > 0) this._queue.shift();
-      if (this._queue.length <= 0) this.invoker.remove();else this._queue[0].start();
+      if (this._queue.length <= 0) this.invoker._remove();else this._queue[0]._start();
     }
     /**
      * Pause an action.
@@ -2379,10 +2772,10 @@ function () {
      */
 
   }, {
-    key: "pause",
-    value: function pause() {
+    key: "_pause",
+    value: function _pause() {
       if (this._queue.length > 0) {
-        this._queue[0].pause();
+        this._queue[0]._pause();
 
         this.isPaused = true;
       }
@@ -2394,12 +2787,12 @@ function () {
      */
 
   }, {
-    key: "resume",
-    value: function resume() {
+    key: "_resume",
+    value: function _resume() {
       if (this._queue.length > 0) {
         this.isPaused = false;
 
-        this._queue[0].resume();
+        this._queue[0]._resume();
       }
     }
     /**
@@ -2409,9 +2802,9 @@ function () {
      */
 
   }, {
-    key: "update",
-    value: function update() {
-      if (this._queue.length > 0) this._queue[0].update();
+    key: "_update",
+    value: function _update() {
+      if (this._queue.length > 0) this._queue[0]._update();
     }
   }], [{
     key: "BaseAction",
@@ -2437,36 +2830,37 @@ function () {
           }
 
           _createClass(BaseAction, [{
-            key: "start",
-            value: function start() {
+            key: "_start",
+            value: function _start() {
               this.startCallback();
             }
           }, {
             key: "finish",
             value: function finish() {
               this.finishCallback();
-              this.invoker.remove();
+
+              this.invoker._remove();
             }
           }, {
-            key: "abort",
-            value: function abort() {
+            key: "_abort",
+            value: function _abort() {
               this.finishCallback();
             }
           }, {
-            key: "resume",
-            value: function resume() {
+            key: "_resume",
+            value: function _resume() {
               this.isPaused = false;
               this.resumeCallback();
             }
           }, {
-            key: "pause",
-            value: function pause() {
+            key: "_pause",
+            value: function _pause() {
               this.pauseCallback();
               this.isPaused = true;
             }
           }, {
-            key: "update",
-            value: function update() {
+            key: "_update",
+            value: function _update() {
               this.updateCallback();
             }
           }]);
@@ -2481,7 +2875,7 @@ function () {
 }();
 
 exports.default = Action;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -2530,7 +2924,7 @@ function (_Action) {
 
     _this = _possibleConstructorReturn(this, (Examine.__proto__ || Object.getPrototypeOf(Examine)).apply(this, arguments));
 
-    _this.addActions([new _WalkTo.default(_this, _this.actor, _this.config), _this.target.behaviour.examine.getAction(_this)]);
+    _this.addActions([new _WalkTo.default(_this, _this.actor, _this.config), _this.target.behaviours.examine.getAction(_this)]);
 
     return _this;
   }
@@ -2539,7 +2933,7 @@ function (_Action) {
 }(_Action2.default);
 
 exports.default = Examine;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -2619,7 +3013,7 @@ function (_Action) {
 }(_Action2.default);
 
 exports.default = FaceTo;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -2723,7 +3117,7 @@ function (_Action) {
 }(_Action2.default);
 
 exports.default = Idle;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -2793,7 +3187,7 @@ function (_Action) {
 
     _this = _possibleConstructorReturn(this, (Interact.__proto__ || Object.getPrototypeOf(Interact)).apply(this, arguments));
 
-    _this.addActions([new _WalkTo.default(_this, _this.actor, _this.config), _this.target.behaviour.interact.getAction(_this)]);
+    _this.addActions([new _WalkTo.default(_this, _this.actor, _this.config), _this.target.behaviours.interact.getAction(_this)]);
 
     return _this;
   }
@@ -2802,7 +3196,7 @@ function (_Action) {
 }(_Action2.default);
 
 exports.default = Interact;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -2851,7 +3245,7 @@ function (_Action) {
 
     _this = _possibleConstructorReturn(this, (Observe.__proto__ || Object.getPrototypeOf(Observe)).apply(this, arguments));
 
-    _this.addActions([new _FaceTo.default(_this, _this.actor, _this.config), _this.target.behaviour.observe.getAction(_this)]);
+    _this.addActions([new _FaceTo.default(_this, _this.actor, _this.config), _this.target.behaviours.observe.getAction(_this)]);
 
     return _this;
   }
@@ -2860,7 +3254,7 @@ function (_Action) {
 }(_Action2.default);
 
 exports.default = Observe;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -2943,7 +3337,7 @@ function (_Action) {
 }(_Action2.default);
 
 exports.default = RunTo;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3053,7 +3447,7 @@ function (_Action) {
 }(_Action2.default);
 
 exports.default = WalkTo;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3169,7 +3563,7 @@ function () {
 }();
 
 exports.default = Behaviour;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3268,7 +3662,7 @@ function (_Behaviour) {
 }(_Behaviour2.default);
 
 exports.default = Examinable;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3370,7 +3764,7 @@ function (_Behaviour) {
 }(_Behaviour2.default);
 
 exports.default = Interactive;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3396,7 +3790,7 @@ var Inventory = function Inventory() {
 };
 
 exports.default = Inventory;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3517,7 +3911,7 @@ function (_Behaviour) {
 }(_Behaviour2.default);
 
 exports.default = Observable;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3657,7 +4051,7 @@ function (_Sprite) {
 }(_Sprite2.default);
 
 exports.default = Character;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3722,7 +4116,7 @@ function (_Character) {
 }(_Character2.default);
 
 exports.default = NPCharacter;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3797,7 +4191,7 @@ function (_Character) {
 }(_Character2.default);
 
 exports.default = Player;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3864,7 +4258,7 @@ function () {
 }();
 
 exports.default = Effect;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -3996,7 +4390,7 @@ function (_LightEffect) {
 }(_LightEffect2.default);
 
 exports.default = HardFlickering;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -4089,7 +4483,7 @@ function (_LightEffect) {
 }(_LightEffect2.default);
 
 exports.default = HardFlickeringAndTrembling;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -4177,7 +4571,7 @@ function (_Effect) {
 }(_Effect2.default);
 
 exports.default = LightEffect;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -4304,7 +4698,7 @@ function (_LightEffect) {
 }(_LightEffect2.default);
 
 exports.default = RadiusFlickering;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -4418,7 +4812,7 @@ function (_LightEffect) {
 }(_LightEffect2.default);
 
 exports.default = SoftFlickering;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -4511,7 +4905,7 @@ function (_LightEffect) {
 }(_LightEffect2.default);
 
 exports.default = SoftDefaultFlickeringAndtrembling;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -4638,7 +5032,7 @@ function (_LightEffect) {
 }(_LightEffect2.default);
 
 exports.default = Trembling;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -4767,7 +5161,7 @@ function (_Sprite) {
 }(_Sprite2.default);
 
 exports.default = InentoryItem;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -4883,7 +5277,7 @@ function (_Sprite) {
 }(_Sprite2.default);
 
 exports.default = WorldItem;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -5061,7 +5455,7 @@ function (_WorldItem) {
 }(_WorldItem2.default);
 
 exports.default = LightSource;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -5156,7 +5550,7 @@ function (_WorldItem) {
 }(_WorldItem2.default);
 
 exports.default = RoomFurniture;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -5257,7 +5651,7 @@ function (_WorldItem) {
 }(_WorldItem2.default);
 
 exports.default = WallFurniture;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -5401,7 +5795,7 @@ function (_Phaser$Plugins$BaseP) {
 
           case CursorSystem.EXAMINABLE_CURSOR:
             {
-              this.lastTarget.behaviour.observe.abort();
+              this.lastTarget.behaviours.observe.abort();
               player.actions.add(_actions.default.Examine, {
                 target: this.lastTarget
               });
@@ -5410,7 +5804,7 @@ function (_Phaser$Plugins$BaseP) {
 
           case CursorSystem.INTERACTIVE_CURSOR:
             {
-              this.lastTarget.behaviour.observe.abort();
+              this.lastTarget.behaviours.observe.abort();
               player.actions.add(_actions.default.Interact, {
                 target: this.lastTarget
               });
@@ -5430,8 +5824,8 @@ function (_Phaser$Plugins$BaseP) {
     /**
      * Set the correct cursor for the target selected.
      * @param {Object} target - The target of the pointer.sceneManager
-     * @param {TDLib.Components.ActionComponent} target.behaviour - The SpriteBehaviourComponent of the target.
-     * @param {string} [target.behaviour.type=TDLib.Sprites.Behaviours.INERT] - The type of the sprite behaviour for this target.
+     * @param {TDLib.Components.ActionComponent} target.behaviours - The SpriteBehaviourComponent of the target.
+     * @param {string} [target.behaviours.type=TDLib.Sprites.Behaviours.INERT] - The type of the sprite behaviour for this target.
      * @since 1.0.0
      */
 
@@ -5439,14 +5833,14 @@ function (_Phaser$Plugins$BaseP) {
     key: "setCursor",
     value: function setCursor() {
       var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-        behaviour: {
+        behaviours: {
           type: _behaviours.default.INERT
         },
         room: {}
       };
 
       if ('room' in target && target !== target.room.player) {
-        switch (target.behaviour.type) {
+        switch (target.behaviours.type) {
           case _behaviours.default.INERT:
             {
               this.cursorScene.cursor.setTexture(CursorSystem.DEFAULT_CURSOR).setOrigin(0.4, 0.33);
@@ -5635,7 +6029,7 @@ function (_Phaser$Plugins$BaseP) {
 }(Phaser.Plugins.BasePlugin);
 
 exports.default = CursorSystem;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 
@@ -5743,7 +6137,7 @@ function (_Phaser$Plugins$BaseP) {
 }(Phaser.Plugins.BasePlugin);
 
 exports.default = RoomSystem;
-module.exports = exports["default"];
+module.exports = exports.default;
 
 /***/ }),
 

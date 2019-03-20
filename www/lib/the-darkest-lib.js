@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
+		module.exports = factory(require("phaser"));
 	else if(typeof define === 'function' && define.amd)
-		define("TDLib", [], factory);
+		define("TDLib", ["phaser"], factory);
 	else if(typeof exports === 'object')
-		exports["TDLib"] = factory();
+		exports["TDLib"] = factory(require("phaser"));
 	else
-		root["TDLib"] = factory();
-})(window, function() {
+		root["TDLib"] = factory(root["phaser"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE_phaser__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -139,6 +139,8 @@ module.exports = g;
 
 var _const = _interopRequireDefault(__webpack_require__(/*! ./const */ "./src/const.js"));
 
+var _phaser = _interopRequireDefault(__webpack_require__(/*! phaser */ "phaser"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -160,13 +162,80 @@ var TDLib = {
   Systems: __webpack_require__(/*! ./systems */ "./src/systems/index.js"),
   Utils: __webpack_require__(/*! ./utils */ "./src/utils/index.js")
 }; // Merge the consts
-// eslint-disable-next-line no-undef
 
-TDLib = Phaser.Utils.Objects.Extend(false, TDLib, _const.default); // Export the module
+TDLib = _phaser.default.Utils.Objects.Extend(false, TDLib, _const.default); // Export the module
 
 module.exports = TDLib;
 global.TDLib = TDLib;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./src/boot/Boot.js":
+/*!**************************!*\
+  !*** ./src/boot/Boot.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _phaser = _interopRequireDefault(__webpack_require__(/*! phaser */ "phaser"));
+
+var _Settings = _interopRequireDefault(__webpack_require__(/*! ./Settings */ "./src/boot/Settings.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Boot =
+/*#__PURE__*/
+function (_Phaser$Scene) {
+  _inherits(Boot, _Phaser$Scene);
+
+  function Boot() {
+    _classCallCheck(this, Boot);
+
+    return _possibleConstructorReturn(this, (Boot.__proto__ || Object.getPrototypeOf(Boot)).call(this, 'Boot'));
+  }
+
+  _createClass(Boot, [{
+    key: "preload",
+    value: function preload() {}
+  }, {
+    key: "create",
+    value: function create() {
+      this.cursors.configure(_Settings.default.GAME.scene);
+      this.rooms.configure(_Settings.default.GAME.scene);
+      this.rooms.add(_Settings.default.STARTING_ROOM); // TEMP NAME
+    }
+  }]);
+
+  return Boot;
+}(_phaser.default.Scene);
+
+exports.default = Boot;
+module.exports = exports.default;
 
 /***/ }),
 
@@ -294,6 +363,10 @@ var _managers = _interopRequireDefault(__webpack_require__(/*! ../managers */ ".
 
 var _systems = _interopRequireDefault(__webpack_require__(/*! ../systems */ "./src/systems/index.js"));
 
+var _Boot = _interopRequireDefault(__webpack_require__(/*! ./Boot */ "./src/boot/Boot.js"));
+
+var _phaser = _interopRequireDefault(__webpack_require__(/*! phaser */ "phaser"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -347,10 +420,10 @@ function () {
 
     this._finalizeConfig();
     /** ************ TODO: Aggiungere il device e la funzione per determinarlo **************/
-    // eslint-disable-next-line no-undef
 
 
-    _Settings.default.GAME = new Phaser.Game(this.config);
+    _Settings.default.STARTING_ROOM = this.config.starting_room;
+    _Settings.default.GAME = new _phaser.default.Game(this.config);
     (0, _DebugHeader.default)(_Settings.default.GAME);
     return _Settings.default.GAME;
   }
@@ -449,8 +522,7 @@ function () {
   }, {
     key: "_setBoot",
     value: function _setBoot() {
-      // eslint-disable-next-line no-undef
-      this.config.scene = [Boot];
+      this.config.scene = [_Boot.default];
       /** ****** TODO: Valutare come spostare il Boot dentro alla libreria*******/
     }
     /**
@@ -478,7 +550,7 @@ function () {
     key: "_finalizeConfig",
     value: function _finalizeConfig() {
       // eslint-disable-next-line no-undef
-      this.config.type = Phaser.WEBGL;
+      this.config.type = _phaser.default.WEBGL;
       this.config.maxLights = 20;
       this.config.parent = 'game';
       this.config.disableContextMenu = true;
@@ -617,7 +689,8 @@ var Settings = {
    * @type {String}
    * @since 1.0.0
    */
-  DEVICE: 'Desktop'
+  DEVICE: 'Desktop',
+  STARTING_ROOM: null
 };
 module.exports = Settings;
 
@@ -1216,7 +1289,14 @@ module.exports = Components;
   !*** ./src/const.js ***!
   \**********************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _phaser = _interopRequireDefault(__webpack_require__(/*! phaser */ "phaser"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * @author       Francesco Negri <francesco.negri@outlook.com>
@@ -1249,7 +1329,7 @@ var CONST = {
    * @since 1.0.0
    */
   // eslint-disable-next-line no-undef
-  PHASER_VERSION: Phaser.VERSION,
+  PHASER_VERSION: _phaser.default.VERSION,
 
   /**
    * Left direction constant.
@@ -6192,6 +6272,17 @@ var Utils = {
   getScreenProps: __webpack_require__(/*! ./Utils */ "./src/utils/Utils.js")
 };
 module.exports = Utils;
+
+/***/ }),
+
+/***/ "phaser":
+/*!*************************!*\
+  !*** external "phaser" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_phaser__;
 
 /***/ })
 

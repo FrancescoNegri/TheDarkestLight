@@ -1,5 +1,14 @@
-node_modules
-www\node_modules
-platforms
-www/index.html
-docs/
+# System and IDE files
+Thumbs.db
+.DS_Store
+.idea
+*.suo
+*.sublime-project
+*.sublime-workspace
+
+# Vendors
+node_modules/
+
+# Build
+dist/
+/npm-debug.log

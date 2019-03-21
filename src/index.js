@@ -3,9 +3,9 @@ import TestRoom from './rooms/TestRoom';
 import Sprites from './sprites';
 
 let config = {
-  title: 'The Darkest Light',
-  version: '1.0.0', // Get dinamically from package.json
-  url: 'https://thedarkestlight.io',
+  title: require('../package.json').title,
+  version: require('../package.json').version, // Get dinamically from package.json
+  url: require('../package.json').homepage,
   startingRoom: TestRoom,
   sprites: Sprites
 };

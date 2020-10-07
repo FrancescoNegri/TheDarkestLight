@@ -1,5 +1,5 @@
 const Players = {
-    Debugger: require('./Debugger')
+  Debugger: require('./Debugger')
 };
 
 module.exports = Players;

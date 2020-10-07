@@ -1,12 +1,12 @@
 import TDLib from '../../lib/the-darkest-lib';
 import Phaser from 'phaser';
 import Debugger from '../sprites/characters/players/Debugger';
-import TestRoom2 from './TestRoom2';
+import TestRoom from './TestRoom';
 
-export default class TestRoom extends TDLib.Rooms.Room {
+export default class TestRoom2 extends TDLib.Rooms.Room {
   constructor() {
     super(
-      'TestRoom',
+      'TestRoom2',
       {
         image: {
           tiles: {
@@ -30,7 +30,7 @@ export default class TestRoom extends TDLib.Rooms.Room {
 
         },
         tilemapTiledJSON:
-          { path: 'assets/Rooms/TestRoomNew.json' }
+          { path: 'assets/Rooms/TestRoomExtended.json' }
       }
     );
   }
@@ -72,8 +72,7 @@ export default class TestRoom extends TDLib.Rooms.Room {
       // this.player.actions.add(ARunTo, { target: { x: this.input.activePointer.worldX } });
     }
     if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
-      // console.log(this.lightSources.calculateLightsContribuitePoint(this.player));
-      this.rooms.start(TestRoom2);
+      this.rooms.start(TestRoom);
     }
     if (Phaser.Input.Keyboard.JustDown(this.keyX)) {
       this.lamp2.effects.play('Trembling', 5000);

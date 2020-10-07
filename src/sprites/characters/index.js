@@ -1,5 +1,5 @@
 const Characters = {
-    Players: require('./players')
+  Players: require('./players')
 };
 
 module.exports = Characters;

@@ -1,12 +1,12 @@
 import TDLib from '../lib/the-darkest-lib';
-import Rooms from './rooms';
+import Screens from './screens';
 import Sprites from './sprites';
 
 let config = {
   title: require('../package.json').title,
   version: require('../package.json').version, // Get dinamically from package.json
   url: require('../package.json').homepage,
-  startingRoom: Rooms.TestRoom.default,
+  startingScene: Screens.TestScreen.default,
   sprites: Sprites
 };
 

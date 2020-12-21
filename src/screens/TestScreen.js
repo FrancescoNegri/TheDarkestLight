@@ -31,7 +31,7 @@ export default class TestScreen extends TDLib.Screens.Screen {
     this.title.setOrigin(0.5);
 
     this.cameras.main.on('camerafadeoutcomplete', function () {
-      this.change(TestScreen2);
+      this.start(TestScreen2);
     }, this);
   }
 

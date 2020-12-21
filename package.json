@@ -41,6 +41,6 @@
     "webpack-shell-plugin-next": "^2.0.8"
   },
   "dependencies": {
-    "phaser": "^3.50.0"
+    "phaser": "^3.50.1"
   }
 }

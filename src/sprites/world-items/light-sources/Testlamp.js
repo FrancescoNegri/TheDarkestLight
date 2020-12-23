@@ -5,7 +5,7 @@ export default class TestLamp extends TDLib.Sprites.WorldItems.LightSources.Ligh
     super(
       room, x, y, 'CeilingLamp', layer,
       { intensity: 0.4, radius: 150, color: 0xFF9900 },
-      { intensity: 1, radius: 6000 },
+      { intensity: 1, radius: 6000, color: 0xfff1c6 },
       { x: 0, y: 20 }
     );
   }

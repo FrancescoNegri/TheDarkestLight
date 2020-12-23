@@ -67,7 +67,7 @@ export default class TestRoom extends TDLib.Rooms.Room {
       this.cursors.showCursor();
     }
     if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
-      this.objects.lamp1.switch();
+      this.objects.lamp2.switch();
       // this.player.actions.add(ARunTo, { target: { x: this.input.activePointer.worldX } });
     }
     if (Phaser.Input.Keyboard.JustDown(this.keyF)) {

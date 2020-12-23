@@ -1,5 +1,5 @@
 const LightSources = {
-    TestLamp: require('./Testlamp')
+  TestLamp: require('./TestLamp')
 };
 
 module.exports = LightSources;
